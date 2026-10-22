@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>동그라미 마쓰야마 여행</title>
+<meta name="description" content="2026.11.5~11.8 마쓰야마 3박 4일 일정">
+<meta name="theme-color" content="#f28c28">
+<link rel="manifest" href="./manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gaegu:wght@700&display=swap" rel="stylesheet">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="마쓰야마 여행">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<!-- ===================================================================
+     데이터는 아래 TRIP 객체 하나에 다 모여 있습니다. 여기만 고치면 됩니다.
+       days[].places[] : 일정 (시간 없이 순서대로)
+       days[].meals    : 그 날 식사
+       stay            : 숙소 카드 (전 일정 고정)
+       foods[]         : 숙소 주변 맛집 (날짜 무관, 카테고리 칩으로 필터)
+       weather         : 날씨 좌표 + 예보 없을 때 쓸 평년값
+       q               : 구글맵 검색어. 일본어 이름이 가장 정확합니다.
+     내용을 고친 뒤에는 sw.js 의 VERSION 숫자도 올려주세요.
+     =================================================================== -->
+<script>
+const TRIP = {
+  title: '동그라미 마쓰야마 여행',
+  titleEmoji: '🍂',
+  subtitle: '松山 · 3박 4일',
+  periodLabel: '2026.11.5(목) ~ 11.8(일)',
+  start: '2026-11-05',
+  end:   '2026-11-08',
+
+  /* ---------- 날씨 ---------- */
+  weather: {
+    lat: 33.8416,
+    lon: 132.7657,
+    spot: '마쓰야마',
+    // 예보 범위(약 2주) 밖일 때 보여줄 11월 초 평년값
+    normalMax: 20,
+    normalMin: 11,
+    normalNote: '11월 초 마쓰야마 평년값'
+  },
+
+  /* ---------- 숙소 (전 일정 고정) ---------- */
+  stay: {
+    name: '칸데오 호텔 마쓰야마 오카이도',
+    nameJa: 'カンデオホテルズ松山大街道',
+    checkIn:  '11/5 (목) 투어 종료 후',
+    checkOut: '11/8 (일) 아침',
+    breakfast: '06:30–09:30 · 11/6 · 11/7 · 11/8',
+    note: '최상층 스카이 스파에 전망 노천탕과 사우나가 있습니다. 체크인 시각(15:00)부터 다음 날 11:00까지 열려 있고 심야에도 들어갈 수 있어, 늦게 돌아온 날에도 몸을 풀 수 있습니다. 어메니티는 객실에 두지 않고 로비에서 필요한 만큼 가져가는 방식입니다. 오카이도 상점가가 바로 옆이라 저녁 식사와 편의점·쇼핑이 전부 도보권입니다.',
+    site: 'https://www.candeohotels.com/ja/ehime-matsuyama',
+    q: 'カンデオホテルズ松山大街道'
+  },
+
+  /* ---------- 일정 ---------- */
+  days: [
+    {
+      date: '2026-11-05',
+      theme: '인천공항 → 마쓰야마공항 → 고토히라 (가가와)',
+      meals: { 중식: '현지식 올리브규 스키야키', 석식: '자유' },
+      places: [
+        {
+          name: '인천국제공항 출발 (1터미널)',
+          nameJa: '7C1721',
+          tag: '항공',
+          short: '제주항공 7C1721 · 07:00 출발. 2시간 전 도착 권장.',
+          detail: '제주항공 7C1721편, 인천 07:00 출발입니다. 이른 아침 편이라 공항철도 첫차나 전날 밤 이동을 미리 확인해 두세요. 출국 수속은 보통 2시간 전부터 여유 있게 보면 되고, 새벽에는 보안검색 줄이 길어지는 날이 있습니다.\n\n일본 입국은 Visit Japan Web에 미리 등록해 QR 코드를 받아두면 도착 후 입국심사·세관을 QR 한 번으로 끝낼 수 있습니다. 출발 전날까지 등록해 캡처해 두는 걸 추천합니다.',
+          q: '인천국제공항 제1여객터미널'
+        },
+        {
+          name: '마쓰야마 국제공항 도착',
+          leg: '✈️ 비행 1시간 35분',
+          nameJa: '松山空港',
+          tag: '항공',
+          short: '08:35 도착. 전용 차량으로 이동 시작.',
+          detail: '비행 1시간 35분, 현지 시각 08:35 도착입니다. 한국과 시차는 없습니다.\n\n마쓰야마 공항은 작아서 입국부터 짐 찾기까지 금방 끝납니다. 도착 로비에 미캉 주스가 나오는 수도꼭지가 있으니 차 타기 전에 한 잔 해보세요. 환전은 공항보다 미리 해 가는 편이 낫고, 현금은 소액 상점·버스용으로 어느 정도 챙기는 게 좋습니다.',
+          q: '松山空港'
+        },
+        {
+          name: '고토히라구 (곤피라상)',
+          leg: '🚐 차로 약 2시간 · 140km · 고속도로',
+          nameJa: '金刀比羅宮',
+          tag: '신사',
+          short: '785개 돌계단 위 바다의 신. 마쓰야마에서 차로 약 2시간.',
+          detail: '가가와현 고토히라에 있는 전국 곤피라 신앙의 총본궁으로, 뱃사람들이 모시던 바다의 수호신입니다. 참배길 입구부터 본궁까지 785개의 돌계단을 올라야 해서 "곤피라상 계단"으로 더 유명합니다.\n\n계단은 급하지 않지만 수가 많아 40분 안팎 걸립니다. 365단의 다이몬을 지나면 흰 우산을 쓰고 엿을 파는 "가미요닌"이 있고, 628단 아사히노야시로의 조각이 볼만합니다. 785단 본궁 앞 전망대에서는 사누키 평야와 사누키 후지(이노야마)가 한눈에 보입니다. 더 위의 오쿠샤(1368단)까지는 시간상 어렵습니다.\n\n계단 중간중간 쉼터와 지팡이 대여(무료)가 있습니다. 편한 신발이 필수이고, 내려올 때 무릎에 부담이 가니 천천히 내려오세요.',
+          q: '金刀比羅宮'
+        },
+        {
+          name: '킨료노사토 주조 기념관',
+          leg: '🚶 도보 2분 · 참배길 중턱',
+          nameJa: '金陵の郷',
+          tag: '박물관',
+          short: '참배길 입구의 400년 사케 양조장 자료관. 입장 무료.',
+          detail: '고토히라구 참배길 중턱에 있는 사케 브랜드 "킨료(金陵)"의 자료관입니다. 1789년부터 이 자리에서 술을 빚어온 양조장이 옛 건물과 도구를 그대로 공개하고 있습니다.\n\n에도 시대 술 빚는 과정을 실물 크기 인형과 거대한 나무통으로 재현해 두었고, 안뜰에 수령 1000년이 넘는 녹나무가 서 있습니다. 입장은 무료이고 매점에서 시음과 구매가 됩니다. 계단을 오르기 전후 잠깐 들르기 좋은 코스입니다.',
+          q: '金陵の郷'
+        },
+        {
+          name: '고토히라 몬젠마치',
+          leg: '🚶 도보 1분',
+          nameJa: '琴平 表参道',
+          tag: '상점가',
+          short: '계단 양옆 참배길 상점가. 사누키 우동과 와산본.',
+          detail: '참배길 초입 양쪽으로 이어지는 상점가입니다. 가가와는 우동의 고장이라 사누키 우동집이 줄지어 있고, 와산본(고급 설탕 과자), 부채, 곤피라 부적이 대표 기념품입니다.\n\n중식이 올리브규 스키야키로 포함되어 있으니 여기서는 간식 정도로 보면 됩니다. 계단을 다 오른 뒤라면 시원한 간장 아이스크림이나 와산본 라테를 파는 집도 있습니다.',
+          q: '琴平 表参道'
+        },
+        {
+          name: '가나마루자',
+          leg: '🚶 도보 5분',
+          nameJa: '旧金毘羅大芝居 金丸座',
+          tag: '극장',
+          short: '1835년 지어진 일본 현존 최고(最古) 가부키 극장.',
+          detail: '1835년에 세워진, 현재 남아 있는 가부키 극장 중 일본에서 가장 오래된 건물입니다. 국가 중요문화재이면서 지금도 매년 봄 실제 공연이 열립니다.\n\n볼거리는 무대 자체가 아니라 무대 "밑"입니다. 사람이 손으로 밀어 돌리는 회전무대와 배우를 들어올리는 승강 장치가 있는 지하 공간 나락(奈落)까지 직접 내려가 볼 수 있고, 객석을 가로지르는 하나미치와 천장의 꽃보라 장치도 그대로입니다. 전기 조명 없이 창문의 자연광만으로 공연하던 구조라 낮에 가면 그 느낌이 살아 있습니다.',
+          q: '旧金毘羅大芝居 金丸座'
+        },
+        {
+          name: '마쓰야마 호텔 체크인',
+          leg: '🚐 차로 약 2시간 · 140km',
+          nameJa: 'カンデオホテルズ松山大街道',
+          tag: '숙소',
+          short: '19시까지 복귀. 석식은 불포함이라 자유 저녁.',
+          detail: '전용 차량 운행이 19시까지라 그 전에 호텔로 돌아옵니다. 호텔이 오카이도 상점가 바로 옆이라 짐만 두고 나오면 저녁 먹을 곳이 널려 있습니다.\n\n첫날 저녁 추천은 아래 "숙소 주변 맛집"에 정리해 두었습니다. 도착일이라 멀리 가지 말고 가까운 타이메시나 초밥집 정도가 무난합니다. 체크인 후 최상층 스카이 스파에서 몸을 푸는 것도 좋습니다.',
+          q: 'カンデオホテルズ松山大街道'
+        }
+      ]
+    },
+    {
+      date: '2026-11-06',
+      theme: '우치코 · 오즈 · 시모나다 (남이요)',
+      meals: { 조식: '호텔식', 중식: '현지식', 석식: '자유' },
+      places: [
+        {
+          name: '우치코 야오카이치 거리',
+          leg: '🚐 차로 약 50분 · 45km · 호텔에서 출발',
+          nameJa: '内子 八日市護国地区',
+          tag: '옛마을',
+          short: '밀랍으로 번성한 에도~메이지 상가 마을.',
+          detail: '목랍(木蠟) 생산으로 큰돈을 번 상인들의 집이 600m 남짓한 길에 그대로 남아 있는 중요전통적건조물군보존지구입니다.\n\n흰 회벽과 노란빛 도는 흙벽, 촘촘한 격자창이 이어지는데, 관광지화가 덜 되어 사람이 적고 실제 주민이 사는 집이 섞여 있습니다. 길 중간중간 작은 카페와 공방, 밀랍 양초 가게가 있습니다. 사진은 아침 빛이 들어올 때가 제일 좋습니다.',
+          q: '内子 八日市護国'
+        },
+        {
+          name: '고쇼지',
+          leg: '🚶 도보 5분',
+          nameJa: '高昌寺',
+          tag: '절',
+          short: '거대한 돌 열반불이 누워 있는 절.',
+          detail: '우치코 마을 안에 있는 조동종 사찰로, 15세기에 창건되었습니다.\n\n유명한 것은 경내에 누워 있는 거대한 석조 열반불입니다. 길이 10m가 넘는 돌 부처가 옆으로 누운 모습으로, 돌로 만든 열반상으로는 일본 최대급이라고 합니다. 1995년에 봉안된 비교적 새것이지만 규모 때문에 꼭 사진을 찍게 됩니다. 절 자체는 조용하고 산문과 종루가 오래된 건축입니다.',
+          q: '高昌寺 内子'
+        },
+        {
+          name: '가미하가 저택',
+          leg: '🚶 도보 5분',
+          nameJa: '上芳我邸',
+          tag: '저택',
+          short: '우치코 제일가는 밀랍 상인의 본가. 제조 과정 전시.',
+          detail: '우치코 밀랍 산업의 중심이었던 하가 가문 분가의 저택으로, 국가 중요문화재입니다. 1894년에 지어진 본채와 창고, 작업장이 통째로 남아 있습니다.\n\n안쪽 전시관에서 목랍을 짜내는 전 과정을 실물 도구로 볼 수 있습니다. 하제나무 열매를 쪄서 압착하고 햇볕에 말려 표백하는, 지금은 사라진 산업의 기록입니다. 당시 상인 집의 생활 공간과 정원도 그대로라 안쪽까지 천천히 도는 걸 추천합니다.',
+          q: '上芳我邸'
+        },
+        {
+          name: '가류산장',
+          leg: '🚐 차로 약 25분 · 20km',
+          nameJa: '臥龍山荘',
+          tag: '건축',
+          short: '히지카와 강이 내려다보이는 수기야 건축의 정점.',
+          detail: '오즈의 무역상이 10년에 걸쳐 1907년에 완성한 산장으로, 일본 수기야(数寄屋) 건축의 걸작으로 꼽힙니다. 2016년 국가 중요문화재가 되었습니다.\n\n히지카와 강이 굽이도는 절벽 위에 지었고, 본채인 가류인에서는 창틀이 그대로 액자가 되어 강과 산이 들어옵니다. 기둥 하나, 못 자리 하나까지 전부 의도가 들어 있어 안내를 들으며 보면 재미가 다릅니다. 강 위로 돌출된 찻집 후로안(不老庵)은 천장을 대나무로 둥글게 휘어 달빛이 반사되도록 만들었다는 이야기가 유명합니다.\n\n실내는 양말 차림으로 걷게 되니 신고 벗기 편한 신발이 좋습니다.',
+          q: '臥龍山荘'
+        },
+        {
+          name: '오즈성',
+          leg: '🚐 차로 약 5분 · 1.5km',
+          nameJa: '大洲城',
+          tag: '성',
+          short: '목조로 복원한 4층 천수. 천수각 입장은 불포함.',
+          detail: '히지카와 강가에 선 성으로, 2004년에 4층 천수를 전통 목조 공법으로 복원했습니다. 콘크리트로 올린 다른 복원 천수와 달리 옛 도면과 사진, 모형을 근거로 나무로만 다시 지은 드문 사례입니다.\n\n일정표상 천수각 내부 입장은 불포함이라 외관과 성 주변을 도는 코스가 됩니다. 강 건너편이나 성 아래 잔디밭에서 보는 각도가 제일 좋고, 네 귀퉁이 망루 중 두 곳은 에도 시대 원형 그대로 남아 있는 중요문화재입니다.',
+          q: '大洲城'
+        },
+        {
+          name: '시모나다역',
+          leg: '🚐 차로 약 40분 · 30km',
+          nameJa: '下灘駅',
+          tag: '전망',
+          short: '플랫폼 바로 앞이 바다인 무인역.',
+          detail: '"일본에서 가장 바다에 가까운 역"으로 불리는 JR 요산선의 무인역입니다. 플랫폼 앞을 가리는 것이 하나도 없이 세토내해가 펼쳐져, 청춘 18 티켓 포스터와 드라마·영화에 수없이 등장했습니다.\n\n볼 것은 벤치와 낡은 역명판, 그리고 바다뿐입니다. 그래서 더 좋은 곳이고, 해가 수평선으로 떨어지는 시간이 절정입니다. 11월 초 이 지역 일몰은 17시 10분 전후입니다.\n\n바닷바람이 생각보다 차니 겉옷을 챙기세요. 역에는 화장실 외에 아무 시설이 없습니다.',
+          q: '下灘駅'
+        },
+        {
+          name: '마쓰야마 복귀',
+          leg: '🚐 차로 약 50분 · 35km',
+          nameJa: 'カンデオホテルズ松山大街道',
+          tag: '숙소',
+          short: '19시까지 호텔. 석식 불포함.',
+          detail: '시모나다에서 마쓰야마까지는 차로 1시간 안팎입니다. 하루 종일 이동이 많은 날이라 돌아오면 바로 쉬고 싶을 수 있는데, 오카이도와 긴텐가이 아케이드는 밤에도 열려 있어 호텔 앞에서 저녁과 산책이 한 번에 해결됩니다.\n\n다리가 뻐근하면 최상층 스카이 스파를 추천합니다. 나베야키 우동집은 대부분 낮 장사라 저녁에는 문을 닫으니 참고하세요.',
+          q: 'カンデオホテルズ松山大街道'
+        }
+      ]
+    },
+    {
+      date: '2026-11-07',
+      theme: '마쓰야마성 · 이마바리 · 도고온천',
+      meals: { 조식: '호텔식', 중식: '현지식 (일정식)', 석식: '자유' },
+      places: [
+        {
+          name: '마쓰야마성',
+          leg: '🚶 도보 5분 + 리프트 3분 · 호텔에서 출발',
+          nameJa: '松山城',
+          tag: '성',
+          short: '현존 12천수 중 하나. 리프트 포함 일정.',
+          detail: '해발 132m 가쓰야마 산 위에 있는 평산성으로, 에도 시대 천수각이 그대로 남아 있는 전국 12곳 중 하나입니다. 1602년 가토 요시아키가 쌓기 시작했습니다.\n\n정상까지는 로프웨이와 1인승 리프트가 나란히 운행하는데, 일정에 리프트가 포함되어 있습니다. 지붕 없이 발이 공중에 뜬 채 3분 정도 올라가는 구조라 전망이 트여 로프웨이보다 재미있습니다. 비가 오면 로프웨이로 바뀝니다.\n\n천수각 최상층에서 마쓰야마 시내와 세토내해가 360도로 보이고, 맑으면 멀리 섬들까지 들어옵니다. 내부 계단이 매우 가파르니 손잡이를 꼭 잡으세요. 가는 길의 통로와 문이 적을 꺾어 가두는 구조로 설계돼 있어 그 동선 자체가 볼거리입니다.',
+          q: '松山城'
+        },
+        {
+          name: '이마바리 타월 미술관',
+          leg: '🚐 차로 약 1시간 · 50km',
+          nameJa: 'タオル美術館ICHIHIRO',
+          tag: '미술관',
+          short: '세계 유일 타월 테마 미술관. 이마바리 타월의 본거지.',
+          detail: '이마바리는 일본 타월 생산량의 절반 이상을 차지하는 고장이고, 그 한복판에 세운 타월 테마 미술관입니다.\n\n타월 실로 만든 대형 아트워크와 실제 공장 라인(실 감기, 직조)을 유리 너머로 볼 수 있는 구역이 핵심입니다. 유럽식 정원이 딸려 있고 건물 자체가 큽니다. 1층 숍이 사실상 하이라이트로, 이마바리 타월을 종류별로 살 수 있습니다. 한 번 쓰면 다른 수건을 못 쓴다는 말이 있을 만큼 흡수력이 좋아 기념품으로 가장 실패 없는 선택입니다.\n\n진품에는 빨강·파랑·흰색의 "今治タオル" 브랜드 태그가 붙어 있으니 확인하고 고르세요.',
+          q: 'タオル美術館ICHIHIRO'
+        },
+        {
+          name: '기로산 전망공원',
+          leg: '🚐 차로 약 30분 · 20km · 구루시마 해협대교를 건넙니다',
+          nameJa: '亀老山展望公園',
+          tag: '전망',
+          short: '구마 켄고 설계. 구루시마 해협대교 최고의 전망대.',
+          detail: '오시마 섬 해발 307m 기로산 정상의 전망공원으로, 건축가 구마 켄고가 설계했습니다. 산 정상을 깎아 그 속에 전망대를 파묻고 위에 다시 흙과 나무를 덮어, 멀리서 보면 건물이 아예 보이지 않습니다. "사라지는 건축"이라 불리는 그의 대표작입니다.\n\n전망대에 서면 구루시마 해협대교가 발밑에 길게 누워 있고, 세토내해의 섬들과 소용돌이치는 조류까지 내려다보입니다. 날이 맑으면 멀리 시코쿠 산맥까지 보입니다. 정상은 바람이 강하고 체감온도가 아래보다 많이 낮습니다.',
+          q: '亀老山展望公園'
+        },
+        {
+          name: '구루시마 해협대교',
+          leg: '👁 이동 없음 · 기로산 전망대에서 바로 내려다보입니다',
+          nameJa: '来島海峡大橋',
+          tag: '전망',
+          short: '세계 최초의 3연 현수교. 총 길이 약 4km.',
+          detail: '시마나미 해도의 시코쿠 쪽 입구에 놓인 다리로, 현수교 세 개를 연이어 붙인 세계 최초의 구조입니다. 총 길이는 약 4,105m.\n\n아래 구루시마 해협은 일본 3대 급조류 중 하나로, 물살이 시속 18km까지 나와 배들이 조류를 거슬러 가지 못하고 시간을 맞춰 통과합니다. 전망대에서 보면 바다 위에 소용돌이 자국이 선처럼 그려져 있습니다. 다리에는 자전거·보행자 전용 길이 따로 있어 시마나미 해도 라이딩의 시작점이기도 합니다.',
+          q: '来島海峡大橋'
+        },
+        {
+          name: '도고온천가 산책',
+          leg: '🚐 차로 약 1시간 10분 · 55km',
+          nameJa: '道後温泉',
+          tag: '온천',
+          short: '3천 년 역사 온천 마을. 본관과 하이카라 거리.',
+          detail: '일본에서 가장 오래된 온천으로 불리는 도고의 온천가를 걷는 코스입니다.\n\n중심은 1894년에 지은 목조 3층 건물 도고온천 본관(중요문화재)으로, 미야자키 하야오가 「센과 치히로의 행방불명」의 목욕탕을 구상할 때 참고한 곳으로 알려져 있습니다. 2024년 7월에 7년에 걸친 보존수리를 마치고 전관 영업을 재개했습니다.\n\n도고온천역 앞에는 봇찬 카라쿠리 시계가 있어 매시 정각에 인형이 나와 움직이고, 바로 옆에 무료 족욕탕이 있습니다. 역에서 본관까지 이어지는 250m 아케이드 하이카라 거리에는 봇찬 당고, 자코텐, 미캉 소프트 가게가 몰려 있습니다.\n\n시간이 맞으면 본관 1층 가미노유에 들어가 볼 수 있지만, 수건과 비누는 별도 구매입니다. 입욕까지는 어려우면 족욕과 상점가만으로도 충분히 분위기가 납니다. 돌아오는 길에 본관 옆 도고 맥주관에서 자코텐에 생맥주 한 잔이 정석 코스입니다.',
+          q: '道後温泉本館'
+        }
+      ]
+    },
+    {
+      date: '2026-11-08',
+      theme: '귀국',
+      meals: { 조식: '호텔식' },
+      places: [
+        {
+          name: '호텔 조식 · 체크아웃',
+          nameJa: 'カンデオホテルズ松山大街道',
+          tag: '숙소',
+          short: '조식 후 짐 정리. 공항으로 출발.',
+          detail: '09:35 출발 편이라 아침이 빠듯합니다. 조식 시작 시간에 맞춰 내려가고, 짐은 전날 밤에 미리 싸두는 게 편합니다.\n\n공항까지는 전용 차량으로 20분 안팎입니다. 국제선 체크인은 보통 출발 2시간 전에 열리므로 07:30 전후에는 호텔을 나서게 됩니다. 전날 사지 못한 기념품이 있으면 오카이도는 아침에 문을 열지 않으니 공항에서 해결하세요.',
+          q: 'カンデオホテルズ松山大街道'
+        },
+        {
+          name: '마쓰야마 국제공항 출발',
+          leg: '🚐 차로 약 20분 · 9km',
+          nameJa: '7C1722',
+          tag: '항공',
+          short: '제주항공 7C1722 · 09:35 출발 → 인천 11:20 도착.',
+          detail: '제주항공 7C1722편, 마쓰야마 09:35 출발 / 인천 11:20 도착입니다.\n\n마쓰야마 공항은 작아서 보안검색 후 면세 구역에 상점이 많지 않습니다. 사고 싶은 것이 있으면 체크인 전 2층 매장에서 끝내는 게 좋습니다.\n\n에히메 기념품의 기본은 세 가지입니다. 유자향 팥소를 카스텔라로 감아 만 타루토(이치로쿠·하타다), 미캉 주스·젤리 같은 감귤 가공품, 그리고 자코텐과 지리멘 같은 어묵류입니다. 어묵은 냉장이라 당일 귀국이면 괜찮지만 보냉팩을 요청하세요. 이마바리 타월도 공항에 일부 들어와 있습니다.\n\n액체류(미캉 주스)는 기내 반입이 안 되니 수하물로 부칠 짐에 넣어야 합니다.',
+          q: '松山空港'
+        }
+      ]
+    }
+  ],
+
+  /* ---------- 저녁 식사 후보 (호텔=오카이도 기준, 날짜 무관 고정) ----------
+     석식 불포함일: 11/5(목) · 11/6(금) · 11/7(토)
+     reserve: '필수' | '권장' | '불필요'
+     rating : { score, count, src }  — 2026년 10월 조사 기준
+     closed : 정기 휴무
+  ------------------------------------------------------------------------ */
+  foodCategories: ['전체', '향토', '해산물', '이자카야', '면·철판', '일식'],
+  foods: [
+    {
+      name: '고시키 본점',
+      nameJa: '郷土料理 五志喜 本店',
+      category: '향토',
+      area: '도보권',
+      walk: '도보 4분',
+      dist: '三番町 3-5-4',
+      hours: '11:00–14:00 / 17:00–22:00',
+      closed: '부정기 휴무',
+      reserve: '권장',
+      rating: { score: 3.49, count: 1180, src: '타베로그' },
+      memo: '1635년 창업. 오색 소면과 타이메시를 한 상에 놓고 먹는 향토요리 종합 선물세트. 에히메 음식을 한 번에 정리하기 좋아 첫 저녁으로 무난합니다.',
+      q: '郷土料理 五志喜 本店 松山'
+    },
+    {
+      name: '스시마루 본점',
+      nameJa: 'すし丸 本店',
+      category: '해산물',
+      area: '도보권',
+      walk: '도보 5분',
+      dist: '二番町 2-3-2',
+      hours: '평일 11:00–14:00 / 16:30–22:30 · 주말 11:00–22:30 (L.O. 22:00)',
+      closed: '무휴 (연말연시 제외)',
+      reserve: '권장',
+      rating: { score: 3.45, count: 258, src: '타베로그' },
+      memo: '세토내해 생선으로 하는 향토 초밥집. 축제 때 먹던 마쓰야마즈시와 이키타이메시(활도미밥)가 간판입니다. 카운터가 있어 1~2인도 편합니다.',
+      q: 'すし丸 本店 松山 二番町'
+    },
+    {
+      name: '잇신마루 오카이도점',
+      nameJa: '居酒屋 一進丸 松山大街道店',
+      category: '이자카야',
+      area: '도보권',
+      walk: '도보 2분',
+      dist: '大街道 2-1-5 (아케이드 안)',
+      hours: '11:00–14:30 / 17:00–23:30',
+      closed: '연중무휴',
+      reserve: '권장',
+      rating: { score: 3.49, count: null, src: '타베로그' },
+      memo: '호텔에서 가장 가까운 제대로 된 이자카야. 세토내해 해산물에 히메코 지도리(닭)·아마토로 부타 같은 에히메 브랜드 고기, 가다랑어 짚불구이, 타이메시까지 다 됩니다. 이치로쿠 맞은편 아케이드 안.',
+      q: '居酒屋 一進丸 松山大街道店'
+    },
+    {
+      name: '스미로바타 코미야',
+      nameJa: '炭炉ばた こみ哉 松山',
+      category: '이자카야',
+      area: '도보권',
+      walk: '도보 3분',
+      dist: '二番町 3-7-19',
+      hours: '17:00–23:00 (L.O. 22:00)',
+      closed: '연중무휴',
+      reserve: '권장',
+      rating: { score: 3.50, count: null, src: '타베로그' },
+      memo: '비장탄 원시야키 — 생선과 채소를 화로에 꽂아 세워 굽는 방식. 이 목록에서 평점 공동 1위이고 완전 개인실이 있어 일행끼리 편하게 먹기 좋습니다.',
+      q: '炭炉ばた こみ哉 松山'
+    },
+    {
+      name: '카도야 로프웨이거리점',
+      nameJa: '鯛めしかどや ロープウェー街店',
+      category: '향토',
+      area: '도보권',
+      walk: '도보 5분',
+      dist: '大街道 3-7-4',
+      hours: '11:00–20:30 (L.O. 20:00)',
+      closed: '무휴 (1/1 휴무)',
+      reserve: '불필요',
+      rating: { score: null, count: null, src: '' },
+      memo: '우와지마식 타이메시 — 도미 회를 날달걀 간장에 적셔 밥에 올려 먹습니다. 20:30에 닫으니 저녁은 일찍 가야 합니다.',
+      q: '鯛めしかどや ロープウェー街店'
+    },
+    {
+      name: '묘진마루 니반초점',
+      nameJa: '藁焼き鰹たたき明神丸 松山二番町店',
+      category: '이자카야',
+      area: '도보권',
+      walk: '도보 5분',
+      dist: '二番町',
+      hours: '월–목 17:00–22:30 · 금 17:00–23:30 · 토 16:00–23:30',
+      closed: '월 1회 부정기',
+      reserve: '권장',
+      rating: { score: 3.27, count: null, src: '타베로그' },
+      memo: '고치에서 온 가다랑어 짚불구이 전문점. 눈앞에서 짚을 태워 겉만 그을린 뒤 소금으로 내줍니다. 주말은 붐빕니다.',
+      q: '藁焼き鰹たたき明神丸 松山二番町店'
+    },
+    {
+      name: '시치린야 와라',
+      nameJa: '七厘や 笑',
+      category: '이자카야',
+      area: '도보권',
+      walk: '도보 3분',
+      dist: '오카이도 인근',
+      hours: '15:00–24:00 (L.O. 23:30)',
+      closed: '일요일',
+      reserve: '권장',
+      rating: { score: 3.19, count: 20, src: '타베로그' },
+      memo: '숯 화로(시치린)에 해산물과 에히메 지도리를 직접 구워 먹는 집. 늦게까지 하고 호텔에서 가까워 피곤한 날에 좋습니다.',
+      q: '七厘や 笑 松山'
+    },
+    {
+      name: '효탄지마',
+      nameJa: 'ひょうたん島',
+      category: '이자카야',
+      area: '도보권',
+      walk: '도보 4분',
+      dist: '二番町 2-7-16',
+      hours: '17:00–익일 03:00',
+      closed: '일요일',
+      reserve: '권장',
+      rating: { score: 3.18, count: null, src: '타베로그' },
+      memo: '나가하마 어항 직송 해산물에 철판구이·오코노미야키까지. 가격이 싸고 새벽 3시까지 해서 2차로도 좋습니다.',
+      q: 'ひょうたん島 松山 二番町'
+    },
+    {
+      name: '와쇼쿠 미요시',
+      nameJa: '和食 みよし',
+      category: '일식',
+      area: '전차 이동',
+      walk: '도보 7분 · 전차 1정거장',
+      dist: '千舟町 (마쓰야마시역 방면)',
+      transit: '오카이도(大街道) 정류장에서 마쓰야마시역행 전차 1정거장, 가쓰야마초 또는 마쓰야마시역 하차. 걸어서 7분이라 도보도 충분합니다.',
+      hours: '11:30–14:00 / 18:00–23:00 (L.O. 22:00)',
+      closed: '일요일 · 셋째 월요일',
+      reserve: '필수',
+      rating: { score: 3.52, count: 174, src: '타베로그' },
+      memo: '이번 목록에서 평점이 가장 높은 집. 자연산 생선 중심의 일품요리와 엄선한 지자케 9종. 자리가 적어 예약 없이 가면 어렵습니다. 조용히 제대로 먹고 싶은 날에.',
+      q: '和食 みよし 松山 千舟町'
+    },
+    {
+      name: '오이덴카 도고점',
+      nameJa: '伊予のご馳走 おいでん家 道後店',
+      category: '향토',
+      area: '전차 이동',
+      walk: '전차 15분',
+      dist: '도고온천 본관 근처',
+      transit: '호텔 앞 오카이도(大街道) 정류장에서 도고온천행 노면전차(5번 계통) 탑승 → 종점 도고온천역 하차, 약 15분. 역에서 상점가 쪽으로 도보 3~5분. 요금은 거리 상관없이 균일, 현금·IC카드 모두 가능합니다.',
+      hours: '평일 17:30–23:00 (L.O. 22:00) · 주말 17:00–23:00',
+      closed: '부정기 휴무',
+      reserve: '권장',
+      rating: { score: 3.49, count: null, src: '타베로그' },
+      memo: '도고에서 향토요리를 제대로 하는 집. 우와지마풍 타이메시, 자코텐, 센자키키(에히메식 닭튀김)에 지자케까지. 전석 금연이라 식사 위주로 편합니다. 3일차 도고 산책과 묶기 좋습니다.',
+      q: '伊予のご馳走 おいでん家 道後店'
+    },
+    {
+      name: '도고 비어 바',
+      nameJa: '道後BEER BAR',
+      category: '이자카야',
+      area: '전차 이동',
+      walk: '전차 15분',
+      dist: '도고온천 본관 옆',
+      transit: '오카이도(大街道) 정류장 → 도고온천행 노면전차(5번 계통) 종점 하차, 약 15분. 도고온천역에서 하이카라 거리를 따라 본관까지 걸으면 바로 옆입니다. 3일차 도고 산책 코스와 같은 길.',
+      hours: '11:00–21:00 (L.O. 20:30)',
+      closed: '무휴 (확인 권장)',
+      reserve: '권장',
+      rating: { score: 3.49, count: 564, src: '타베로그' },
+      memo: '3일차 도고온천가 산책에 묶어서 가는 코스. 도고 수제맥주 4종(쾰슈·알트·스타우트·바이젠) 비교와 자코텐이 정석입니다. 저녁엔 대기가 생깁니다. 옛 이름은 도고 맥주관(道後麦酒館)입니다.',
+      q: '道後麦酒館'
+    },
+    {
+      name: '야키토리 돈 니반초점',
+      nameJa: '焼鳥どん 松山二番町店',
+      category: '이자카야',
+      area: '도보권',
+      walk: '도보 2분',
+      dist: '二番町 2-5-8',
+      hours: '17:00–익일 01:00 · 금·토·공휴일 전날 ~익일 03:00',
+      closed: '연중무휴',
+      reserve: '권장',
+      rating: { score: 3.02, count: null, src: '타베로그' },
+      memo: '호텔에서 181m, 이 목록에서 가장 가깝습니다. 비장탄에 굽는 큼직한 꼬치와 간판 메뉴 닭조림. 전석 금연이고 새벽까지 해서 1차·2차 아무 때나.',
+      q: '焼鳥どん 松山二番町店'
+    },
+    {
+      name: '멘야 나카무라',
+      nameJa: '麺家 なかむら',
+      category: '면·철판',
+      area: '도보권',
+      walk: '도보 6분',
+      dist: '오카이도 인근',
+      closed: '화요일',
+      reserve: '불필요',
+      rating: { score: 3.57, count: null, src: '타베로그' },
+      memo: '이 목록에서 평점이 가장 높습니다. 마쓰야마 소금으로 낸 시오라멘이 간판. 저녁에 가볍게 한 그릇 하기 좋고, 영업시간은 가기 전 확인하세요.',
+      q: '麺家 なかむら 松山'
+    },
+    {
+      name: '아즈마야',
+      nameJa: 'あづま家',
+      category: '면·철판',
+      area: '도보권',
+      walk: '도보 4분',
+      dist: '오카이도 인근',
+      closed: '일요일',
+      reserve: '불필요',
+      rating: { score: 3.47, count: null, src: '타베로그' },
+      memo: '간장 라멘이 대표. 나카무라가 맑은 소금이라면 이쪽은 진한 간장 쪽입니다. 술 마신 뒤 마무리로도 좋습니다.',
+      q: 'あづま家 ラーメン 松山'
+    },
+    {
+      name: '스미레 헤이와도리점',
+      nameJa: 'お好み鉄板 すみれ 平和通店',
+      category: '면·철판',
+      area: '전차 이동',
+      walk: '전차 10분',
+      dist: '清水町 정류장 도보 5분',
+      transit: '오카이도(大街道) 정류장에서 순환선(1·2계통) 전차를 타고 기요미즈마치(清水町) 하차, 도보 5분. 마쓰야마성 북쪽입니다.',
+      reserve: '권장',
+      rating: { score: null, count: null, src: '' },
+      memo: '마쓰야마 명물 미쓰하마야키를 시내에서 먹을 수 있는 집. 얇게 편 반죽에 삶은 국수와 어육 가루(치쿠와·지리멘)를 올려 굽는, 히로시마풍과도 다른 이 동네만의 철판 요리입니다. 테이블석이 넉넉합니다.',
+      q: 'お好み鉄板 すみれ 平和通店'
+    },
+    {
+      name: '이요타누키',
+      nameJa: 'いよ狸',
+      category: '향토',
+      area: '전차 이동',
+      walk: '전차 15분',
+      dist: '도고온천역 도보 2분',
+      transit: '오카이도(大街道) 정류장에서 도고온천행 노면전차(5번 계통) 종점 하차, 약 15분. 역에서 도보 2분.',
+      closed: '부정기 휴무',
+      reserve: '권장',
+      rating: { score: 3.43, count: null, src: '타베로그' },
+      memo: '창업 48년 된 도고의 노포 이자카야. 에히메 진미와 지자케를 갖춰 놓고 있어, 관광지 식당보다 동네 술집에 가까운 분위기입니다.',
+      q: 'いよ狸 道後'
+    },
+    {
+      name: '타이쇼',
+      nameJa: '鯛将',
+      category: '해산물',
+      area: '전차 이동',
+      walk: '전차 15분',
+      dist: '도고온천 일대',
+      transit: '오카이도(大街道) 정류장에서 도고온천행 노면전차(5번 계통) 종점 하차, 약 15분.',
+      reserve: '권장',
+      rating: { score: 3.38, count: null, src: '타베로그' },
+      memo: '시마나미 해역에서 직송하는 참돔 전문점. 같은 도미를 회·타이메시·구이로 다르게 먹어볼 수 있습니다. 해산물을 제대로 먹고 싶은 날에.',
+      q: '鯛将 道後 松山'
+    },
+    {
+      name: '이요식당 오토라',
+      nameJa: '伊予食堂 おとら',
+      category: '향토',
+      area: '전차 이동',
+      walk: '전차 15분',
+      dist: '도고온천역 67m',
+      transit: '오카이도(大街道) 정류장에서 도고온천행 노면전차(5번 계통) 종점 하차, 약 15분. 역에서 바로 앞입니다.',
+      reserve: '불필요',
+      rating: { score: 3.36, count: null, src: '타베로그' },
+      memo: '도고온천역 바로 앞 향토 식당. 우동과 덮밥 같은 한 그릇 메뉴가 많아, 온천 후 가볍게 먹고 숙소로 돌아가기 좋습니다.',
+      q: '伊予食堂 おとら 道後'
+    },
+    {
+      name: '세토우치 요리 카나기',
+      nameJa: '瀬戸内料理 懐凪',
+      category: '해산물',
+      area: '도보권',
+      walk: '도보 7분',
+      dist: '二番町 1-1-6',
+      hours: '18:00–23:00',
+      closed: '일요일',
+      reserve: '필수',
+      rating: { score: 3.59, count: null, src: '타베로그' },
+      memo: '이 목록 전체에서 평점이 가장 높습니다. 세토내해 생선을 제철로 내고 에히메 안팎의 술을 갖춰 놨습니다. 반개인실이 있어 조용합니다. 예약은 방문 2일 전까지(코스는 4일 전), 예약이 없으면 일찍 닫는 날도 있으니 꼭 미리 잡으세요.',
+      q: '瀬戸内料理 懐凪 松山'
+    },
+    {
+      name: '우와지마 바쇼 니반초점',
+      nameJa: '海鮮・相撲茶屋 うわじま場所 二番町店',
+      category: '해산물',
+      area: '도보권',
+      walk: '도보 4분',
+      dist: '二番町 3-8-4',
+      hours: '평일·공휴일 전날 17:00–24:00 · 일·공휴일 17:00–22:00',
+      closed: '부정기 휴무',
+      reserve: '권장',
+      rating: { score: 3.57, count: null, src: '타베로그' },
+      memo: '우와지마 수산회사가 직영하는 해산물집. 스모 찻집을 표방해 창코나베도 하고, 회와 타이메시도 같이 됩니다. 자정까지 해서 늦은 저녁에도 여유 있습니다.',
+      q: 'うわじま場所 二番町店'
+    },
+    {
+      name: '오오타키',
+      nameJa: '一品御料理 おゝたき',
+      category: '일식',
+      area: '도보권',
+      walk: '도보 6분',
+      dist: '二番町 1-3-5',
+      hours: '18:00–23:00 (L.O. 22:00)',
+      closed: '일요일',
+      reserve: '필수',
+      rating: { score: 3.52, count: null, src: '타베로그' },
+      memo: '세토내해 생선과 에히메 식재료로 사계절 일품요리를 내는 할포. 미요시와 함께 이번 목록에서 가장 격식 있는 쪽입니다. 자리가 적어 예약이 사실상 필수입니다.',
+      q: '一品御料理 おゝたき 松山'
+    },
+    {
+      name: '우미노사치 타이야',
+      nameJa: '海の幸 鯛や',
+      category: '해산물',
+      area: '도보권',
+      walk: '도보 4분',
+      dist: '二番町 2-7-5',
+      reserve: '권장',
+      rating: { score: 3.47, count: null, src: '타베로그' },
+      memo: '이름 그대로 도미를 중심으로 세토내해 생선을 내는 집. 회·조림·타이메시까지 한자리에서 비교해 볼 수 있습니다. 영업시간은 가기 전에 확인하세요.',
+      q: '海の幸 鯛や 松山 二番町'
+    },
+    {
+      name: '치소야 코노',
+      nameJa: '馳走屋河の',
+      category: '일식',
+      area: '도보권',
+      walk: '도보 4분',
+      dist: '二番町 2-8-6 2F',
+      hours: '18:00–22:00 (월·일은 점심 12:00–14:30도)',
+      closed: '부정기 휴무',
+      reserve: '필수',
+      rating: { score: 3.90, count: 101, src: '타베로그' },
+      memo: '마쓰야마 전체에서 평점이 가장 높은 집입니다. 세토내해 생선으로 내는 일본요리·스시 코스 전문. 다만 완전예약제이고 1인 2만 엔대부터라, 가볍게 들르는 곳이 아니라 하루를 작정하고 잡는 자리에 가깝습니다. 취소 수수료가 7일 전부터 50%, 3일 전부터 100%이니 일정이 확실할 때만 예약하세요.',
+      q: '馳走屋河の 松山'
+    },
+    {
+      name: '테우치소바 마로',
+      nameJa: '手打蕎麦 まろ',
+      category: '면·철판',
+      area: '도보권',
+      walk: '도보 2분',
+      dist: '大街道 2-5-9 1F',
+      hours: '11:00–14:45 / 17:30–21:30',
+      closed: '일요일',
+      reserve: '불필요',
+      rating: { score: 3.52, count: null, src: '타베로그' },
+      memo: '오카이도 아케이드 안의 손으로 치는 소바집. 목넘김이 좋아 기름진 저녁이 이어질 때 쉬어 가기 좋습니다. 21:30에 닫으니 너무 늦지 않게.',
+      q: '手打蕎麦 まろ 松山'
+    },
+    {
+      name: '요나키소바 이안',
+      nameJa: 'よなき蕎麦 癒庵',
+      category: '면·철판',
+      area: '도보권',
+      walk: '도보 5분',
+      dist: '二番町 1-6-10',
+      hours: '23:00–익일 03:00',
+      closed: '일요일',
+      reserve: '불필요',
+      rating: { score: 3.21, count: null, src: '타베로그' },
+      memo: '밤 11시에 문을 여는 심야 소바집. 술자리를 마치고 마지막 한 그릇으로 가는 곳이라, 저녁 1차용이 아니라 마무리용입니다.',
+      q: 'よなき蕎麦 癒庵 松山'
+    },
+    {
+      name: '중화바 로타스',
+      nameJa: '中華バル ろたす',
+      category: '이자카야',
+      area: '도보권',
+      walk: '도보 7분',
+      dist: '오카이도 인근',
+      hours: '18:00–익일 04:00',
+      closed: '부정기 휴무',
+      reserve: '불필요',
+      rating: { score: null, count: null, src: '' },
+      memo: '마파두부로 알려진 중화 바. 새우 칠리처럼 맥주·소흥주에 맞는 안주가 많고 새벽 4시까지 합니다. 일식이 이어져 물릴 때나 2차로.',
+      q: '中華バル ろたす 松山'
+    }
+  ]
+};
+</script>
+
+<style>
+:root{
+  --bg:#faf7f2;
+  --surface:#ffffff;
+  --surface-2:#f3eee6;
+  --line:#e6ded1;
+  --text:#1d1b19;
+  --text-2:#6b6358;
+  --text-3:#9a9185;
+  --accent:#e07b1f;
+  --accent-soft:#fdf0e0;
+  --accent-text:#a85711;
+  --ink:#1f3a4d;
+  --sky:#e8f1f7;
+  --shadow:0 1px 2px rgba(29,27,25,.05),0 8px 24px -12px rgba(29,27,25,.18);
+  --radius:16px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121316;
+    --surface:#1b1d21;
+    --surface-2:#23262b;
+    --line:#2e3238;
+    --text:#f0eeea;
+    --text-2:#a7a39c;
+    --text-3:#767168;
+    --accent:#f2a04d;
+    --accent-soft:#2a211a;
+    --accent-text:#f2a04d;
+    --ink:#9cc4dd;
+    --sky:#1b242b;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Segoe UI",
+    "Noto Sans KR",Roboto,sans-serif;
+  font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  -webkit-text-size-adjust:100%;
+  overflow-x:hidden;
+}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px calc(48px + env(safe-area-inset-bottom))}
+
+/* ---------- 헤더 ---------- */
+.hero{
+  position:relative;overflow:hidden;
+  margin:0 -16px 2px;
+  padding:calc(16px + env(safe-area-inset-top)) 16px 10px;
+}
+.hero::before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    linear-gradient(180deg,color-mix(in srgb,var(--accent) 14%,transparent) 0%,transparent 62%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200' preserveAspectRatio='xMaxYMax slice'%3E%3Cg fill='%23e07b1f'%3E%3Ccircle cx='72' cy='44' r='17' opacity='.15'/%3E%3Cpath opacity='.13' d='M0 200v-46c40-20 78-6 112 6 34 12 66 4 96-12 30-16 64-14 96 4 30 17 60 14 96-2v50z'/%3E%3Cg opacity='.28' transform='translate(284 84)'%3E%3Cpath d='M4 88h92v12H4z'/%3E%3Cpath d='M14 70h72v18H14z'/%3E%3Cpath d='M6 70 50 54l44 16z'/%3E%3Cpath d='M22 44h56v12H22z'/%3E%3Cpath d='M16 44 50 30l34 14z'/%3E%3Cpath d='M32 20h36v10H32z'/%3E%3Cpath d='M26 20 50 8l24 12z'/%3E%3Cpath d='M48 0h4v8h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+      right bottom / auto 100% no-repeat;
+}
+.hero > *{position:relative;z-index:1}
+.hero .eyebrow{
+  font-size:12px;letter-spacing:.12em;color:var(--text-3);
+  margin:0 0 5px;font-weight:600;
+}
+.hero h1{
+  margin:0;font-size:32px;line-height:1.24;letter-spacing:-.01em;font-weight:400;
+  /* 정자에 가까우면서 둥근 손글씨 결이 남은 서체 */
+  font-family:'Jua','Gaegu',-apple-system,BlinkMacSystemFont,
+    "Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  -webkit-text-stroke:.45px currentColor;
+}
+.hero h1 .emo{
+  margin-left:4px;font-size:24px;vertical-align:2px;
+  -webkit-text-stroke:0;
+  font-family:-apple-system,"Apple Color Emoji","Segoe UI Emoji",sans-serif;
+}
+.hero .meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.period{font-size:14px;color:var(--text-2);font-variant-numeric:tabular-nums}
+.dday{
+  position:absolute;z-index:2;
+  top:calc(14px + env(safe-area-inset-top));right:16px;
+  display:inline-flex;align-items:baseline;gap:4px;
+  background:var(--accent);color:#fff;
+  padding:5px 12px;border-radius:999px;
+  font-size:14px;font-weight:700;letter-spacing:.01em;
+  box-shadow:0 4px 12px -4px color-mix(in srgb,var(--accent) 60%,transparent);
+}
+
+/* ---------- 섹션 ---------- */
+section{margin-top:28px}
+section:first-of-type{margin-top:8px}   /* 제목 바로 아래 진행 바 */
+.sec-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.sec-head h2{
+  margin:0;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-3);
+}
+.sec-head .hint{font-size:12px;color:var(--text-3)}
+
+/* ---------- 진행 바 ---------- */
+.progress{margin:0 0 10px}
+.progress .track{
+  position:relative;height:8px;border-radius:999px;
+  background:var(--surface-2);border:1px solid var(--line);
+  overflow:hidden;
+}
+.progress .fill{
+  display:block;height:100%;border-radius:999px;
+  background:linear-gradient(90deg,
+    color-mix(in srgb,var(--accent) 30%,transparent) 0%,
+    color-mix(in srgb,var(--accent) 65%,transparent) 45%,
+    var(--accent) 100%);
+  transition:width .5s cubic-bezier(.4,0,.2,1);
+}
+.progress .plabel{
+  display:flex;justify-content:space-between;gap:10px;
+  margin-top:8px;font-size:12px;color:var(--text-3);font-weight:600;
+}
+
+/* ---------- 날짜 탭 ---------- */
+.tabs{
+  display:grid;grid-auto-flow:column;grid-auto-columns:1fr;
+  gap:7px;margin:0;padding:0 0 10px;
+}
+.tab{
+  min-width:0;
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:14px;padding:9px 6px;
+  font:inherit;color:var(--text-2);cursor:pointer;text-align:center;line-height:1.3;
+  transition:background .15s,border-color .15s;
+}
+.tab .dayn{
+  display:block;font-size:10px;font-weight:700;letter-spacing:.04em;
+  color:var(--text-3);line-height:1.2;
+}
+.tab b{
+  display:block;font-size:14px;font-weight:700;color:var(--text);
+  font-variant-numeric:tabular-nums;margin-top:2px;white-space:nowrap;
+}
+.tab i.wx{
+  display:block;font-style:normal;font-size:11px;margin-top:6px;
+  color:var(--text-2);white-space:nowrap;
+}
+.tab i.wx em{display:block;font-style:normal;font-size:15px;line-height:1.1}
+.tab i.wx u{display:block;text-decoration:none;margin-top:1px}
+.tab i.wx s{
+  display:block;text-decoration:none;margin-top:1px;
+  font-variant-numeric:tabular-nums;color:var(--text-3);font-size:10px;
+}
+.tab[aria-selected="true"]{
+  background:var(--accent);border-color:var(--accent);
+  box-shadow:0 6px 16px -8px color-mix(in srgb,var(--accent) 70%,transparent);
+}
+.tab[aria-selected="true"] b,
+.tab[aria-selected="true"] .dayn,
+.tab[aria-selected="true"] i.wx,
+.tab[aria-selected="true"] i.wx s{color:#fff}
+.tab[aria-selected="true"] .dayn,
+.tab[aria-selected="true"] i.wx{opacity:.92}
+.tab .today-dot{
+  display:inline-block;width:5px;height:5px;border-radius:50%;
+  background:var(--accent);margin-left:5px;vertical-align:middle;
+}
+.tab[aria-selected="true"] .today-dot{background:#fff}
+
+.day-theme{font-size:15px;font-weight:600;color:var(--text);margin:4px 0 10px}
+
+/* ---------- 식사 ---------- */
+.meals{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.meal{
+  font-size:12px;color:var(--text-2);background:var(--surface);
+  border:1px solid var(--line);border-radius:999px;padding:4px 10px;
+}
+.meal b{color:var(--text-3);font-weight:700;margin-right:4px}
+.meal.off{color:var(--text-3)}
+
+/* ---------- 일정 리스트 ---------- */
+ol.places{list-style:none;margin:0;padding:0;position:relative}
+ol.places::before{
+  content:"";position:absolute;left:13px;top:12px;bottom:12px;width:2px;
+  background:linear-gradient(var(--line),color-mix(in srgb,var(--line) 20%,transparent));
+}
+li.place{position:relative;padding:0 0 6px 38px}
+
+/* 앞 목적지에서 여기까지의 이동 */
+.leg{
+  position:relative;margin:1px 0 7px;
+  font-size:11.5px;font-weight:700;line-height:1.5;
+  color:var(--text-2);letter-spacing:-.01em;
+}
+.leg::before{
+  content:"";position:absolute;left:-25px;top:50%;
+  width:6px;height:6px;margin-top:-4px;
+  border-right:1.6px solid var(--text-2);border-bottom:1.6px solid var(--text-2);
+  transform:rotate(45deg);opacity:.85;
+}
+li.place .row{position:relative}
+.num{
+  position:absolute;left:-38px;top:11px;width:28px;height:28px;border-radius:50%;
+  background:var(--surface);border:2px solid var(--line);
+  display:grid;place-items:center;
+  font-size:13px;font-weight:700;color:var(--text-2);font-variant-numeric:tabular-nums;
+}
+li.place .card{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:11px 13px;box-shadow:var(--shadow);
+}
+.p-top{display:flex;align-items:flex-start;gap:7px}
+.p-name{margin:0;font-size:16px;font-weight:700;letter-spacing:-.01em;flex:1;min-width:0}
+.p-ja{font-size:12px;color:var(--text-3);font-weight:500;margin-top:1px}
+.tag{
+  flex:0 0 auto;margin-top:2px;font-size:11px;font-weight:700;
+  color:var(--accent-text);background:var(--accent-soft);
+  padding:3px 8px;border-radius:999px;white-space:nowrap;
+}
+.p-short{margin:6px 0 0;font-size:14px;color:var(--text-2);line-height:1.5}
+.p-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.p-actions.right{justify-content:flex-end}
+
+/* 지도 아이콘 버튼 (카드 우측 상단) */
+.btn-map{
+  flex:0 0 auto;width:32px;height:32px;padding:0;
+  display:grid;place-items:center;
+  background:var(--surface-2);border:1px solid var(--line);
+  border-radius:9px;color:var(--ink);cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn-map:active{background:var(--line)}
+.btn-map svg{width:16px;height:16px}
+
+details.more{margin-top:8px}
+details.more summary{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:12px;font-weight:600;letter-spacing:.01em;color:var(--ink);
+  cursor:pointer;list-style:none;padding:3px 0;
+  -webkit-tap-highlight-color:transparent;
+}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::after{
+  content:"";width:6px;height:6px;margin-left:1px;
+  border-right:1.8px solid currentColor;border-bottom:1.8px solid currentColor;
+  transform:rotate(45deg) translateY(-2px);transition:transform .2s;
+}
+details.more[open] summary::after{transform:rotate(-135deg) translateY(0)}
+/* 상세는 위의 한 줄 안내와 구분되게 — 들여쓴 인용 형태 */
+details.more .body{
+  font-size:13px;line-height:1.78;color:var(--text-2);
+  margin-top:7px;padding:1px 0 1px 13px;
+  border-left:2px solid color-mix(in srgb,var(--accent) 45%,var(--line));
+  white-space:pre-line;
+}
+
+/* ---------- 버튼 ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--surface-2);color:var(--text);
+  border:1px solid var(--line);border-radius:10px;
+  padding:7px 12px;font:inherit;font-size:13px;font-weight:600;
+  text-decoration:none;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;transition:background .15s;
+}
+.btn:active{background:var(--line)}
+.btn svg{width:14px;height:14px;flex:0 0 auto}
+
+/* ---------- 숙소 카드 ---------- */
+.stay{
+  background:var(--surface);border:1px solid var(--line);
+  border-left:4px solid var(--accent);
+  border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);
+}
+.stay h3{margin:0;font-size:18px;font-weight:700;letter-spacing:-.01em}
+.stay .ja{font-size:12px;color:var(--text-3);margin-top:2px}
+.stay dl{margin:14px 0 0;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:14px}
+.stay dt{color:var(--text-3);font-size:13px;font-weight:600;white-space:nowrap}
+.stay dd{margin:0;color:var(--text)}
+.stay dd .arrow{color:var(--text-3);margin:0 1px}
+.stay .p-top{margin-bottom:2px}
+.stay .p-top .btn-map{width:30px;height:30px;border-radius:8px}
+.stay .p-top .btn-map svg{width:15px;height:15px}
+.stay .note{margin:12px 0 0;font-size:13px;color:var(--text-2)}
+
+/* ---------- 맛집 ---------- */
+/* 카테고리는 항상 한 줄. 좁은 화면에서는 가로로 밀어서 봅니다 */
+.chips{
+  display:flex;flex-wrap:nowrap;gap:5px;margin:0 0 14px;
+  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex:1 0 auto;background:var(--surface);border:1px solid var(--line);
+  border-radius:999px;padding:7px 9px;font:inherit;font-size:12px;font-weight:600;
+  color:var(--text-2);cursor:pointer;white-space:nowrap;text-align:center;
+  letter-spacing:-.02em;
+  -webkit-tap-highlight-color:transparent;
+  transition:background .15s,color .15s,border-color .15s;
+}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .chip[aria-pressed="true"]{color:#101216}
+}
+ul.foods{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+li.food{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);
+}
+.f-top{display:flex;align-items:flex-start;gap:10px}
+.f-top .btn{flex:0 0 auto;margin-top:1px}
+.f-name{margin:0;font-size:16px;font-weight:700;flex:1;min-width:0;line-height:1.35}
+.f-ja{font-size:12px;font-weight:500;color:var(--text-3);word-break:keep-all}
+.f-badges{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:9px}
+/* 평점 · 카테고리 · 이동 뱃지를 같은 규격으로 */
+.f-badges > *{
+  flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;
+  margin:0;padding:3px 9px;
+  font-size:11px;font-weight:700;line-height:1.55;
+  border:1px solid transparent;border-radius:999px;
+  white-space:nowrap;
+}
+.f-badges small{font-size:10px}
+.tag.alt{color:var(--ink);background:var(--sky)}
+.f-walk{
+  display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px;
+  font-size:13px;color:var(--text-2);font-variant-numeric:tabular-nums;
+}
+.f-walk .sep{width:3px;height:3px;border-radius:50%;background:var(--text-3)}
+.f-memo{margin:10px 0 0;font-size:14px;color:var(--text-2)}
+.f-empty{text-align:center;color:var(--text-3);font-size:14px;padding:28px 0}
+
+/* ---------- 맛집 추가 ---------- */
+.add-btn{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  width:100%;margin-top:12px;padding:13px;
+  background:var(--surface);color:var(--accent-text);
+  border:1.5px dashed color-mix(in srgb,var(--accent) 45%,var(--line));
+  border-radius:var(--radius);
+  font:inherit;font-size:15px;font-weight:700;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;transition:background .15s;
+}
+.add-btn:active{background:var(--accent-soft)}
+.add-btn .plus{font-size:19px;line-height:1}
+.add-form{
+  margin-top:12px;padding:16px;
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:var(--shadow);
+  display:grid;gap:12px;
+}
+.add-form label{display:block;font-size:12px;font-weight:700;color:var(--text-3)}
+.add-form label small{font-weight:600;color:var(--text-3);opacity:.8}
+.add-form .req{color:var(--accent)}
+.add-form input,.add-form select,.add-form textarea{
+  display:block;width:100%;margin-top:5px;
+  padding:9px 11px;font:inherit;font-size:16px;font-weight:500;
+  color:var(--text);background:var(--bg);
+  border:1px solid var(--line);border-radius:10px;
+  -webkit-appearance:none;appearance:none;
+}
+.add-form select{
+  background-image:linear-gradient(45deg,transparent 50%,var(--text-3) 50%),
+                   linear-gradient(135deg,var(--text-3) 50%,transparent 50%);
+  background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat;
+}
+.add-form textarea{resize:vertical;line-height:1.5}
+.add-form input:focus,.add-form select:focus,.add-form textarea:focus{
+  outline:2px solid color-mix(in srgb,var(--accent) 55%,transparent);outline-offset:-1px;
+}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-actions{display:flex;gap:8px;margin-top:2px}
+.btn.primary{
+  background:var(--accent);border-color:var(--accent);color:#fff;
+  padding:10px 18px;font-size:14px;
+}
+.btn.ghost{
+  width:100%;justify-content:center;margin-top:10px;
+  background:transparent;color:var(--text-3);font-weight:600;
+}
+.export{
+  margin-top:12px;padding:14px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius);
+}
+.export-help{margin:0 0 10px;font-size:13px;color:var(--text-2);line-height:1.6}
+.export-help code{
+  font-size:12px;background:var(--surface);padding:1px 5px;border-radius:5px;
+  border:1px solid var(--line);
+}
+.export textarea{
+  width:100%;padding:11px;font-size:12px;line-height:1.6;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color:var(--text);background:var(--bg);
+  border:1px solid var(--line);border-radius:10px;resize:vertical;
+}
+.mine{color:var(--ink);background:var(--sky)}
+.del{
+  flex:0 0 auto;width:32px;height:32px;padding:0;display:grid;place-items:center;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:9px;
+  color:var(--text-3);font:inherit;font-size:17px;line-height:1;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.del:active{background:var(--line)}
+.f-rate{
+  color:var(--text);background:var(--surface-2);border-color:var(--line);
+  font-variant-numeric:tabular-nums;
+}
+.f-rate .star{color:#f0a500}
+.f-rate small{font-weight:600;color:var(--text-3)}
+.f-rows{margin:10px 0 0;display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:13px}
+.f-rows dt{color:var(--text-3);font-weight:600;white-space:nowrap}
+.f-rows dd{margin:0;color:var(--text-2)}
+.f-rows dd.warn{color:var(--accent-text);font-weight:600}
+.res{
+  display:inline-block;font-size:11px;font-weight:700;border-radius:999px;
+  padding:2px 8px;border:1px solid transparent;
+}
+.res.must{background:var(--accent);color:#fff}
+.res.rec{background:var(--accent-soft);color:var(--accent-text)}
+.res.no{background:var(--surface-2);color:var(--text-3);border-color:var(--line)}
+
+footer{
+  margin-top:36px;padding-top:18px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--text-3);text-align:center;line-height:1.7;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 1. 헤더 -->
+  <header class="hero">
+    <span class="dday" id="hero-dday" hidden></span>
+    <p class="eyebrow" id="hero-sub"></p>
+    <h1 id="hero-title"></h1>
+    <div class="meta">
+      <span class="period" id="hero-period"></span>
+    </div>
+  </header>
+
+  <!-- 2. 일정 -->
+  <section aria-label="일정">
+    <div class="progress">
+      <div class="track" id="bar-track" role="img" aria-label="여행 진행 상황"></div>
+      <div class="plabel"><span id="bar-left"></span><span id="bar-right"></span></div>
+    </div>
+    <div class="tabs" id="tabs" role="tablist" aria-label="날짜 선택"></div>
+    <p class="day-theme" id="day-theme"></p>
+    <div class="meals" id="day-meals"></div>
+    <ol class="places" id="places"></ol>
+  </section>
+
+  <!-- 3. 숙소 -->
+  <section aria-labelledby="sec-stay">
+    <div class="sec-head">
+      <h2 id="sec-stay">숙소</h2>
+    </div>
+    <div class="stay" id="stay"></div>
+  </section>
+
+  <!-- 4. 숙소 주변 저녁 식사 -->
+  <section aria-labelledby="sec-food">
+    <div class="sec-head">
+      <h2 id="sec-food">저녁 맛집</h2>
+      <span class="hint" id="food-count"></span>
+    </div>
+    <div class="chips" id="chips" aria-label="카테고리 필터"></div>
+    <ul class="foods" id="foods"></ul>
+
+    <!-- 맛집 추가 -->
+    <button type="button" class="add-btn" id="add-toggle" aria-expanded="false">
+      <span class="plus">+</span> 맛집 추가
+    </button>
+
+    <form class="add-form" id="add-form" hidden>
+      <label>식당 이름 <span class="req">*</span>
+        <input type="text" id="fx-name" required placeholder="예) 카도야 본점">
+      </label>
+      <label>내용
+        <textarea id="fx-memo" rows="4"
+          placeholder="메뉴, 위치, 영업시간, 가는 법 등 자유롭게 적어주세요"></textarea>
+      </label>
+      <div class="form-actions">
+        <button type="submit" class="btn primary">추가하기</button>
+        <button type="button" class="btn" id="add-cancel">취소</button>
+      </div>
+    </form>
+
+    <div class="export" id="export-box" hidden>
+      <p class="export-help">
+        추가한 맛집은 이 기기에만 저장됩니다. 아래 코드를 <code>index.html</code> 의
+        <code>TRIP.foods</code> 배열에 붙여 넣으면 모두에게 보입니다.
+      </p>
+      <textarea id="export-code" rows="8" readonly></textarea>
+      <div class="form-actions">
+        <button type="button" class="btn" id="export-copy">코드 복사</button>
+        <button type="button" class="btn" id="export-close">닫기</button>
+      </div>
+    </div>
+    <button type="button" class="btn ghost" id="export-toggle" hidden>추가한 맛집 코드 보기</button>
+  </section>
+
+  <footer>
+    <span id="foot-title"></span><br>
+    도보 시간·거리는 대략적인 값이고, 평점·영업시간·휴무는 2026년 10월 조사 기준입니다.<br>
+    방문 전 구글맵에서 최신 영업 상태를 확인하세요.<br>
+    날씨: Open-Meteo
+  </footer>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var MAP = 'https://www.google.com/maps/search/?api=1&query=';
+  var DOW = ['일','월','화','수','목','금','토'];
+  var WX_KEY = 'matsuyama-wx-v1';
+
+  function el(id){ return document.getElementById(id); }
+  function parseDate(s){ var p = s.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function today(){ var d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function days(a,b){ return Math.round((b-a)/86400000); }
+  function mapUrl(q){ return MAP + encodeURIComponent(q); }
+  function esc(s){
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  /* 설명 끝에 붙는 마침표는 떼고 보여줍니다 */
+  function noDot(s){ return String(s).replace(/[.。]+\s*$/, ''); }
+  function escT(s){ return esc(noDot(s)); }
+
+  var WMO_SHORT = {
+    0:'맑음', 1:'맑음', 2:'구름', 3:'흐림',
+    45:'안개', 48:'안개',
+    51:'이슬비', 53:'이슬비', 55:'이슬비', 56:'이슬비', 57:'이슬비',
+    61:'비', 63:'비', 65:'큰비', 66:'비', 67:'비',
+    71:'눈', 73:'눈', 75:'큰눈', 77:'싸락눈',
+    80:'소나기', 81:'소나기', 82:'소나기', 85:'눈', 86:'눈',
+    95:'뇌우', 96:'뇌우', 99:'뇌우'
+  };
+
+  var ICON_MAP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"'
+    + ' stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    + '<path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/>'
+    + '<circle cx="12" cy="10" r="2.5"/></svg>';
+  var ICON_LINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"'
+    + ' stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+    + '<path d="M10 14 21 3M21 3h-6M21 3v6"/>'
+    + '<path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>';
+
+  /* =========== 날씨 =========== */
+  var WMO = {
+    0:['☀️','맑음'], 1:['🌤️','대체로 맑음'], 2:['⛅','구름 조금'], 3:['☁️','흐림'],
+    45:['🌫️','안개'], 48:['🌫️','서리 안개'],
+    51:['🌦️','약한 이슬비'], 53:['🌦️','이슬비'], 55:['🌧️','짙은 이슬비'],
+    56:['🌧️','어는 이슬비'], 57:['🌧️','어는 이슬비'],
+    61:['🌦️','약한 비'], 63:['🌧️','비'], 65:['🌧️','강한 비'],
+    66:['🌧️','어는 비'], 67:['🌧️','어는 비'],
+    71:['🌨️','약한 눈'], 73:['🌨️','눈'], 75:['❄️','강한 눈'], 77:['🌨️','싸락눈'],
+    80:['🌦️','소나기'], 81:['🌦️','소나기'], 82:['⛈️','강한 소나기'],
+    85:['🌨️','눈 소나기'], 86:['🌨️','눈 소나기'],
+    95:['⛈️','뇌우'], 96:['⛈️','우박 동반 뇌우'], 99:['⛈️','우박 동반 뇌우']
+  };
+
+  var wxData = null;   // { 'YYYY-MM-DD': {code,max,min,pop,wind}, _at: ms }
+
+  function loadCache(){
+    try {
+      var raw = localStorage.getItem(WX_KEY);
+      if (raw) wxData = JSON.parse(raw);
+    } catch (e) { /* 저장소 차단된 브라우저 */ }
+  }
+
+  function saveCache(){
+    try { localStorage.setItem(WX_KEY, JSON.stringify(wxData)); } catch (e) {}
+  }
+
+  function fetchWeather(){
+    var w = TRIP.weather;
+    if (!w || typeof fetch !== 'function') return;
+    var url = 'https://api.open-meteo.com/v1/forecast'
+      + '?latitude=' + w.lat + '&longitude=' + w.lon
+      + '&daily=weather_code,temperature_2m_max,temperature_2m_min,'
+      + 'precipitation_probability_max,wind_speed_10m_max'
+      + '&timezone=Asia%2FTokyo'
+      + '&start_date=' + TRIP.start + '&end_date=' + TRIP.end;
+
+    fetch(url, { cache: 'no-store' })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(j){
+        if (!j || !j.daily || !j.daily.time || !j.daily.time.length) return;
+        var d = j.daily, next = {};
+        d.time.forEach(function(date, i){
+          if (d.temperature_2m_max[i] === null) return;
+          next[date] = {
+            code: d.weather_code[i],
+            max: Math.round(d.temperature_2m_max[i]),
+            min: Math.round(d.temperature_2m_min[i]),
+            pop: d.precipitation_probability_max[i],
+            wind: Math.round(d.wind_speed_10m_max[i])
+          };
+        });
+        if (!Object.keys(next).length) return;
+        next._at = Date.now();
+        wxData = next;
+        saveCache();
+        renderTabs(current);
+      })
+      .catch(function(){ /* 오프라인 — 캐시 또는 평년값 사용 */ });
+  }
+
+  function wxFor(date){ return wxData && wxData[date] ? wxData[date] : null; }
+
+  /* =========== 헤더 =========== */
+  function renderHeader(){
+    el('hero-title').innerHTML = esc(TRIP.title)
+      + (TRIP.titleEmoji ? ' <span class="emo">' + TRIP.titleEmoji + '</span>' : '');
+    el('hero-sub').textContent = TRIP.subtitle || '';
+    el('hero-period').textContent = TRIP.periodLabel;
+    el('foot-title').textContent = TRIP.title;
+    document.title = TRIP.title;
+
+    var t = today(), s = parseDate(TRIP.start);
+    var box = el('hero-dday'), left = days(t, s);
+
+    // 출발 전에만 D-day 를 띄우고, 여행이 시작되면 숨깁니다.
+    if (left > 0) {
+      box.textContent = 'D-' + left;
+      box.hidden = false;
+    } else {
+      box.textContent = '';
+      box.hidden = true;
+    }
+  }
+
+  /* =========== 일정 =========== */
+  var todayIdx = -1, current = 0;
+
+  function startIndex(){
+    var t = today();
+    todayIdx = -1;
+    for (var i = 0; i < TRIP.days.length; i++) {
+      if (days(parseDate(TRIP.days[i].date), t) === 0) { todayIdx = i; break; }
+    }
+    return todayIdx >= 0 ? todayIdx : 0;
+  }
+
+  /* 여행 진행 바 — 선택한 일자까지 채워집니다 (일정 탭 칸에 맞춘 연속 선) */
+  function renderProgress(i){
+    var total = TRIP.days.length;
+    var done = (typeof i === 'number' ? i : current) + 1;
+
+    var track = el('bar-track');
+    var fill = track.firstElementChild;
+    if (!fill) {
+      fill = document.createElement('span');
+      fill.className = 'fill';
+      track.appendChild(fill);
+    }
+    fill.style.width = Math.round((done / total) * 100) + '%';
+    track.setAttribute('aria-label', total + '일 중 ' + done + '일차');
+
+    el('bar-left').textContent = done + '일차'
+      + (done - 1 === todayIdx ? ' · 오늘' : '');
+    el('bar-right').textContent = done + ' / ' + total + '일';
+  }
+
+  function renderTabs(active){
+    var box = el('tabs');
+    box.innerHTML = '';
+    var n = TRIP.weather || {};
+    TRIP.days.forEach(function(day, i){
+      var d = parseDate(day.date);
+      var w = wxFor(day.date);
+      var lo = w ? w.min : n.normalMin;
+      var hi = w ? w.max : n.normalMax;
+      var ic = w ? (WMO[w.code] || ['🌡️'])[0] : '🌤️';
+      var nm = w ? (WMO_SHORT[w.code] || '—') : '평년';
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'tab';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-selected', i === active ? 'true' : 'false');
+      b.innerHTML = '<span class="dayn">' + (i+1) + '일차</span>'
+        + '<b>' + (d.getMonth()+1) + '/' + d.getDate() + '(' + DOW[d.getDay()] + ')'
+        + (i === todayIdx ? '<i class="today-dot"></i>' : '') + '</b>'
+        + '<i class="wx"><em>' + ic + '</em><u>' + nm + '</u>'
+        + '<s>' + lo + '° / ' + hi + '°</s></i>';
+      b.addEventListener('click', function(){ select(i); });
+      box.appendChild(b);
+    });
+  }
+
+  function renderMeals(i){
+    var m = TRIP.days[i].meals || {};
+    var box = el('day-meals');
+    var keys = ['조식','중식','석식'];
+    var html = '';
+    keys.forEach(function(k){
+      if (!m[k]) return;
+      var off = /자유/.test(m[k]);
+      html += '<span class="meal' + (off ? ' off' : '') + '"><b>' + k + '</b>'
+        + esc(m[k]) + '</span>';
+    });
+    box.innerHTML = html;
+  }
+
+  function renderPlaces(i){
+    var day = TRIP.days[i];
+    el('day-theme').textContent = noDot(day.theme || '');
+    var list = el('places');
+    list.innerHTML = '';
+
+    day.places.forEach(function(p, n){
+      var li = document.createElement('li');
+      li.className = 'place';
+      var h = (p.leg ? '<div class="leg">' + esc(p.leg) + '</div>' : '')
+        + '<div class="row"><div class="num">' + (n+1) + '</div><div class="card">'
+        + '<div class="p-top"><div class="p-name">' + esc(p.name)
+        + (p.nameJa ? '<div class="p-ja">' + esc(p.nameJa) + '</div>' : '')
+        + '</div>'
+        + (p.tag ? '<span class="tag">' + esc(p.tag) + '</span>' : '')
+        + (p.q ? '<a class="btn-map" target="_blank" rel="noopener" title="지도"'
+               + ' aria-label="지도에서 보기" href="' + mapUrl(p.q) + '">' + ICON_MAP + '</a>' : '')
+        + '</div>';
+      if (p.short)  h += '<p class="p-short">' + escT(p.short) + '</p>';
+      if (p.detail) h += '<details class="more"><summary>자세히 보기</summary>'
+                       + '<div class="body">' + escT(p.detail) + '</div></details>';
+      h += '</div></div>';
+      li.innerHTML = h;
+      list.appendChild(li);
+    });
+  }
+
+  function select(i){
+    current = i;
+    renderTabs(i);
+    renderProgress(i);
+    renderMeals(i);
+    renderPlaces(i);
+  }
+
+  /* =========== 숙소 =========== */
+  function renderStay(){
+    var s = TRIP.stay;
+    var h = '<div class="p-top"><div class="p-name"><h3>' + esc(s.name) + '</h3>'
+      + (s.nameJa ? '<div class="ja">' + esc(s.nameJa) + '</div>' : '')
+      + '</div>'
+      + (s.site ? '<a class="btn-map" target="_blank" rel="noopener" title="호텔 사이트"'
+                + ' aria-label="호텔 사이트 열기" href="' + esc(s.site) + '">' + ICON_LINK + '</a>' : '')
+      + (s.q ? '<a class="btn-map" target="_blank" rel="noopener" title="지도"'
+             + ' aria-label="지도에서 보기" href="' + mapUrl(s.q) + '">' + ICON_MAP + '</a>' : '')
+      + '</div>'
+      + '<dl>'
+      + '<dt>체크인 · 아웃</dt><dd>' + esc(s.checkIn)
+      + ' <span class="arrow">→</span> ' + esc(s.checkOut) + '</dd>'
+      + '<dt>조식</dt><dd>' + esc(s.breakfast) + '</dd>'
+      + '</dl>'
+      + (s.note ? '<p class="note">' + escT(s.note) + '</p>' : '');
+    el('stay').innerHTML = h;
+  }
+
+  /* =========== 맛집 =========== */
+  var foodCat = (TRIP.foodCategories && TRIP.foodCategories[0]) || '전체';
+  var MY_KEY = 'matsuyama-myfoods-v1';
+  var myFoods = [];
+
+  function loadMine(){
+    try {
+      var raw = localStorage.getItem(MY_KEY);
+      myFoods = raw ? JSON.parse(raw) : [];
+      if (!Array.isArray(myFoods)) myFoods = [];
+    } catch (e) { myFoods = []; }
+  }
+  function saveMine(){
+    try { localStorage.setItem(MY_KEY, JSON.stringify(myFoods)); } catch (e) {}
+  }
+  function allFoods(){ return (TRIP.foods || []).concat(myFoods); }
+
+  function catList(){
+    var seen = {}, out = [];
+    (TRIP.foodCategories || []).forEach(function(c){ seen[c] = 1; out.push(c); });
+    myFoods.forEach(function(f){
+      if (f.category && !seen[f.category]) { seen[f.category] = 1; out.push(f.category); }
+    });
+    return out;
+  }
+
+  function renderChips(){
+    var box = el('chips');
+    box.innerHTML = '';
+    catList().forEach(function(c){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip';
+      b.textContent = c;
+      b.setAttribute('aria-pressed', c === foodCat ? 'true' : 'false');
+      b.addEventListener('click', function(){ foodCat = c; renderChips(); renderFoods(); });
+      b.title = c;
+      box.appendChild(b);
+    });
+  }
+
+  function renderFoods(){
+    var all = allFoods();
+    var rows = foodCat === '전체' ? all : all.filter(function(f){
+      return f.category === foodCat || f.area === foodCat;
+    });
+    el('food-count').textContent = rows.length + '곳';
+
+    var box = el('foods');
+    box.innerHTML = '';
+    if (!rows.length) {
+      box.innerHTML = '<li class="f-empty">이 카테고리에는 아직 없습니다.</li>';
+      return;
+    }
+    rows.forEach(function(f){
+      var li = document.createElement('li');
+      li.className = 'food';
+
+      var h = '<div class="f-top"><div class="f-name">' + esc(f.name)
+        + (f.nameJa ? ' <span class="f-ja">' + esc(f.nameJa) + '</span>' : '')
+        + '</div>';
+      if (f.q) {
+        h += '<a class="btn-map" target="_blank" rel="noopener" title="지도"'
+          + ' aria-label="지도에서 보기" href="' + mapUrl(f.q) + '">' + ICON_MAP + '</a>';
+      }
+      if (f._id) {
+        h += '<button type="button" class="del" data-del="' + esc(f._id) + '"'
+          + ' title="삭제" aria-label="삭제">&times;</button>';
+      }
+      h += '</div>';
+
+      h += '<div class="f-badges">';
+      if (f._id) h += '<span class="mine">내가 추가</span>';
+      if (f.rating && f.rating.score) {
+        h += '<span class="f-rate"><span class="star">★</span>'
+          + f.rating.score.toFixed(2)
+          + (f.rating.count ? ' <small>(' + f.rating.count.toLocaleString() + ')</small>' : '')
+          + '</span>';
+      }
+      if (f.category) h += '<span class="tag">' + esc(f.category) + '</span>';
+      if (f.area)     h += '<span class="tag alt">' + esc(f.area) + '</span>';
+      h += '</div>';
+
+      h += '<div class="f-walk">';
+      if (f.walk) h += '<span>' + esc(f.walk) + '</span>';
+      if (f.walk && f.dist) h += '<span class="sep"></span>';
+      if (f.dist) h += '<span>' + esc(f.dist) + '</span>';
+      h += '</div>';
+
+      h += '<dl class="f-rows">';
+      if (f.hours)  h += '<dt>영업</dt><dd>' + esc(f.hours) + '</dd>';
+      if (f.reserve) {
+        var cls = f.reserve === '필수' ? 'must' : (f.reserve === '불필요' ? 'no' : 'rec');
+        var txt = f.reserve === '필수' ? '예약 필수'
+                : (f.reserve === '불필요' ? '예약 없이 OK' : '예약 권장');
+        h += '<dt>예약</dt><dd><span class="res ' + cls + '">' + txt + '</span></dd>';
+      }
+      if (f.transit) h += '<dt>가는 법</dt><dd>' + escT(f.transit) + '</dd>';
+      h += '</dl>';
+
+      if (f.memo) h += '<p class="f-memo">' + escT(f.memo) + '</p>';
+
+      li.innerHTML = h;
+      box.appendChild(li);
+    });
+
+    Array.prototype.forEach.call(box.querySelectorAll('[data-del]'), function(b){
+      b.addEventListener('click', function(){
+        var id = b.getAttribute('data-del');
+        var it = myFoods.filter(function(f){ return f._id === id; })[0];
+        if (!confirm('"' + (it ? it.name : '') + '" 을(를) 삭제할까요?')) return;
+        myFoods = myFoods.filter(function(f){ return f._id !== id; });
+        saveMine();
+        refreshFoods();
+      });
+    });
+  }
+
+  function refreshFoods(){
+    if (catList().indexOf(foodCat) < 0) foodCat = '전체';
+    renderChips();
+    renderFoods();
+    renderExport();
+  }
+
+  /* ---------- 추가 폼 ---------- */
+  function fieldVal(id){ return (el(id).value || '').trim(); }
+
+  function setupAddForm(){
+    var toggle = el('add-toggle'), form = el('add-form');
+
+    function open(on){
+      form.hidden = !on;
+      toggle.hidden = on;
+      toggle.setAttribute('aria-expanded', on ? 'true' : 'false');
+      if (on) el('fx-name').focus();
+    }
+
+    toggle.addEventListener('click', function(){ open(true); });
+    el('add-cancel').addEventListener('click', function(){ form.reset(); open(false); });
+
+    form.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      var name = fieldVal('fx-name');
+      if (!name) return;
+
+      myFoods.push({
+        _id: 'u' + Date.now() + Math.floor(Math.random() * 1000),
+        name: name,
+        category: '기타',
+        memo: fieldVal('fx-memo'),
+        q: name
+      });
+      saveMine();
+      form.reset();
+      open(false);
+      refreshFoods();
+
+      var box = el('foods');
+      if (box.lastElementChild) {
+        box.lastElementChild.scrollIntoView({ behavior:'smooth', block:'center' });
+      }
+    });
+  }
+
+  /* ---------- 코드 내보내기 ---------- */
+  function quote(s){ return "'" + String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'") + "'"; }
+
+  function exportCode(){
+    return myFoods.map(function(f){
+      var lines = ['  {', '    name: ' + quote(f.name) + ','];
+      if (f.nameJa)  lines.push('    nameJa: ' + quote(f.nameJa) + ',');
+      lines.push('    category: ' + quote(f.category || '기타') + ',');
+      if (f.area)    lines.push('    area: ' + quote(f.area) + ',');
+      if (f.walk)    lines.push('    walk: ' + quote(f.walk) + ',');
+      if (f.dist)    lines.push('    dist: ' + quote(f.dist) + ',');
+      if (f.transit) lines.push('    transit: ' + quote(f.transit) + ',');
+      if (f.hours)   lines.push('    hours: ' + quote(f.hours) + ',');
+      if (f.reserve) lines.push('    reserve: ' + quote(f.reserve) + ',');
+      if (f.rating && f.rating.score) {
+        lines.push('    rating: { score: ' + f.rating.score
+          + ', count: null, src: ' + quote(f.rating.src) + ' },');
+      }
+      if (f.memo)    lines.push('    memo: ' + quote(f.memo) + ',');
+      lines.push('    q: ' + quote(f.q));
+      lines.push('  },');
+      return lines.join('\n');
+    }).join('\n');
+  }
+
+  function renderExport(){
+    var has = myFoods.length > 0;
+    el('export-toggle').hidden = !has;
+    if (!has) el('export-box').hidden = true;
+    else el('export-code').value = exportCode();
+  }
+
+  function setupExport(){
+    el('export-toggle').addEventListener('click', function(){
+      el('export-code').value = exportCode();
+      el('export-box').hidden = false;
+      el('export-toggle').hidden = true;
+      el('export-box').scrollIntoView({ behavior:'smooth', block:'nearest' });
+    });
+    el('export-close').addEventListener('click', function(){
+      el('export-box').hidden = true;
+      el('export-toggle').hidden = myFoods.length === 0;
+    });
+    el('export-copy').addEventListener('click', function(){
+      var ta = el('export-code'), btn = el('export-copy');
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      function done(ok){
+        btn.textContent = ok ? '복사했습니다' : '직접 선택해 복사하세요';
+        setTimeout(function(){ btn.textContent = '코드 복사'; }, 2000);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(ta.value).then(function(){ done(true); },
+          function(){ done(!!tryExec()); });
+      } else {
+        done(!!tryExec());
+      }
+      function tryExec(){
+        try { return document.execCommand('copy'); } catch (e) { return false; }
+      }
+    });
+  }
+
+  /* =========== init =========== */
+  loadCache();
+  loadMine();
+  renderHeader();
+  select(startIndex());
+  renderStay();
+  refreshFoods();
+  setupAddForm();
+  setupExport();
+  fetchWeather();
+
+  /* 날짜가 바뀌면 그 날 일정으로 자동 이동 */
+  function autoAdvance(){
+    var prev = todayIdx;
+    var idx = startIndex();
+    if (todayIdx !== prev) {
+      if (todayIdx >= 0) select(idx);
+      else { renderTabs(current); renderProgress(current); }
+    }
+  }
+  setInterval(autoAdvance, 60000);
+
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden) return;
+    autoAdvance();
+    fetchWeather();
+  });
+
+  /* =========== service worker =========== */
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./sw.js').catch(function(){});
+    });
+    var reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function(){
+      if (reloaded) return;
+      reloaded = true;
+      location.reload();
+    });
+  }
+})();
+</script>
+</body>
+</html>

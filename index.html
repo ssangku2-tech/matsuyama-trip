@@ -774,7 +774,8 @@ section:first-of-type{margin-top:8px}   /* 제목 바로 아래 진행 바 */
   margin:0;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
   color:var(--text-3);
 }
-.sec-head .hint{font-size:12px;color:var(--text-3)}
+.sec-head .hint{font-size:12px;color:var(--text-3);text-align:right;line-height:1.45;flex:0 1 auto}
+.sec-head .hint .sub{font-size:11px;opacity:.8}
 
 /* ---------- 진행 바 ---------- */
 .progress{margin:0 0 10px}
@@ -1179,7 +1180,6 @@ footer{
 
   <footer>
     <span id="foot-title"></span><br>
-    맛집 평점은 타베로그(食べログ) 기준입니다. 3.5 이상이면 상위권.<br>
     도보 시간·거리·예산은 대략적인 값이고, 조사 시점은 2026년 10월입니다.<br>
     방문 전 구글맵에서 최신 영업 상태와 구글 평점을 확인하세요.<br>
     날씨: Open-Meteo
@@ -1485,7 +1485,8 @@ footer{
     var rows = foodCat === '전체' ? all : all.filter(function(f){
       return f.category === foodCat || f.area === foodCat;
     });
-    el('food-count').textContent = rows.length + '곳';
+    el('food-count').innerHTML = rows.length + '곳 · 평점은 타베로그 기준'
+      + '<br><span class="sub">3.5 이상이면 상위권</span>';
 
     var box = el('foods');
     box.innerHTML = '';

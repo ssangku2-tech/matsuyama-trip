@@ -1377,14 +1377,23 @@ section:first-of-type{margin-top:8px}   /* 제목 바로 아래 진행 바 */
 .day-theme{margin:8px 0 0;font-size:12px;color:var(--text-3);line-height:1.5}
 .day-theme:empty{display:none}
 
-/* ---------- 식사 ---------- */
-.meals{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+/* ---------- 식사 — 동선 카드 바로 아래, 칸으로 나눠 한눈에 ---------- */
+.meals{margin:0 0 16px}
+.meals-title{margin:0 0 6px 2px;font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--accent-text)}
+.meals-grid{display:grid;gap:6px}
 .meal{
-  font-size:12px;color:var(--text-2);background:var(--surface);
-  border:1px solid var(--line);border-radius:999px;padding:4px 10px;
+  display:flex;flex-direction:column;gap:2px;min-width:0;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:8px 10px;box-shadow:var(--shadow);
 }
-.meal b{color:var(--text-3);font-weight:700;margin-right:4px}
-.meal.off{color:var(--text-3)}
+.meal b{font-size:11px;font-weight:700;color:var(--text-3);letter-spacing:.04em}
+.meal span{font-size:13px;font-weight:600;color:var(--text);line-height:1.4;word-break:keep-all}
+/* 자유식 — 직접 골라야 하는 끼니라 강조하고 맛집으로 바로 연결 */
+.meal.off{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 35%,var(--line))}
+.meal.off b{color:var(--accent-text)}
+.meal.off a{
+  margin-top:2px;font-size:11.5px;font-weight:700;color:var(--accent-text);text-decoration:none;
+}
 
 /* ---------- 일정 리스트 ---------- */
 ol.places{list-style:none;margin:0;padding:0;position:relative}
@@ -2047,15 +2056,19 @@ footer{
   function renderMeals(i){
     var m = TRIP.days[i].meals || {};
     var box = el('day-meals');
-    var keys = ['조식','중식','석식'];
+    var keys = ['조식','중식','석식'].filter(function(k){ return m[k]; });
     var html = '';
     keys.forEach(function(k){
-      if (!m[k]) return;
       var off = /자유/.test(m[k]);
-      html += '<span class="meal' + (off ? ' off' : '') + '"><b>' + k + '</b>'
-        + esc(m[k]) + '</span>';
+      html += '<div class="meal' + (off ? ' off' : '') + '"><b>' + k + '</b>'
+        + '<span>' + esc(off ? '자유식' : m[k]) + '</span>'
+        + (off && k === '석식' ? '<a href="#sec-food">저녁 맛집 보기 ›</a>' : '')
+        + '</div>';
     });
-    box.innerHTML = html;
+    box.innerHTML = keys.length
+      ? '<p class="meals-title">오늘의 식사</p><div class="meals-grid" style="grid-template-columns:repeat('
+        + keys.length + ',minmax(0,1fr))">' + html + '</div>'
+      : '';
   }
 
   /* =========== 이동 요약 + 약도 =========== */
@@ -2138,7 +2151,7 @@ footer{
     var sum = [];
     if (fly) sum.push('비행 ' + fly);
     if (drive) sum.push('차량 약 ' + fmtMin(drive));
-    var spots = stops.filter(function(s){ return s.spot !== '호텔' && s.spot !== '인천'; }).length;
+    var spots = stops.filter(function(s){ return s.spot !== '호텔' && s.spot !== '인천' && s.spot !== '마쓰야마공항'; }).length;
     if (spots) sum.push('방문 ' + spots + '곳');
     el('route-sum').innerHTML = sum.map(function(t){ return '<span>' + esc(t) + '</span>'; }).join('');
     el('day-theme').textContent = /→/.test(day.theme || '') ? '' : noDot(day.theme || '');

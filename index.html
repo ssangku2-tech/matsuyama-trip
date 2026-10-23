@@ -1321,7 +1321,6 @@ section:first-of-type{margin-top:8px}   /* 제목 바로 아래 진행 바 */
 .tab[aria-selected="true"] i.wx s.pop{color:#fff}
 .tab[aria-selected="true"] .dayn,
 .tab[aria-selected="true"] i.wx{opacity:.92}
-.wx-src{margin:8px 2px 0;font-size:11px;color:var(--text-3);line-height:1.5}
 .tab .today-dot{
   display:inline-block;width:5px;height:5px;border-radius:50%;
   background:var(--accent);margin-left:5px;vertical-align:middle;
@@ -1650,7 +1649,6 @@ footer{
       <div class="plabel"><span id="bar-left"></span><span id="bar-right"></span></div>
     </div>
     <div class="tabs" id="tabs" role="tablist" aria-label="날짜 선택"></div>
-    <p class="wx-src" id="wx-src"></p>
     <div class="route" id="day-route">
       <svg class="route-map" id="route-map" viewBox="0 0 133 90" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"></svg>
       <div class="route-text">
@@ -1936,22 +1934,6 @@ footer{
     });
   }
 
-  /* 날짜 탭 아래 한 줄: 날짜별로 어느 예보를 쓰고 있는지 */
-  function renderWxSource(){
-    var box = el('wx-src');
-    if (!box) return;
-    var parts = TRIP.days.map(function(day){
-      var d = parseDate(day.date), w = wxFor(day.date);
-      var lab = !w ? '평년값'
-        : w.src === '기상청 주간' ? '기상청 주간예보' + (w.rel ? ' (신뢰도 ' + w.rel + ')' : '')
-        : w.src === '기상청' ? '기상청 단기예보'
-        : w.src === 'ECMWF' ? 'ECMWF 예보'
-        : 'Open-Meteo 예보';
-      return (d.getMonth()+1) + '/' + d.getDate() + ' ' + lab;
-    });
-    box.textContent = '날씨 · ' + parts.join(' · ');
-  }
-
   function wxFor(date){ return wxData && wxData[date] ? wxData[date] : null; }
 
   /* =========== 헤더 =========== */
@@ -2034,7 +2016,6 @@ footer{
       b.addEventListener('click', function(){ select(i); });
       box.appendChild(b);
     });
-    renderWxSource();
   }
 
   function renderMeals(i){

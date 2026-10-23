@@ -1173,7 +1173,8 @@ const TRIP = {
   --ink:#4f4868;
   --sky:#eeeff6;
   --route-a:#7d6bbb;
-  --route-b:#ab9ddf;
+  --route-b:#c79ab3;            /* 라벤더 → 말린 장미, 가을 저녁 하늘 느낌 */
+  --autumn:#cf8a5e;             /* 단풍 포인트 — 아주 조금만 씁니다 */
   --shadow:0 1px 2px rgba(60,50,80,.04),0 10px 26px -18px rgba(60,50,80,.22);
   --radius:20px;
 }
@@ -1192,7 +1193,8 @@ const TRIP = {
     --ink:#cbc2e8;
     --sky:#232430;
     --route-a:#4a3f7a;
-    --route-b:#2f2a48;
+    --route-b:#5a3550;
+    --autumn:#e3a57c;
     --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.6);
   }
 }
@@ -1221,6 +1223,8 @@ body{
   content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background:
     linear-gradient(180deg,color-mix(in srgb,var(--accent) 9%,transparent) 0%,transparent 62%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200' preserveAspectRatio='xMaxYMin slice'%3E%3Cpath fill='%23cf8a5e' opacity='.5' transform='translate(150 40) rotate(-18) scale(1.7)' d='M12 2l1.6 4.2 3.4-1.6-.9 3.9 3.9.4-2.8 2.7 2 1.7-4 .8.5 3.6-3.2-2.1L12 22l-.5-6.4-3.2 2.1.5-3.6-4-.8 2-1.7-2.8-2.7 3.9-.4-.9-3.9 3.4 1.6z'/%3E%3Cpath fill='%23c0727a' opacity='.4' transform='translate(96 92) rotate(24) scale(1.2)' d='M12 2l1.6 4.2 3.4-1.6-.9 3.9 3.9.4-2.8 2.7 2 1.7-4 .8.5 3.6-3.2-2.1L12 22l-.5-6.4-3.2 2.1.5-3.6-4-.8 2-1.7-2.8-2.7 3.9-.4-.9-3.9 3.4 1.6z'/%3E%3Cpath fill='%23d9a15f' opacity='.42' transform='translate(212 128) rotate(-40) scale(1.05)' d='M12 2l1.6 4.2 3.4-1.6-.9 3.9 3.9.4-2.8 2.7 2 1.7-4 .8.5 3.6-3.2-2.1L12 22l-.5-6.4-3.2 2.1.5-3.6-4-.8 2-1.7-2.8-2.7 3.9-.4-.9-3.9 3.4 1.6z'/%3E%3C/svg%3E")
+      right top / auto 100% no-repeat,
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200' preserveAspectRatio='xMaxYMax slice'%3E%3Cg fill='%237d6bbb'%3E%3Ccircle cx='72' cy='44' r='17' opacity='.15'/%3E%3Cpath opacity='.13' d='M0 200v-46c40-20 78-6 112 6 34 12 66 4 96-12 30-16 64-14 96 4 30 17 60 14 96-2v50z'/%3E%3Cg opacity='.28' transform='translate(284 84)'%3E%3Cpath d='M4 88h92v12H4z'/%3E%3Cpath d='M14 70h72v18H14z'/%3E%3Cpath d='M6 70 50 54l44 16z'/%3E%3Cpath d='M22 44h56v12H22z'/%3E%3Cpath d='M16 44 50 30l34 14z'/%3E%3Cpath d='M32 20h36v10H32z'/%3E%3Cpath d='M26 20 50 8l24 12z'/%3E%3Cpath d='M48 0h4v8h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
       right bottom / auto 100% no-repeat;
 }
@@ -1274,8 +1278,8 @@ section:first-of-type{margin-top:8px}   /* 제목 바로 아래 진행 바 */
 .progress .fill{
   display:block;height:100%;border-radius:999px;
   background:linear-gradient(90deg,
-    color-mix(in srgb,var(--accent) 30%,transparent) 0%,
-    color-mix(in srgb,var(--accent) 65%,transparent) 45%,
+    color-mix(in srgb,var(--autumn) 55%,transparent) 0%,
+    color-mix(in srgb,var(--accent) 65%,transparent) 55%,
     var(--accent) 100%);
   transition:width .5s cubic-bezier(.4,0,.2,1);
 }
@@ -1380,7 +1384,7 @@ section:first-of-type{margin-top:8px}   /* 제목 바로 아래 진행 바 */
 /* ---------- 식사 — 동선 카드 아래 한 줄 띠 ---------- */
 .meals{margin:0 0 18px}
 .meals-grid{
-  display:flex;flex-wrap:wrap;align-items:center;gap:4px 0;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px 0;text-align:center;
   background:var(--surface);border:1px solid var(--line);border-radius:999px;
   padding:7px 14px;font-size:13px;line-height:1.4;
 }
@@ -1540,7 +1544,7 @@ details.more .body{
 .tn{--tone:var(--text-2);--tone-bg:var(--surface-2)}
 /* 일정 번호 동그라미와 카드 왼쪽 띠도 목적지 색으로 — 다른 종류의 장소로 간다는 걸 바로 알게 */
 li.place[class*=" t"] .num{border-color:var(--tone);color:var(--tone);background:var(--tone-bg)}
-li.place[class*=" t"] .card{box-shadow:inset 3px 0 0 var(--tone),var(--shadow)}
+li.place[class*=" t"] .card{box-shadow:inset 2px 0 0 var(--tone),var(--shadow)}
 .res.g-ok{background:var(--sky);color:var(--ink)}
 ul.foods{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 li.food{

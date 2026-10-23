@@ -1536,6 +1536,11 @@ details.more .body{
   :root:not([data-theme="light"]) .t7{--tone:#92cbc5;--tone-bg:#1a2625}
 }
 .tag[class*=" t"]{color:var(--tone);background:var(--tone-bg)}
+/* 항공·숙소처럼 이동 자체인 곳은 무채색 */
+.tn{--tone:var(--text-2);--tone-bg:var(--surface-2)}
+/* 일정 번호 동그라미와 카드 왼쪽 띠도 목적지 색으로 — 다른 종류의 장소로 간다는 걸 바로 알게 */
+li.place[class*=" t"] .num{border-color:var(--tone);color:var(--tone);background:var(--tone-bg)}
+li.place[class*=" t"] .card{box-shadow:inset 3px 0 0 var(--tone),var(--shadow)}
 .res.g-ok{background:var(--sky);color:var(--ink)}
 ul.foods{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 li.food{
@@ -2203,6 +2208,16 @@ footer{
     el('route-map').innerHTML = svg;
   }
 
+  /* 목적지 종류별 색 — 맛집 카테고리와 같은 파스텔 색을 나눠 씁니다 */
+  var PLACE_TONE = {
+    '신사':'t5', '절':'t5',
+    '성':'t1', '건축':'t1', '저택':'t1',
+    '옛마을':'t4', '상점가':'t4',
+    '박물관':'t3', '미술관':'t3', '극장':'t3',
+    '전망':'t2', '온천':'t7',
+    '항공':'tn', '숙소':'tn'
+  };
+
   function renderPlaces(i){
     var day = TRIP.days[i];
     renderRoute(i);
@@ -2211,13 +2226,14 @@ footer{
 
     day.places.forEach(function(p, n){
       var li = document.createElement('li');
-      li.className = 'place';
+      var pt = PLACE_TONE[p.tag] || '';
+      li.className = 'place' + (pt ? ' ' + pt : '');
       var h = (p.leg ? '<div class="leg">' + esc(p.leg) + '</div>' : '')
         + '<div class="row"><div class="num">' + (n+1) + '</div><div class="card">'
         + '<div class="p-top"><div class="p-name">' + esc(p.name)
         + (p.nameJa ? '<div class="p-ja">' + esc(p.nameJa) + '</div>' : '')
         + '</div>'
-        + (p.tag ? '<span class="tag">' + esc(p.tag) + '</span>' : '')
+        + (p.tag ? '<span class="tag' + (pt ? ' ' + pt : '') + '">' + esc(p.tag) + '</span>' : '')
         + (p.q ? '<a class="btn-map" target="_blank" rel="noopener" title="지도"'
                + ' aria-label="지도에서 보기" href="' + mapUrl(p.q) + '">' + ICON_MAP + '</a>' : '')
         + '</div>';

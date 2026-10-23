@@ -58,6 +58,7 @@ const TRIP = {
     breakfast: '06:30–09:30 · 11/6 · 11/7 · 11/8',
     note: '최상층 스카이 스파에 전망 노천탕과 사우나가 있습니다. 체크인 시각(15:00)부터 다음 날 11:00까지 열려 있고 심야에도 들어갈 수 있어, 늦게 돌아온 날에도 몸을 풀 수 있습니다. 어메니티는 객실에 두지 않고 로비에서 필요한 만큼 가져가는 방식입니다. 오카이도 상점가가 바로 옆이라 저녁 식사와 편의점·쇼핑이 전부 도보권입니다.',
     site: 'https://www.candeohotels.com/ja/ehime-matsuyama',
+    ll: [33.8418, 132.7680],   // 일정 약도의 기준점
     q: 'カンデオホテルズ松山大街道'
   },
 
@@ -65,6 +66,7 @@ const TRIP = {
   days: [
     {
       date: '2026-11-05',
+      fly: 'in',
       theme: '인천공항 → 마쓰야마공항 → 고토히라 (가가와)',
       meals: { 중식: '현지식 올리브규 스키야키', 석식: '자유' },
       places: [
@@ -74,6 +76,7 @@ const TRIP = {
           tag: '항공',
           short: '제주항공 7C1721 · 07:00 출발. 2시간 전 도착 권장.',
           detail: '제주항공 7C1721편, 인천 07:00 출발입니다. 이른 아침 편이라 공항철도 첫차나 전날 밤 이동을 미리 확인해 두세요. 출국 수속은 보통 2시간 전부터 여유 있게 보면 되고, 새벽에는 보안검색 줄이 길어지는 날이 있습니다.\n\n일본 입국은 Visit Japan Web에 미리 등록해 QR 코드를 받아두면 도착 후 입국심사·세관을 QR 한 번으로 끝낼 수 있습니다. 출발 전날까지 등록해 캡처해 두는 걸 추천합니다.',
+          spot: '인천',
           q: '인천국제공항 제1여객터미널'
         },
         {
@@ -83,6 +86,8 @@ const TRIP = {
           tag: '항공',
           short: '08:35 도착. 전용 차량으로 이동 시작.',
           detail: '비행 1시간 35분, 현지 시각 08:35 도착입니다. 한국과 시차는 없습니다.\n\n마쓰야마 공항은 작아서 입국부터 짐 찾기까지 금방 끝납니다. 도착 로비에 미캉 주스가 나오는 수도꼭지가 있으니 차 타기 전에 한 잔 해보세요. 환전은 공항보다 미리 해 가는 편이 낫고, 현금은 소액 상점·버스용으로 어느 정도 챙기는 게 좋습니다.',
+          spot: '마쓰야마공항',
+          ll: [33.8272, 132.6997],
           q: '松山空港 愛媛県松山市'
         },
         {
@@ -92,6 +97,8 @@ const TRIP = {
           tag: '신사',
           short: '785개 돌계단 위 바다의 신. 마쓰야마에서 차로 약 2시간.',
           detail: '가가와현 고토히라에 있는 전국 곤피라 신앙의 총본궁으로, 뱃사람들이 모시던 바다의 수호신입니다. 참배길 입구부터 본궁까지 785개의 돌계단을 올라야 해서 "곤피라상 계단"으로 더 유명합니다.\n\n계단은 급하지 않지만 수가 많아 40분 안팎 걸립니다. 365단의 다이몬을 지나면 흰 우산을 쓰고 엿을 파는 "가미요닌"이 있고, 628단 아사히노야시로의 조각이 볼만합니다. 785단 본궁 앞 전망대에서는 사누키 평야와 사누키 후지(이노야마)가 한눈에 보입니다. 더 위의 오쿠샤(1368단)까지는 시간상 어렵습니다.\n\n계단 중간중간 쉼터와 지팡이 대여(무료)가 있습니다. 편한 신발이 필수이고, 내려올 때 무릎에 부담이 가니 천천히 내려오세요.',
+          spot: '고토히라',
+          ll: [34.1855, 133.8095],
           q: '金刀比羅宮 香川県仲多度郡琴平町892-1'
         },
         {
@@ -101,6 +108,8 @@ const TRIP = {
           tag: '박물관',
           short: '참배길 입구의 400년 사케 양조장 자료관. 입장 무료.',
           detail: '고토히라구 참배길 중턱에 있는 사케 브랜드 "킨료(金陵)"의 자료관입니다. 1789년부터 이 자리에서 술을 빚어온 양조장이 옛 건물과 도구를 그대로 공개하고 있습니다.\n\n에도 시대 술 빚는 과정을 실물 크기 인형과 거대한 나무통으로 재현해 두었고, 안뜰에 수령 1000년이 넘는 녹나무가 서 있습니다. 입장은 무료이고 매점에서 시음과 구매가 됩니다. 계단을 오르기 전후 잠깐 들르기 좋은 코스입니다.',
+          spot: '고토히라',
+          ll: [34.1868, 133.8122],
           q: '金陵の郷 香川県琴平町'
         },
         {
@@ -110,6 +119,8 @@ const TRIP = {
           tag: '상점가',
           short: '계단 양옆 참배길 상점가. 사누키 우동과 와산본.',
           detail: '참배길 초입 양쪽으로 이어지는 상점가입니다. 가가와는 우동의 고장이라 사누키 우동집이 줄지어 있고, 와산본(고급 설탕 과자), 부채, 곤피라 부적이 대표 기념품입니다.\n\n중식이 올리브규 스키야키로 포함되어 있으니 여기서는 간식 정도로 보면 됩니다. 계단을 다 오른 뒤라면 시원한 간장 아이스크림이나 와산본 라테를 파는 집도 있습니다.',
+          spot: '고토히라',
+          ll: [34.1880, 133.8135],
           q: '金刀比羅宮 表参道 香川県琴平町'
         },
         {
@@ -119,6 +130,8 @@ const TRIP = {
           tag: '극장',
           short: '1835년 지어진 일본 현존 최고(最古) 가부키 극장.',
           detail: '1835년에 세워진, 현재 남아 있는 가부키 극장 중 일본에서 가장 오래된 건물입니다. 국가 중요문화재이면서 지금도 매년 봄 실제 공연이 열립니다.\n\n볼거리는 무대 자체가 아니라 무대 "밑"입니다. 사람이 손으로 밀어 돌리는 회전무대와 배우를 들어올리는 승강 장치가 있는 지하 공간 나락(奈落)까지 직접 내려가 볼 수 있고, 객석을 가로지르는 하나미치와 천장의 꽃보라 장치도 그대로입니다. 전기 조명 없이 창문의 자연광만으로 공연하던 구조라 낮에 가면 그 느낌이 살아 있습니다.',
+          spot: '고토히라',
+          ll: [34.1890, 133.8170],
           q: '旧金毘羅大芝居 金丸座 香川県琴平町'
         },
         {
@@ -128,12 +141,15 @@ const TRIP = {
           tag: '숙소',
           short: '19시까지 복귀. 석식은 불포함이라 자유 저녁.',
           detail: '전용 차량 운행이 19시까지라 그 전에 호텔로 돌아옵니다. 호텔이 오카이도 상점가 바로 옆이라 짐만 두고 나오면 저녁 먹을 곳이 널려 있습니다.\n\n첫날 저녁 추천은 아래 "숙소 주변 맛집"에 정리해 두었습니다. 도착일이라 멀리 가지 말고 가까운 타이메시나 초밥집 정도가 무난합니다. 체크인 후 최상층 스카이 스파에서 몸을 푸는 것도 좋습니다.',
+          spot: '호텔',
+          ll: [33.8418, 132.7680],
           q: 'カンデオホテルズ松山大街道'
         }
       ]
     },
     {
       date: '2026-11-06',
+      from: 'hotel',
       theme: '우치코 · 오즈 · 시모나다 (남이요)',
       meals: { 조식: '호텔식', 중식: '현지식', 석식: '자유' },
       places: [
@@ -144,6 +160,8 @@ const TRIP = {
           tag: '옛마을',
           short: '밀랍으로 번성한 에도~메이지 상가 마을.',
           detail: '목랍(木蠟) 생산으로 큰돈을 번 상인들의 집이 600m 남짓한 길에 그대로 남아 있는 중요전통적건조물군보존지구입니다.\n\n흰 회벽과 노란빛 도는 흙벽, 촘촘한 격자창이 이어지는데, 관광지화가 덜 되어 사람이 적고 실제 주민이 사는 집이 섞여 있습니다. 길 중간중간 작은 카페와 공방, 밀랍 양초 가게가 있습니다. 사진은 아침 빛이 들어올 때가 제일 좋습니다.',
+          spot: '우치코',
+          ll: [33.5355, 132.6566],
           q: '八日市護国地区 愛媛県内子町'
         },
         {
@@ -153,6 +171,8 @@ const TRIP = {
           tag: '절',
           short: '거대한 돌 열반불이 누워 있는 절.',
           detail: '우치코 마을 안에 있는 조동종 사찰로, 15세기에 창건되었습니다.\n\n유명한 것은 경내에 누워 있는 거대한 석조 열반불입니다. 길이 10m가 넘는 돌 부처가 옆으로 누운 모습으로, 돌로 만든 열반상으로는 일본 최대급이라고 합니다. 1995년에 봉안된 비교적 새것이지만 규모 때문에 꼭 사진을 찍게 됩니다. 절 자체는 조용하고 산문과 종루가 오래된 건축입니다.',
+          spot: '우치코',
+          ll: [33.5395, 132.6560],
           q: '高昌寺 愛媛県内子町'
         },
         {
@@ -162,6 +182,8 @@ const TRIP = {
           tag: '저택',
           short: '우치코 제일가는 밀랍 상인의 본가. 제조 과정 전시.',
           detail: '우치코 밀랍 산업의 중심이었던 하가 가문 분가의 저택으로, 국가 중요문화재입니다. 1894년에 지어진 본채와 창고, 작업장이 통째로 남아 있습니다.\n\n안쪽 전시관에서 목랍을 짜내는 전 과정을 실물 도구로 볼 수 있습니다. 하제나무 열매를 쪄서 압착하고 햇볕에 말려 표백하는, 지금은 사라진 산업의 기록입니다. 당시 상인 집의 생활 공간과 정원도 그대로라 안쪽까지 천천히 도는 걸 추천합니다.',
+          spot: '우치코',
+          ll: [33.5370, 132.6550],
           q: '上芳我邸 愛媛県内子町'
         },
         {
@@ -171,6 +193,8 @@ const TRIP = {
           tag: '건축',
           short: '히지카와 강이 내려다보이는 수기야 건축의 정점.',
           detail: '오즈의 무역상이 10년에 걸쳐 1907년에 완성한 산장으로, 일본 수기야(数寄屋) 건축의 걸작으로 꼽힙니다. 2016년 국가 중요문화재가 되었습니다.\n\n히지카와 강이 굽이도는 절벽 위에 지었고, 본채인 가류인에서는 창틀이 그대로 액자가 되어 강과 산이 들어옵니다. 기둥 하나, 못 자리 하나까지 전부 의도가 들어 있어 안내를 들으며 보면 재미가 다릅니다. 강 위로 돌출된 찻집 후로안(不老庵)은 천장을 대나무로 둥글게 휘어 달빛이 반사되도록 만들었다는 이야기가 유명합니다.\n\n실내는 양말 차림으로 걷게 되니 신고 벗기 편한 신발이 좋습니다.',
+          spot: '오즈',
+          ll: [33.5068, 132.5422],
           q: '臥龍山荘 愛媛県大洲市'
         },
         {
@@ -180,6 +204,8 @@ const TRIP = {
           tag: '성',
           short: '목조로 복원한 4층 천수. 천수각 입장은 불포함.',
           detail: '히지카와 강가에 선 성으로, 2004년에 4층 천수를 전통 목조 공법으로 복원했습니다. 콘크리트로 올린 다른 복원 천수와 달리 옛 도면과 사진, 모형을 근거로 나무로만 다시 지은 드문 사례입니다.\n\n일정표상 천수각 내부 입장은 불포함이라 외관과 성 주변을 도는 코스가 됩니다. 강 건너편이나 성 아래 잔디밭에서 보는 각도가 제일 좋고, 네 귀퉁이 망루 중 두 곳은 에도 시대 원형 그대로 남아 있는 중요문화재입니다.',
+          spot: '오즈',
+          ll: [33.5106, 132.5419],
           q: '大洲城 愛媛県大洲市'
         },
         {
@@ -189,6 +215,8 @@ const TRIP = {
           tag: '전망',
           short: '플랫폼 바로 앞이 바다인 무인역.',
           detail: '"일본에서 가장 바다에 가까운 역"으로 불리는 JR 요산선의 무인역입니다. 플랫폼 앞을 가리는 것이 하나도 없이 세토내해가 펼쳐져, 청춘 18 티켓 포스터와 드라마·영화에 수없이 등장했습니다.\n\n볼 것은 벤치와 낡은 역명판, 그리고 바다뿐입니다. 그래서 더 좋은 곳이고, 해가 수평선으로 떨어지는 시간이 절정입니다. 11월 초 이 지역 일몰은 17시 10분 전후입니다.\n\n바닷바람이 생각보다 차니 겉옷을 챙기세요. 역에는 화장실 외에 아무 시설이 없습니다.',
+          spot: '시모나다',
+          ll: [33.7080, 132.5812],
           q: '下灘駅 愛媛県伊予市'
         },
         {
@@ -198,12 +226,16 @@ const TRIP = {
           tag: '숙소',
           short: '19시까지 호텔. 석식 불포함.',
           detail: '시모나다에서 마쓰야마까지는 차로 1시간 안팎입니다. 하루 종일 이동이 많은 날이라 돌아오면 바로 쉬고 싶을 수 있는데, 오카이도와 긴텐가이 아케이드는 밤에도 열려 있어 호텔 앞에서 저녁과 산책이 한 번에 해결됩니다.\n\n다리가 뻐근하면 최상층 스카이 스파를 추천합니다. 나베야키 우동집은 대부분 낮 장사라 저녁에는 문을 닫으니 참고하세요.',
+          spot: '호텔',
+          ll: [33.8418, 132.7680],
           q: 'カンデオホテルズ松山大街道'
         }
       ]
     },
     {
       date: '2026-11-07',
+      from: 'hotel',
+      to: 'hotel',
       theme: '마쓰야마성 · 이마바리 · 도고온천',
       meals: { 조식: '호텔식', 중식: '현지식 (일정식)', 석식: '자유' },
       places: [
@@ -214,6 +246,8 @@ const TRIP = {
           tag: '성',
           short: '현존 12천수 중 하나. 리프트 포함 일정.',
           detail: '해발 132m 가쓰야마 산 위에 있는 평산성으로, 에도 시대 천수각이 그대로 남아 있는 전국 12곳 중 하나입니다. 1602년 가토 요시아키가 쌓기 시작했습니다.\n\n정상까지는 로프웨이와 1인승 리프트가 나란히 운행하는데, 일정에 리프트가 포함되어 있습니다. 지붕 없이 발이 공중에 뜬 채 3분 정도 올라가는 구조라 전망이 트여 로프웨이보다 재미있습니다. 비가 오면 로프웨이로 바뀝니다.\n\n천수각 최상층에서 마쓰야마 시내와 세토내해가 360도로 보이고, 맑으면 멀리 섬들까지 들어옵니다. 내부 계단이 매우 가파르니 손잡이를 꼭 잡으세요. 가는 길의 통로와 문이 적을 꺾어 가두는 구조로 설계돼 있어 그 동선 자체가 볼거리입니다.',
+          spot: '마쓰야마성',
+          ll: [33.8456, 132.7656],
           q: '松山城 愛媛県松山市丸之内1'
         },
         {
@@ -223,6 +257,8 @@ const TRIP = {
           tag: '미술관',
           short: '세계 유일 타월 테마 미술관. 이마바리 타월의 본거지.',
           detail: '이마바리는 일본 타월 생산량의 절반 이상을 차지하는 고장이고, 그 한복판에 세운 타월 테마 미술관입니다.\n\n타월 실로 만든 대형 아트워크와 실제 공장 라인(실 감기, 직조)을 유리 너머로 볼 수 있는 구역이 핵심입니다. 유럽식 정원이 딸려 있고 건물 자체가 큽니다. 1층 숍이 사실상 하이라이트로, 이마바리 타월을 종류별로 살 수 있습니다. 한 번 쓰면 다른 수건을 못 쓴다는 말이 있을 만큼 흡수력이 좋아 기념품으로 가장 실패 없는 선택입니다.\n\n진품에는 빨강·파랑·흰색의 "今治タオル" 브랜드 태그가 붙어 있으니 확인하고 고르세요.',
+          spot: '이마바리',
+          ll: [33.9960, 132.9680],
           q: 'タオル美術館 愛媛県今治市'
         },
         {
@@ -232,6 +268,8 @@ const TRIP = {
           tag: '전망',
           short: '구마 켄고 설계. 구루시마 해협대교 최고의 전망대.',
           detail: '오시마 섬 해발 307m 기로산 정상의 전망공원으로, 건축가 구마 켄고가 설계했습니다. 산 정상을 깎아 그 속에 전망대를 파묻고 위에 다시 흙과 나무를 덮어, 멀리서 보면 건물이 아예 보이지 않습니다. "사라지는 건축"이라 불리는 그의 대표작입니다.\n\n전망대에 서면 구루시마 해협대교가 발밑에 길게 누워 있고, 세토내해의 섬들과 소용돌이치는 조류까지 내려다보입니다. 날이 맑으면 멀리 시코쿠 산맥까지 보입니다. 정상은 바람이 강하고 체감온도가 아래보다 많이 낮습니다.',
+          spot: '기로산',
+          ll: [34.1416, 133.0386],
           q: '亀老山展望公園 愛媛県今治市'
         },
         {
@@ -241,6 +279,8 @@ const TRIP = {
           tag: '전망',
           short: '세계 최초의 3연 현수교. 총 길이 약 4km.',
           detail: '시마나미 해도의 시코쿠 쪽 입구에 놓인 다리로, 현수교 세 개를 연이어 붙인 세계 최초의 구조입니다. 총 길이는 약 4,105m.\n\n아래 구루시마 해협은 일본 3대 급조류 중 하나로, 물살이 시속 18km까지 나와 배들이 조류를 거슬러 가지 못하고 시간을 맞춰 통과합니다. 전망대에서 보면 바다 위에 소용돌이 자국이 선처럼 그려져 있습니다. 다리에는 자전거·보행자 전용 길이 따로 있어 시마나미 해도 라이딩의 시작점이기도 합니다.',
+          spot: '기로산',
+          ll: [34.1150, 133.0000],
           q: '来島海峡大橋 愛媛県今治市'
         },
         {
@@ -250,12 +290,15 @@ const TRIP = {
           tag: '온천',
           short: '3천 년 역사 온천 마을. 본관과 하이카라 거리.',
           detail: '일본에서 가장 오래된 온천으로 불리는 도고의 온천가를 걷는 코스입니다.\n\n중심은 1894년에 지은 목조 3층 건물 도고온천 본관(중요문화재)으로, 미야자키 하야오가 「센과 치히로의 행방불명」의 목욕탕을 구상할 때 참고한 곳으로 알려져 있습니다. 2024년 7월에 7년에 걸친 보존수리를 마치고 전관 영업을 재개했습니다.\n\n도고온천역 앞에는 봇찬 카라쿠리 시계가 있어 매시 정각에 인형이 나와 움직이고, 바로 옆에 무료 족욕탕이 있습니다. 역에서 본관까지 이어지는 250m 아케이드 하이카라 거리에는 봇찬 당고, 자코텐, 미캉 소프트 가게가 몰려 있습니다.\n\n시간이 맞으면 본관 1층 가미노유에 들어가 볼 수 있지만, 수건과 비누는 별도 구매입니다. 입욕까지는 어려우면 족욕과 상점가만으로도 충분히 분위기가 납니다. 돌아오는 길에 본관 옆 도고 맥주관에서 자코텐에 생맥주 한 잔이 정석 코스입니다.',
+          spot: '도고온천',
+          ll: [33.8521, 132.7863],
           q: '道後温泉本館 愛媛県松山市'
         }
       ]
     },
     {
       date: '2026-11-08',
+      fly: 'out',
       theme: '귀국',
       meals: { 조식: '호텔식' },
       places: [
@@ -265,6 +308,8 @@ const TRIP = {
           tag: '숙소',
           short: '조식 후 짐 정리. 공항으로 출발.',
           detail: '09:35 출발 편이라 아침이 빠듯합니다. 조식 시작 시간에 맞춰 내려가고, 짐은 전날 밤에 미리 싸두는 게 편합니다.\n\n공항까지는 전용 차량으로 20분 안팎입니다. 국제선 체크인은 보통 출발 2시간 전에 열리므로 07:30 전후에는 호텔을 나서게 됩니다. 전날 사지 못한 기념품이 있으면 오카이도는 아침에 문을 열지 않으니 공항에서 해결하세요.',
+          spot: '호텔',
+          ll: [33.8418, 132.7680],
           q: 'カンデオホテルズ松山大街道'
         },
         {
@@ -274,6 +319,8 @@ const TRIP = {
           tag: '항공',
           short: '제주항공 7C1722 · 09:35 출발 → 인천 11:20 도착.',
           detail: '제주항공 7C1722편, 마쓰야마 09:35 출발 / 인천 11:20 도착입니다.\n\n마쓰야마 공항은 작아서 보안검색 후 면세 구역에 상점이 많지 않습니다. 사고 싶은 것이 있으면 체크인 전 2층 매장에서 끝내는 게 좋습니다.\n\n에히메 기념품의 기본은 세 가지입니다. 유자향 팥소를 카스텔라로 감아 만 타루토(이치로쿠·하타다), 미캉 주스·젤리 같은 감귤 가공품, 그리고 자코텐과 지리멘 같은 어묵류입니다. 어묵은 냉장이라 당일 귀국이면 괜찮지만 보냉팩을 요청하세요. 이마바리 타월도 공항에 일부 들어와 있습니다.\n\n액체류(미캉 주스)는 기내 반입이 안 되니 수하물로 부칠 짐에 넣어야 합니다.',
+          spot: '마쓰야마공항',
+          ll: [33.8272, 132.6997],
           q: '松山空港 愛媛県松山市'
         }
       ]
@@ -1270,6 +1317,8 @@ section:first-of-type{margin-top:8px}   /* 제목 바로 아래 진행 바 */
 .tab[aria-selected="true"] .dayn,
 .tab[aria-selected="true"] i.wx,
 .tab[aria-selected="true"] i.wx s{color:#fff}
+.tab i.wx s.pop{color:var(--ink);font-weight:600}
+.tab[aria-selected="true"] i.wx s.pop{color:#fff}
 .tab[aria-selected="true"] .dayn,
 .tab[aria-selected="true"] i.wx{opacity:.92}
 .wx-src{margin:8px 2px 0;font-size:11px;color:var(--text-3);line-height:1.5}
@@ -1279,7 +1328,26 @@ section:first-of-type{margin-top:8px}   /* 제목 바로 아래 진행 바 */
 }
 .tab[aria-selected="true"] .today-dot{background:#fff}
 
-.day-theme{font-size:15px;font-weight:600;color:var(--text);margin:4px 0 10px}
+/* 그날의 이동 요약 — 뒤에 호텔 기준 약도 */
+.route{
+  position:relative;overflow:hidden;margin:4px 0 12px;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  min-height:118px;padding:12px 14px;
+}
+.route-map{position:absolute;right:0;top:0;width:62%;height:100%;pointer-events:none}
+.route-map .land{fill:var(--surface-2);stroke:var(--line);stroke-width:.4}
+.route-map .path{fill:none;stroke:var(--accent);stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round;opacity:.75}
+.route-map .fly{fill:none;stroke:var(--ink);stroke-width:.8;stroke-dasharray:2 1.6;opacity:.55}
+.route-map .dot{fill:var(--surface);stroke:var(--accent);stroke-width:.9}
+.route-map .home{fill:var(--ink);stroke:var(--surface);stroke-width:.8}
+.route-map text{font-size:5.4px;fill:var(--text-3);font-weight:600}
+.route-map text.sea{font-size:4.6px;font-weight:500;opacity:.8;letter-spacing:.4px}
+.route-text{position:relative;max-width:60%}
+.route-steps{margin:0;font-size:15px;font-weight:700;color:var(--text);line-height:1.45;word-break:keep-all}
+.route-steps i{font-style:normal;color:var(--text-3);font-weight:500;margin:0 3px}
+.route-sum{margin:6px 0 0;font-size:12px;color:var(--text-2);line-height:1.5}
+.day-theme{margin:4px 0 0;font-size:12px;color:var(--text-3);line-height:1.5}
+.day-theme:empty{display:none}
 
 /* ---------- 식사 ---------- */
 .meals{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
@@ -1583,7 +1651,14 @@ footer{
     </div>
     <div class="tabs" id="tabs" role="tablist" aria-label="날짜 선택"></div>
     <p class="wx-src" id="wx-src"></p>
-    <p class="day-theme" id="day-theme"></p>
+    <div class="route" id="day-route">
+      <svg class="route-map" id="route-map" viewBox="0 0 133 90" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"></svg>
+      <div class="route-text">
+        <p class="route-steps" id="route-steps"></p>
+        <p class="route-sum" id="route-sum"></p>
+        <p class="day-theme" id="day-theme"></p>
+      </div>
+    </div>
     <div class="meals" id="day-meals"></div>
     <ol class="places" id="places"></ol>
   </section>
@@ -1953,7 +2028,9 @@ footer{
         + '<b>' + (d.getMonth()+1) + '/' + d.getDate() + '(' + DOW[d.getDay()] + ')'
         + (i === todayIdx ? '<i class="today-dot"></i>' : '') + '</b>'
         + '<i class="wx"><em>' + ic + '</em><u>' + nm + '</u>'
-        + '<s>' + lo + '° / ' + hi + '°</s></i>';
+        + '<s>' + lo + '° / ' + hi + '°</s>'
+        + (w && w.pop !== null && w.pop !== undefined ? '<s class="pop">☔ ' + w.pop + '%</s>' : '')
+        + '</i>';
       b.addEventListener('click', function(){ select(i); });
       box.appendChild(b);
     });
@@ -1974,9 +2051,142 @@ footer{
     box.innerHTML = html;
   }
 
+  /* =========== 이동 요약 + 약도 =========== */
+  // 약도는 날마다 그날 지점(+호텔)에 맞춰 확대합니다. viewBox 는 133×90 고정.
+  // 위도 34° 근처라 경도 1° 는 위도 1° 의 cos(34°) ≈ 0.83 배.
+  var VB_W = 133, VB_H = 90, KX = 83, KY = 100;
+  var view = { lat: 33.87, lon: 133.15, k: 1 };
+  function fitView(lls){
+    var la = lls.map(function(p){ return p[0]; }), lo = lls.map(function(p){ return p[1]; });
+    var n = Math.max.apply(null, la), s = Math.min.apply(null, la);
+    var e = Math.max.apply(null, lo), w = Math.min.apply(null, lo);
+    var pad = 14;
+    var width = Math.max((e - w) * KX + pad * 2, ((n - s) * KY + pad * 2) * VB_W / VB_H, 60);
+    view = { lat: (n + s) / 2, lon: (e + w) / 2, k: VB_W / width };
+  }
+  function proj(ll){
+    return [ (ll[1] - view.lon) * KX * view.k + VB_W / 2,
+             (view.lat - ll[0]) * KY * view.k + VB_H / 2 ];
+  }
+  function xy(q){ return q[0].toFixed(1) + ',' + q[1].toFixed(1); }
+  function poly(pts){
+    return pts.map(function(p){ return xy(proj([p[1], p[0]])); }).join(' ');
+  }
+  // 아주 거친 해안선 (경도, 위도) — 시코쿠 북서부, 오시마, 히로시마 쪽 혼슈
+  var LAND = [
+    [[131.95,33.33],[132.37,33.47],[132.47,33.60],[132.56,33.68],[132.63,33.73],[132.70,33.78],
+     [132.69,33.86],[132.73,33.92],[132.80,33.99],[132.90,34.05],[132.99,34.08],[133.03,34.03],
+     [133.13,33.95],[133.22,33.92],[133.32,33.97],[133.45,33.99],[133.56,34.02],[133.65,34.12],
+     [133.71,34.23],[133.80,34.30],[133.95,34.35],[134.30,34.36],[134.30,33.00],[131.95,33.00]],
+    [[133.00,34.12],[133.07,34.11],[133.13,34.16],[133.08,34.22],[133.02,34.19]],
+    [[132.20,34.50],[132.20,34.30],[132.50,34.22],[132.62,34.21],[132.75,34.28],[132.90,34.33],
+     [133.10,34.37],[133.40,34.45],[133.60,34.50]]
+  ];
+  var AIRPORT = [33.8272, 132.6997];
+  var SEAS = [[34.16, 132.62, '세토내해'], [34.22, 133.35, '세토내해'], [33.66, 132.40, '이요나다']];
+
+  function legMinutes(leg){
+    var m = /차로 약\s*(?:(\d+)시간)?\s*(?:(\d+)분)?/.exec(leg || '');
+    return m ? (+(m[1] || 0)) * 60 + (+(m[2] || 0)) : 0;
+  }
+  function fmtMin(t){
+    var h = Math.floor(t / 60), m = t % 60;
+    return (h ? h + '시간' : '') + (h && m ? ' ' : '') + (m ? m + '분' : '');
+  }
+
+  function routeStops(day){
+    var hotel = TRIP.stay && TRIP.stay.ll;
+    var stops = [];
+    function push(spot, ll){
+      var last = stops[stops.length - 1];
+      if (last && last.spot === spot) return;   // 같은 동네 안에서 걷는 건 한 칸으로
+      stops.push({ spot: spot, ll: ll });
+    }
+    if (day.from === 'hotel') push('호텔', hotel);
+    day.places.forEach(function(p){ if (p.spot) push(p.spot, p.ll || null); });
+    if (day.to === 'hotel') push('호텔', hotel);
+    if (day.fly === 'out') push('인천', null);
+    return stops;
+  }
+
+  function renderRoute(i){
+    var day = TRIP.days[i];
+    var stops = routeStops(day);
+
+    el('route-steps').innerHTML = stops.map(function(s, n){
+      if (!n) return esc(s.spot);
+      var air = (n === 1 && day.fly === 'in') || (n === stops.length - 1 && day.fly === 'out');
+      return '<i>' + (air ? '✈' : '→') + '</i>' + esc(s.spot);
+    }).join('');
+
+    var drive = 0, fly = '';
+    day.places.forEach(function(p){
+      drive += legMinutes(p.leg);
+      var f = /비행\s*([^·]+)/.exec(p.leg || '');
+      if (f) fly = f[1].trim();
+    });
+    var sum = [];
+    if (fly) sum.push('✈️ 비행 ' + fly);
+    if (drive) sum.push('🚐 차로 약 ' + fmtMin(drive));
+    sum.push('동네 안은 걸어서');
+    el('route-sum').textContent = sum.join(' · ');
+    el('day-theme').textContent = /→/.test(day.theme || '') ? '' : noDot(day.theme || '');
+
+    // 약도
+    var lls = stops.filter(function(s){ return s.ll; }).map(function(s){ return s.ll; });
+    if (TRIP.stay && TRIP.stay.ll) lls.push(TRIP.stay.ll);
+    if (day.fly) lls.push(AIRPORT);
+    fitView(lls);
+
+    var svg = '';
+    LAND.forEach(function(l){ svg += '<polygon class="land" points="' + poly(l) + '"/>'; });
+    var seaShown = {};
+    SEAS.forEach(function(m){
+      var q = proj(m);
+      if (seaShown[m[2]]) return;
+      if (q[0] > 4 && q[0] < VB_W - 24 && q[1] > 6 && q[1] < VB_H - 4) {
+        seaShown[m[2]] = 1;
+        svg += '<text class="sea" x="' + q[0].toFixed(1) + '" y="' + q[1].toFixed(1) + '">' + m[2] + '</text>';
+      }
+    });
+
+    var pts = stops.filter(function(s){ return s.ll; }).map(function(s){
+      return { spot: s.spot, xy: proj(s.ll) };
+    });
+    var air = xy(proj(AIRPORT));
+    if (day.fly === 'in')  svg += '<path class="fly" d="M2,4 Q14,30 ' + air + '"/>';
+    if (day.fly === 'out') svg += '<path class="fly" d="M' + air + ' Q14,30 2,4"/>';
+    if (pts.length > 1) {
+      svg += '<polyline class="path" points="' + pts.map(function(p){ return xy(p.xy); }).join(' ') + '"/>';
+    }
+
+    var home = TRIP.stay && TRIP.stay.ll ? proj(TRIP.stay.ll) : null;
+    var labeled = {};
+    pts.forEach(function(p){
+      if (p.spot === '호텔' || labeled[p.spot]) return;
+      svg += '<circle class="dot" cx="' + p.xy[0].toFixed(1) + '" cy="' + p.xy[1].toFixed(1) + '" r="1.6"/>';
+      // 호텔 바로 옆(마쓰야마 시내)과 공항은 이름을 생략 — 호텔 표시와 비행 점선으로 충분
+      if (p.spot === '마쓰야마공항') return;
+      if (home && Math.abs(p.xy[0] - home[0]) < 6 && Math.abs(p.xy[1] - home[1]) < 6) return;
+      labeled[p.spot] = 1;
+      // 오른쪽 가까이에 다른 이름이 있으면 왼쪽에 붙입니다
+      var left = p.xy[0] > VB_W - 22 || pts.some(function(q){
+        return q.spot !== p.spot && q.xy[0] > p.xy[0] && q.xy[0] - p.xy[0] < 20
+          && Math.abs(q.xy[1] - p.xy[1]) < 6;
+      });
+      svg += '<text x="' + (p.xy[0] + (left ? -3 : 3)).toFixed(1) + '" y="' + (p.xy[1] + 1.8).toFixed(1) + '"'
+        + (left ? ' text-anchor="end"' : '') + '>' + esc(p.spot) + '</text>';
+    });
+    if (home) {
+      svg += '<circle class="home" cx="' + home[0].toFixed(1) + '" cy="' + home[1].toFixed(1) + '" r="2.4"/>'
+        + '<text x="' + (home[0] + 3.5).toFixed(1) + '" y="' + (home[1] + 5.5).toFixed(1) + '">마쓰야마</text>';
+    }
+    el('route-map').innerHTML = svg;
+  }
+
   function renderPlaces(i){
     var day = TRIP.days[i];
-    el('day-theme').textContent = noDot(day.theme || '');
+    renderRoute(i);
     var list = el('places');
     list.innerHTML = '';
 

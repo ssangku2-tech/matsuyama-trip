@@ -1492,20 +1492,19 @@ details.more .body{
 .stay .note{margin:12px 0 0;font-size:13px;color:var(--text-2)}
 
 /* ---------- 맛집 ---------- */
-/* 카테고리는 5칸 격자로 줄바꿈해 한 화면에 다 보입니다. 마지막 '10명 OK' 칩은 두 칸 */
+/* 카테고리는 4칸 격자로 두 줄 — 한 화면에 다 보입니다 */
 .chips{
-  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:0 0 14px;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0 0 14px;
 }
 .chip{
   --tone:var(--text-2);--tone-bg:var(--surface);
   min-width:0;background:var(--tone-bg);border:1px solid var(--line);
-  border-radius:999px;padding:7px 2px;font:inherit;font-size:12px;font-weight:600;
+  border-radius:999px;padding:8px 2px;font:inherit;font-size:12.5px;font-weight:600;
   color:var(--tone);cursor:pointer;white-space:nowrap;text-align:center;
   letter-spacing:-.03em;overflow:hidden;text-overflow:ellipsis;
   -webkit-tap-highlight-color:transparent;
   transition:background .15s,color .15s,border-color .15s;
 }
-.chip.wide{grid-column:span 2}
 .chip[aria-pressed="true"]{background:var(--tone);border-color:var(--tone);color:#fff}
 .chip.t0[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 @media (prefers-color-scheme:dark){
@@ -1520,7 +1519,6 @@ details.more .body{
 .t5{--tone:#ad434d;--tone-bg:#fbeaeb}
 .t6{--tone:#557a57;--tone-bg:#edf4ec}
 .t7{--tone:#3d7672;--tone-bg:#e8f3f1}
-.t8{--tone:#5d3b4c;--tone-bg:#f3eaf0}
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .t1{--tone:#e7a586;--tone-bg:#2d201b}
   :root:not([data-theme="light"]) .t2{--tone:#9db8dc;--tone-bg:#1c2129}
@@ -1529,7 +1527,6 @@ details.more .body{
   :root:not([data-theme="light"]) .t5{--tone:#ee9aa1;--tone-bg:#2e1d20}
   :root:not([data-theme="light"]) .t6{--tone:#a3c8a4;--tone-bg:#1d261e}
   :root:not([data-theme="light"]) .t7{--tone:#92cbc5;--tone-bg:#1a2625}
-  :root:not([data-theme="light"]) .t8{--tone:#dbb6c9;--tone-bg:#2b2129}
 }
 .tag[class*=" t"]{color:var(--tone);background:var(--tone-bg)}
 .res.g-ok{background:var(--sky);color:var(--ink)}
@@ -2270,9 +2267,7 @@ footer{
   }
   function allFoods(){ return (TRIP.foods || []).concat(myFoods); }
 
-  var GROUP_CHIP = '10명 OK';
   var TONE = { '향토':1, '해산물':2, '이자카야':3, '닭·꼬치':4, '고기':5, '면·철판':6, '일식':7 };
-  TONE[GROUP_CHIP] = 8;
   function tone(c){ return c === '전체' ? 't0' : (TONE[c] ? 't' + TONE[c] : ''); }
 
   function catList(){
@@ -2281,7 +2276,6 @@ footer{
     myFoods.forEach(function(f){
       if (f.category && !seen[f.category]) { seen[f.category] = 1; out.push(f.category); }
     });
-    out.push(GROUP_CHIP);
     return out;
   }
 
@@ -2291,7 +2285,7 @@ footer{
     catList().forEach(function(c){
       var b = document.createElement('button');
       b.type = 'button';
-      b.className = 'chip ' + tone(c) + (c === GROUP_CHIP ? ' wide' : '');
+      b.className = 'chip ' + tone(c);
       b.textContent = c;
       b.setAttribute('aria-pressed', c === foodCat ? 'true' : 'false');
       b.addEventListener('click', function(){ foodCat = c; renderChips(); renderFoods(); });
@@ -2303,7 +2297,6 @@ footer{
   function renderFoods(){
     var all = allFoods();
     var rows = foodCat === '전체' ? all : all.filter(function(f){
-      if (foodCat === GROUP_CHIP) return f.group === 'ok';
       return f.category === foodCat || f.area === foodCat;
     });
     el('food-count').innerHTML = rows.length + '곳 · 평점은 타베로그 기준'

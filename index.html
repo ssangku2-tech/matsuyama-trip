@@ -23,6 +23,7 @@
        stay            : 숙소 카드 (전 일정 고정)
        foods[]         : 숙소 주변 맛집 (날짜 무관, 카테고리 칩으로 필터)
        weather         : 날씨 좌표 + 예보 없을 때 쓸 평년값
+                         (기상청 예보 > ECMWF 예보 > 평년값 순으로 씁니다)
        q               : 구글맵 검색어. 일본어 이름이 가장 정확합니다.
      내용을 고친 뒤에는 sw.js 의 VERSION 숫자도 올려주세요.
      =================================================================== -->
@@ -43,7 +44,9 @@ const TRIP = {
     // 예보 범위(약 2주) 밖일 때 보여줄 11월 초 평년값
     normalMax: 20,
     normalMin: 11,
-    normalNote: '11월 초 마쓰야마 평년값'
+    normalNote: '11월 초 마쓰야마 평년값',
+    // 기상청 예보 JSON 코드: 에히메현(380000) · 중예 지방(380010) · 마쓰야마 관측점(73166)
+    jma: { office: '380000', area: '380010', weekArea: '380000', point: '73166' }
   },
 
   /* ---------- 숙소 (전 일정 고정) ---------- */
@@ -1178,6 +1181,7 @@ section:first-of-type{margin-top:8px}   /* 제목 바로 아래 진행 바 */
 .tab[aria-selected="true"] i.wx s{color:#fff}
 .tab[aria-selected="true"] .dayn,
 .tab[aria-selected="true"] i.wx{opacity:.92}
+.wx-src{margin:8px 2px 0;font-size:11px;color:var(--text-3);line-height:1.5}
 .tab .today-dot{
   display:inline-block;width:5px;height:5px;border-radius:50%;
   background:var(--accent);margin-left:5px;vertical-align:middle;
@@ -1464,6 +1468,7 @@ footer{
       <div class="plabel"><span id="bar-left"></span><span id="bar-right"></span></div>
     </div>
     <div class="tabs" id="tabs" role="tablist" aria-label="날짜 선택"></div>
+    <p class="wx-src" id="wx-src"></p>
     <p class="day-theme" id="day-theme"></p>
     <div class="meals" id="day-meals"></div>
     <ol class="places" id="places"></ol>
@@ -1523,7 +1528,7 @@ footer{
     <span id="foot-title"></span><br>
     도보 시간·거리·예산은 대략적인 값이고, 조사 시점은 2026년 10월입니다.<br>
     방문 전 구글맵에서 최신 영업 상태와 구글 평점을 확인하세요.<br>
-    날씨: Open-Meteo
+    날씨: 일본 기상청(단기·주간예보), 그 밖의 날은 Open-Meteo(ECMWF)
   </footer>
 </div>
 
@@ -1533,7 +1538,7 @@ footer{
 
   var MAP = 'https://www.google.com/maps/search/?api=1&query=';
   var DOW = ['일','월','화','수','목','금','토'];
-  var WX_KEY = 'matsuyama-wx-v1';
+  var WX_KEY = 'matsuyama-wx-v2';
 
   function el(id){ return document.getElementById(id); }
   function parseDate(s){ var p = s.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
@@ -1582,7 +1587,7 @@ footer{
     95:['⛈️','뇌우'], 96:['⛈️','우박 동반 뇌우'], 99:['⛈️','우박 동반 뇌우']
   };
 
-  var wxData = null;   // { 'YYYY-MM-DD': {code,max,min,pop,wind}, _at: ms }
+  var wxData = null;   // { 'YYYY-MM-DD': {code,max,min,pop,wind,src,rel}, _at: ms }
 
   function loadCache(){
     try {
@@ -1595,38 +1600,167 @@ footer{
     try { localStorage.setItem(WX_KEY, JSON.stringify(wxData)); } catch (e) {}
   }
 
+  /* 기상청(JMA) 날씨 코드 → 위 WMO 표의 가장 가까운 코드.
+     100번대 맑음, 200번대 흐림, 300번대 비, 400번대 눈 */
+  function jmaToWmo(c){
+    c = +c;
+    if (c === 240 || c === 250 || c === 350) return 95;
+    if (c >= 400) return 73;
+    if (c >= 300) return c === 308 ? 65 : (c === 311 || c === 313 ? 61 : 63);
+    if (c >= 200) {
+      if (c === 200 || c === 209 || c === 231) return 3;
+      if (c === 201 || c === 210 || c === 211 || c === 223) return 2;
+      return 61;
+    }
+    if (c === 100 || c === 123 || c === 124 || c === 130 || c === 131) return 0;
+    if (c === 101 || c === 110 || c === 111 || c === 132) return 2;
+    return 80;
+  }
+
+  function getJson(url){
+    return fetch(url, { cache: 'no-store' })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .catch(function(){ return null; });
+  }
+
+  function num(v){ return v === '' || v === null || v === undefined ? null : +v; }
+
+  /* Open-Meteo: ECMWF IFS 를 먼저 쓰고, 그 범위(약 15일) 밖은 best_match 로 채웁니다.
+     start/end_date 대신 forecast_days=16 으로 받아서 여행 날짜만 고릅니다.
+     (끝 날짜가 예보 범위를 넘으면 요청 전체가 거절되기 때문) */
+  function fromOpenMeteo(j, out){
+    if (!j || !j.daily || !j.daily.time) return;
+    var d = j.daily;
+    function pick(key, i){
+      var a = d[key + '_ecmwf_ifs'], b = d[key + '_best_match'];
+      if (a && a[i] !== null && a[i] !== undefined) return { v: a[i], src: 'ECMWF' };
+      if (b && b[i] !== null && b[i] !== undefined) return { v: b[i], src: 'Open-Meteo' };
+      return null;
+    }
+    d.time.forEach(function(date, i){
+      if (date < TRIP.start || date > TRIP.end) return;
+      var hi = pick('temperature_2m_max', i);
+      if (!hi) return;
+      var code = pick('weather_code', i), lo = pick('temperature_2m_min', i);
+      var pop = pick('precipitation_probability_max', i), wind = pick('wind_speed_10m_max', i);
+      out[date] = {
+        code: code ? code.v : 3,
+        max: Math.round(hi.v),
+        min: lo ? Math.round(lo.v) : null,
+        pop: pop ? pop.v : null,
+        wind: wind ? Math.round(wind.v) : null,
+        src: hi.src
+      };
+    });
+  }
+
+  /* 기상청 예보: [0] 단기예보(오늘~모레), [1] 주간예보(7일, 신뢰도 A/B/C).
+     단기 > 주간 > Open-Meteo 순으로 덮어씁니다. */
+  function fromJma(j, cfg, out){
+    if (!j || !j.length) return;
+    function day(t){ return String(t).slice(0, 10); }
+    function slot(date){
+      if (date < TRIP.start || date > TRIP.end) return null;
+      return out[date] || (out[date] = { code: 3, max: null, min: null, pop: null, wind: null });
+    }
+    function area(ts, code){
+      for (var k = 0; k < ts.areas.length; k++) if (ts.areas[k].area.code === code) return ts.areas[k];
+      return null;
+    }
+
+    var wk = j[1] && j[1].timeSeries;
+    if (wk && wk[0] && wk[1]) {
+      var a0 = area(wk[0], cfg.weekArea) || wk[0].areas[0];
+      var a1 = area(wk[1], cfg.point) || wk[1].areas[0];
+      wk[0].timeDefines.forEach(function(t, i){
+        var s = slot(day(t));
+        if (!s || !a0.weatherCodes[i]) return;
+        s.code = jmaToWmo(a0.weatherCodes[i]);
+        if (num(a0.pops[i]) !== null) s.pop = num(a0.pops[i]);
+        if (num(a1.tempsMax[i]) !== null) s.max = num(a1.tempsMax[i]);
+        if (num(a1.tempsMin[i]) !== null) s.min = num(a1.tempsMin[i]);
+        s.src = '기상청 주간';
+        s.rel = (a0.reliabilities && a0.reliabilities[i]) || '';
+      });
+    }
+
+    var st = j[0] && j[0].timeSeries;
+    if (st && st[0]) {
+      var w0 = area(st[0], cfg.area) || st[0].areas[0];
+      st[0].timeDefines.forEach(function(t, i){
+        var s = slot(day(t));
+        if (!s || !w0.weatherCodes[i]) return;
+        s.code = jmaToWmo(w0.weatherCodes[i]);
+        s.src = '기상청';
+        s.rel = '';
+      });
+      if (st[1]) {
+        var p0 = area(st[1], cfg.area) || st[1].areas[0];
+        var best = {};
+        st[1].timeDefines.forEach(function(t, i){
+          var v = num(p0.pops[i]), d = day(t);
+          if (v !== null && (best[d] === undefined || v > best[d])) best[d] = v;
+        });
+        Object.keys(best).forEach(function(d){
+          if (out[d] && out[d].src === '기상청') out[d].pop = best[d];
+        });
+      }
+      // 기온은 00시 = 최저, 09시 = 최고 로 나옵니다.
+      if (st[2]) {
+        var t0 = area(st[2], cfg.point) || st[2].areas[0];
+        st[2].timeDefines.forEach(function(t, i){
+          var s = out[day(t)], v = num(t0.temps[i]);
+          if (!s || s.src !== '기상청' || v === null) return;
+          if (String(t).slice(11, 13) === '09') s.max = v; else s.min = v;
+        });
+      }
+    }
+  }
+
   function fetchWeather(){
     var w = TRIP.weather;
-    if (!w || typeof fetch !== 'function') return;
-    var url = 'https://api.open-meteo.com/v1/forecast'
+    if (!w || typeof fetch !== 'function' || typeof Promise !== 'function') return;
+    var om = 'https://api.open-meteo.com/v1/forecast'
       + '?latitude=' + w.lat + '&longitude=' + w.lon
       + '&daily=weather_code,temperature_2m_max,temperature_2m_min,'
       + 'precipitation_probability_max,wind_speed_10m_max'
-      + '&timezone=Asia%2FTokyo'
-      + '&start_date=' + TRIP.start + '&end_date=' + TRIP.end;
+      + '&models=ecmwf_ifs,best_match'
+      + '&timezone=Asia%2FTokyo&forecast_days=16';
+    var jma = w.jma
+      ? 'https://www.jma.go.jp/bosai/forecast/data/forecast/' + w.jma.office + '.json'
+      : null;
 
-    fetch(url, { cache: 'no-store' })
-      .then(function(r){ return r.ok ? r.json() : null; })
-      .then(function(j){
-        if (!j || !j.daily || !j.daily.time || !j.daily.time.length) return;
-        var d = j.daily, next = {};
-        d.time.forEach(function(date, i){
-          if (d.temperature_2m_max[i] === null) return;
-          next[date] = {
-            code: d.weather_code[i],
-            max: Math.round(d.temperature_2m_max[i]),
-            min: Math.round(d.temperature_2m_min[i]),
-            pop: d.precipitation_probability_max[i],
-            wind: Math.round(d.wind_speed_10m_max[i])
-          };
-        });
-        if (!Object.keys(next).length) return;
-        next._at = Date.now();
-        wxData = next;
-        saveCache();
-        renderTabs(current);
-      })
-      .catch(function(){ /* 오프라인 — 캐시 또는 평년값 사용 */ });
+    Promise.all([getJson(om), jma ? getJson(jma) : null]).then(function(r){
+      var next = {};
+      fromOpenMeteo(r[0], next);
+      if (jma) fromJma(r[1], w.jma, next);
+      Object.keys(next).forEach(function(d){
+        var s = next[d];
+        if (s.max === null) { delete next[d]; return; }
+        if (s.min === null) s.min = w.normalMin;
+      });
+      if (!Object.keys(next).length) return;   // 아직 예보 범위 밖 — 캐시 또는 평년값 유지
+      next._at = Date.now();
+      wxData = next;
+      saveCache();
+      renderTabs(current);
+    });
+  }
+
+  /* 날짜 탭 아래 한 줄: 날짜별로 어느 예보를 쓰고 있는지 */
+  function renderWxSource(){
+    var box = el('wx-src');
+    if (!box) return;
+    var parts = TRIP.days.map(function(day){
+      var d = parseDate(day.date), w = wxFor(day.date);
+      var lab = !w ? '평년값'
+        : w.src === '기상청 주간' ? '기상청 주간예보' + (w.rel ? ' (신뢰도 ' + w.rel + ')' : '')
+        : w.src === '기상청' ? '기상청 단기예보'
+        : w.src === 'ECMWF' ? 'ECMWF 예보'
+        : 'Open-Meteo 예보';
+      return (d.getMonth()+1) + '/' + d.getDate() + ' ' + lab;
+    });
+    box.textContent = '날씨 · ' + parts.join(' · ');
   }
 
   function wxFor(date){ return wxData && wxData[date] ? wxData[date] : null; }
@@ -1709,6 +1843,7 @@ footer{
       b.addEventListener('click', function(){ select(i); });
       box.appendChild(b);
     });
+    renderWxSource();
   }
 
   function renderMeals(i){

@@ -1,6 +1,6 @@
 /* 동그라미 마쓰야마 여행 — service worker
    index.html 을 고친 뒤 캐시를 확실히 비우려면 아래 VERSION 숫자를 올리세요. */
-const VERSION = 'v38';
+const VERSION = 'v39';
 const CACHE = 'matsuyama-' + VERSION;
 
 const SHELL = [
@@ -16,7 +16,8 @@ self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE)
       // 아이콘 하나가 없어도 설치가 실패하지 않도록 개별 추가
-      .then((c) => Promise.all(SHELL.map((u) => c.add(u).catch(() => {}))))
+      // cache:'reload' 로 브라우저 HTTP 캐시를 건너뛰고 서버의 최신 파일을 받음
+      .then((c) => Promise.all(SHELL.map((u) => c.add(new Request(u, { cache: 'reload' })).catch(() => {}))))
       .then(() => self.skipWaiting())
   );
 });
@@ -37,6 +38,11 @@ self.addEventListener('fetch', (e) => {
 
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
+
+  /* manifest·아이콘은 서비스 워커를 거치지 않고 항상 네트워크에서.
+     크롬 '앱 설치'(WebAPK)는 기기가 받은 아이콘과 구글 서버가 받은 아이콘이
+     같아야 하는데, 옛 캐시 아이콘이 나가면 설치가 조용히 실패하고 바로가기만 됩니다. */
+  if (/\/(manifest\.json|icon-[\w-]+\.png)$/.test(url.pathname)) return;
 
   e.respondWith((async () => {
     const cache = await caches.open(CACHE);

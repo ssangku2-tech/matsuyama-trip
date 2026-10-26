@@ -1217,7 +1217,7 @@ body{
 .hero{
   position:relative;overflow:hidden;
   margin:0 -16px 2px;
-  padding:calc(16px + env(safe-area-inset-top)) 16px 10px;
+  padding:calc(34px + env(safe-area-inset-top)) 16px 10px;
 }
 .hero::before{
   content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
@@ -1229,6 +1229,60 @@ body{
       right bottom / auto 100% no-repeat;
 }
 .hero > *{position:relative;z-index:1}
+
+/* ---------- 여행 소품 그림 — 테마 색을 따라가도록 전부 CSS 로 칠합니다 ---------- */
+.hero .bunting{
+  position:absolute;z-index:1;left:0;right:0;top:env(safe-area-inset-top);
+  width:100%;height:30px;pointer-events:none;
+}
+.bunting .string{fill:none;stroke:var(--text-3);stroke-width:1;opacity:.55}
+.bunting .b1{fill:var(--accent)}
+.bunting .b2{fill:var(--route-b)}
+.bunting .b3{fill:#8fa07a}
+.bunting .b4{fill:var(--autumn)}
+.bunting .b5{fill:#c0727a}
+.bunting path:not(.string){opacity:.82}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .bunting .b2{fill:#d9a066}
+  :root:not([data-theme="light"]) .bunting path:not(.string){opacity:.62}
+}
+.plane-trail{width:68px;height:17px;flex:0 0 auto;margin-left:-2px;overflow:visible}
+.plane-trail .trail{fill:none;stroke:var(--accent);stroke-width:1.4;stroke-linecap:round;stroke-dasharray:2.5 3.5;opacity:.55}
+.plane-trail .plane{fill:var(--accent)}
+
+/* 섹션 제목 — 끝이 갈라진 작은 깃발 라벨 */
+.sec-head h2.flag{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 18px 4px 10px;
+  background:var(--accent-soft);color:var(--accent-text);letter-spacing:.06em;
+  clip-path:polygon(0 0,100% 0,calc(100% - 8px) 50%,100% 100%,0 100%);
+  border-radius:6px 0 0 6px;
+}
+.sec-head h2.flag svg{
+  width:15px;height:15px;flex:0 0 auto;
+  fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;
+}
+
+/* 동선 카드 — 가이드 깃발 */
+.guide-flag{width:11px;height:14px;margin-right:5px;vertical-align:-2px}
+.guide-flag .pole{fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round}
+.guide-flag .cloth{fill:#fff;opacity:.9}
+
+/* 꼬리말 — 여권 도장과 여행 소품 */
+footer .stamp{
+  display:block;width:84px;height:84px;margin:0 auto 6px;
+  transform:rotate(-12deg);color:var(--accent);opacity:.7;
+}
+.stamp .o{fill:none;stroke:currentColor;stroke-width:2.4;stroke-dasharray:5 2.4}
+.stamp .i{fill:none;stroke:currentColor;stroke-width:1.4}
+.stamp .ring{fill:currentColor;font-size:10.5px;font-weight:800}
+.stamp .date{fill:currentColor;font-size:10px;font-weight:800;letter-spacing:.5px}
+.stamp .plane{fill:currentColor}
+.foot-icons{display:flex;justify-content:center;gap:14px;margin:0 0 10px;color:var(--text-3)}
+.foot-icons svg{
+  width:18px;height:18px;opacity:.75;
+  fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;
+}
 .hero .eyebrow{
   font-size:12px;letter-spacing:.12em;color:var(--text-3);
   margin:0 0 5px;font-weight:600;
@@ -1249,7 +1303,7 @@ body{
 .period{font-size:14px;color:var(--text-2);font-variant-numeric:tabular-nums}
 .dday{
   position:absolute;z-index:2;
-  top:calc(14px + env(safe-area-inset-top));right:16px;
+  top:calc(32px + env(safe-area-inset-top));right:16px;
   display:inline-flex;align-items:baseline;gap:4px;
   background:var(--accent);color:#fff;
   padding:5px 12px;border-radius:999px;
@@ -1676,11 +1730,17 @@ footer{
 
   <!-- 1. 헤더 -->
   <header class="hero">
+    <!-- 여행사 이벤트 안내처럼 — 위에 걸린 삼각 깃발 가랜드 -->
+    <svg class="bunting" viewBox="0 0 560 32" preserveAspectRatio="xMidYMin slice" aria-hidden="true"><path class="string" d="M0 2Q140 22 280 2Q420 22 560 2"/><path class="b1" transform="translate(28 5.6) rotate(7)" d="M-8 0h16L0 18z"/><path class="b2" transform="translate(56 8.4) rotate(5)" d="M-8 0h16L0 18z"/><path class="b3" transform="translate(84 10.4) rotate(3)" d="M-8 0h16L0 18z"/><path class="b4" transform="translate(112 11.6) rotate(2)" d="M-8 0h16L0 18z"/><path class="b5" transform="translate(140 12.0) rotate(0)" d="M-8 0h16L0 18z"/><path class="b1" transform="translate(168 11.6) rotate(-2)" d="M-8 0h16L0 18z"/><path class="b2" transform="translate(196 10.4) rotate(-3)" d="M-8 0h16L0 18z"/><path class="b3" transform="translate(224 8.4) rotate(-5)" d="M-8 0h16L0 18z"/><path class="b4" transform="translate(252 5.6) rotate(-7)" d="M-8 0h16L0 18z"/><path class="b5" transform="translate(308 5.6) rotate(7)" d="M-8 0h16L0 18z"/><path class="b1" transform="translate(336 8.4) rotate(5)" d="M-8 0h16L0 18z"/><path class="b2" transform="translate(364 10.4) rotate(3)" d="M-8 0h16L0 18z"/><path class="b3" transform="translate(392 11.6) rotate(2)" d="M-8 0h16L0 18z"/><path class="b4" transform="translate(420 12.0) rotate(0)" d="M-8 0h16L0 18z"/><path class="b5" transform="translate(448 11.6) rotate(-2)" d="M-8 0h16L0 18z"/><path class="b1" transform="translate(476 10.4) rotate(-3)" d="M-8 0h16L0 18z"/><path class="b2" transform="translate(504 8.4) rotate(-5)" d="M-8 0h16L0 18z"/><path class="b3" transform="translate(532 5.6) rotate(-7)" d="M-8 0h16L0 18z"/></svg>
     <span class="dday" id="hero-dday" hidden></span>
     <p class="eyebrow" id="hero-sub"></p>
     <h1 id="hero-title"></h1>
     <div class="meta">
       <span class="period" id="hero-period"></span>
+      <svg class="plane-trail" viewBox="0 0 92 22" aria-hidden="true">
+        <path class="trail" d="M2 18C24 20 46 16 70 8"/>
+        <path class="plane" transform="translate(80 7) rotate(-22)" d="M-9 -1.2h6l4.5-6h2.4l-2.6 6h4.6l2-2.6h1.8l-1.2 3.8 1.2 3.8h-1.8l-2-2.6h-4.6l2.6 6h-2.4l-4.5-6h-6z"/>
+      </svg>
     </div>
   </header>
 
@@ -1694,7 +1754,7 @@ footer{
     <div class="route" id="day-route">
       <svg class="route-map" id="route-map" viewBox="0 0 133 90" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"></svg>
       <div class="route-text">
-        <p class="route-eyebrow">오늘의 동선</p>
+        <p class="route-eyebrow"><svg class="guide-flag" viewBox="0 0 16 20" aria-hidden="true"><path class="pole" d="M3 1.5v17"/><path class="cloth" d="M3.6 2.2h10.2l-2.6 3.6 2.6 3.6H3.6z"/></svg>오늘의 동선</p>
         <p class="route-steps" id="route-steps"></p>
         <p class="route-sum" id="route-sum"></p>
         <p class="day-theme" id="day-theme"></p>
@@ -1707,7 +1767,7 @@ footer{
   <!-- 3. 숙소 -->
   <section aria-labelledby="sec-stay">
     <div class="sec-head">
-      <h2 id="sec-stay">숙소</h2>
+      <h2 id="sec-stay" class="flag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg>숙소</h2>
     </div>
     <div class="stay" id="stay"></div>
   </section>
@@ -1715,7 +1775,7 @@ footer{
   <!-- 4. 숙소 주변 저녁 식사 -->
   <section aria-labelledby="sec-food">
     <div class="sec-head">
-      <h2 id="sec-food">저녁 맛집</h2>
+      <h2 id="sec-food" class="flag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12h17a8.5 8.5 0 0 1-17 0z"/><path d="M9 20.5h6"/><path d="M14 3.5 9.5 10M19 4.5 12 10"/></svg>저녁 맛집</h2>
       <span class="hint" id="food-count"></span>
     </div>
     <div class="chips" id="chips" aria-label="카테고리 필터"></div>
@@ -1755,6 +1815,21 @@ footer{
   </section>
 
   <footer>
+    <!-- 여권 도장 -->
+    <svg class="stamp" viewBox="0 0 120 120" aria-hidden="true">
+      <defs><path id="stamp-ring" d="M60 18a42 42 0 1 1 0 84a42 42 0 1 1 0-84"/></defs>
+      <circle class="o" cx="60" cy="60" r="54"/>
+      <circle class="i" cx="60" cy="60" r="31"/>
+      <text class="ring"><textPath href="#stamp-ring" textLength="256" lengthAdjust="spacing">MATSUYAMA ✦ EHIME ✦ JAPAN ✦</textPath></text>
+      <path class="plane" transform="translate(60 52) rotate(-30) scale(1.25)" d="M-9 -1.2h6l4.5-6h2.4l-2.6 6h4.6l2-2.6h1.8l-1.2 3.8 1.2 3.8h-1.8l-2-2.6h-4.6l2.6 6h-2.4l-4.5-6h-6z"/>
+      <text class="date" x="60" y="76" text-anchor="middle">2026·11</text>
+    </svg>
+    <div class="foot-icons" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><rect x="4" y="7.5" width="16" height="12.5" rx="2.5"/><path d="M9 7.5V5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5v2.5M9 11v6M15 11v6"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M3.5 9a2 2 0 0 1 2-2h2.3l1.5-2.2h5.4L16.2 7h2.3a2 2 0 0 1 2 2v8.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.4"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M3.5 7.5h17v3a2 2 0 0 0 0 3.5v3h-17v-3a2 2 0 0 0 0-3.5z"/><path d="M15 7.5v9" stroke-dasharray="1.6 1.8"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M5.5 21V3.5"/><path d="M5.5 4.5h12l-3 4 3 4h-12"/></svg>
+    </div>
     <span id="foot-title"></span><br>
     도보 시간·거리·예산은 대략적인 값이고, 조사 시점은 2026년 10월입니다.<br>
     방문 전 구글맵에서 최신 영업 상태와 구글 평점을 확인하세요.<br>

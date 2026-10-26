@@ -1,6 +1,6 @@
 /* 동그라미 마쓰야마 여행 — service worker
    index.html 을 고친 뒤 캐시를 확실히 비우려면 아래 VERSION 숫자를 올리세요. */
-const VERSION = 'v42';
+const VERSION = 'v43';
 const CACHE = 'matsuyama-' + VERSION;
 
 const SHELL = [

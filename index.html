@@ -1153,6 +1153,41 @@ const TRIP = {
       memo: '세토내해 재료를 내세운 이자카야. 혼자서도 들어가기 쉽다는 평. 최근 이 자리로 이전해서 정보가 적으니 영업시간은 가기 전에 확인하세요.',
       q: '瀬戸内居酒屋 笑門 松山市一番町2-5-16'
     }
+  ],
+
+  /* ---------- 식당 일본어 (저녁 맛집 옆 버튼) ----------
+     ja: 일본어 · ko: 한글 발음(긴 소리는 -) · mean: 뜻
+  ------------------------------------------------------------------------ */
+  phrases: [
+    { group: '들어갈 때', items: [
+      { ja: 'すみません！', ko: '스미마셍!', mean: '저기요! (직원 부를 때도 이 말)' },
+      { ja: '10人です。', ko: '쥬-닌 데스', mean: '10명이에요.' },
+      { ja: '10人ですが、席はありますか？', ko: '쥬-닌 데스가, 세키와 아리마스카?', mean: '10명인데 자리 있나요?' },
+      { ja: '予約した〇〇です。', ko: '요야쿠 시타 〇〇 데스', mean: '〇〇(이름)으로 예약했어요.' },
+      { ja: '予約していません。', ko: '요야쿠 시테 이마셍', mean: '예약은 안 했어요.' },
+      { ja: '韓国語のメニューはありますか？', ko: '캉코쿠고노 메뉴-와 아리마스카?', mean: '한국어 메뉴 있어요?' }
+    ]},
+    { group: '주문할 때', items: [
+      { ja: '注文お願いします。', ko: '츄-몽 오네가이시마스', mean: '주문할게요.' },
+      { ja: 'とりあえず生ビール二つ。', ko: '토리아에즈 나마비-루 후타츠', mean: '일단 생맥주 두 잔이요. (이자카야 첫 주문의 정석)' },
+      { ja: 'おすすめは何ですか？', ko: '오스스메와 난데스카?', mean: '추천 메뉴가 뭐예요?' },
+      { ja: 'これをください。', ko: '코레오 쿠다사이', mean: '이거 주세요. (메뉴를 가리키며)' },
+      { ja: 'これは何ですか？', ko: '코레와 난데스카?', mean: '이건 뭐예요? (메뉴나 나온 음식을 가리키며)' },
+      { ja: '同じものをもう一つ。', ko: '오나지 모노오 모- 히토츠', mean: '같은 걸로 하나 더요.' },
+      { ja: '地酒はありますか？', ko: '지자케와 아리마스카?', mean: '이 지역 술(에히메 사케) 있어요?' },
+      { ja: 'ラストオーダーは何時ですか？', ko: '라스토 오-다-와 난지 데스카?', mean: '마지막 주문은 몇 시예요?' }
+    ]},
+    { group: '먹는 중', items: [
+      { ja: 'お通しって何ですか？', ko: '오토-싯테 난데스카?', mean: '오토시가 뭐예요? (자리마다 나오는 유료 기본 안주)' },
+      { ja: 'お水をください。', ko: '오미즈오 쿠다사이', mean: '물 주세요.' },
+      { ja: '取り皿をください。', ko: '토리자라오 쿠다사이', mean: '앞접시 주세요.' },
+      { ja: 'とても美味しいです！', ko: '토테모 오이시- 데스!', mean: '정말 맛있어요!' }
+    ]},
+    { group: '계산할 때', items: [
+      { ja: 'お会計お願いします。', ko: '오카이케- 오네가이시마스', mean: '계산해 주세요.' },
+      { ja: 'カードは使えますか？', ko: '카-도와 츠카에마스카?', mean: '카드 되나요?' },
+      { ja: 'ごちそうさまでした。', ko: '고치소-사마 데시타', mean: '잘 먹었습니다. (나갈 때 인사)' }
+    ]}
   ]
 };
 </script>
@@ -1623,6 +1658,49 @@ li.place .card{
 .stay .note{margin:12px 0 0;font-size:13px;color:var(--text-2)}
 
 /* ---------- 맛집 ---------- */
+/* 제목 옆 '식당 일본어' — 제목과 평점 안내 사이 빈자리에 작게 */
+.sec-title{display:flex;align-items:center;gap:6px;min-width:0}
+.phrase-btn{
+  flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;padding:3px 11px 3px 13px;
+  background:var(--surface);border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));
+  border-radius:999px;box-shadow:0 2px 6px -3px color-mix(in srgb,var(--accent) 45%,transparent);
+  font:inherit;font-size:11.5px;font-weight:700;line-height:1.5;color:var(--accent-text);
+  white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:background .15s,transform .1s;
+}
+/* 오른쪽 작은 화살표 — 눌러서 열린다는 표시 */
+.phrase-btn::after{
+  content:"";width:5px;height:5px;margin-left:1px;
+  border-right:1.6px solid currentColor;border-bottom:1.6px solid currentColor;transform:rotate(-45deg);
+}
+.phrase-btn:active{background:var(--accent-soft);transform:scale(.96)}
+
+/* 문장 모음 — 아래에서 올라오는 시트 */
+.phrase-sheet{
+  width:100%;max-width:560px;max-height:82vh;max-height:82dvh;
+  margin:auto auto 0;padding:0;border:0;border-radius:var(--radius) var(--radius) 0 0;
+  background:var(--bg);color:var(--text);box-shadow:var(--shadow);
+  overflow:hidden;flex-direction:column;
+}
+.phrase-sheet[open]{display:flex}
+.phrase-sheet::backdrop{background:rgba(30,20,15,.45)}
+.ph-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px 10px;border-bottom:1px solid var(--line);
+}
+.ph-head h3{margin:0;font-size:15px;font-weight:700}
+.ph-close{
+  width:30px;height:30px;padding:0;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:50%;font-size:18px;line-height:1;color:var(--text-2);cursor:pointer;
+}
+.ph-body{overflow-y:auto;padding:4px 16px calc(20px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch}
+.ph-group{margin:14px 0 6px;font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--accent-text)}
+.ph-list{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.ph-list li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:9px 12px}
+.ph-ja{font-size:16px;font-weight:600;line-height:1.45}
+.ph-ko{font-size:13px;color:var(--accent-text);font-weight:600}
+.ph-mean{font-size:12.5px;color:var(--text-2)}
+
 /* 카테고리는 4칸 격자로 두 줄 — 한 화면에 다 보입니다 */
 .chips{
   display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0 0 14px;
@@ -1859,9 +1937,20 @@ footer{
   <!-- 4. 숙소 주변 저녁 식사 -->
   <section aria-labelledby="sec-food">
     <div class="sec-head">
-      <h2 id="sec-food" class="flag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12h17a8.5 8.5 0 0 1-17 0z"/><path d="M9 20.5h6"/><path d="M14 3.5 9.5 10M19 4.5 12 10"/></svg>저녁 맛집</h2>
+      <div class="sec-title">
+        <h2 id="sec-food" class="flag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12h17a8.5 8.5 0 0 1-17 0z"/><path d="M9 20.5h6"/><path d="M14 3.5 9.5 10M19 4.5 12 10"/></svg>저녁 맛집</h2>
+        <button type="button" class="phrase-btn" id="phrase-open" aria-haspopup="dialog">식당 일본어</button>
+      </div>
       <span class="hint" id="food-count"></span>
     </div>
+
+    <dialog class="phrase-sheet" id="phrase-sheet" aria-labelledby="phrase-title">
+      <div class="ph-head">
+        <h3 id="phrase-title">식당 · 이자카야 일본어</h3>
+        <button type="button" class="ph-close" id="phrase-close" aria-label="닫기">&times;</button>
+      </div>
+      <div class="ph-body" id="phrase-list"></div>
+    </dialog>
     <div class="chips" id="chips" aria-label="카테고리 필터"></div>
     <ul class="foods" id="foods"></ul>
 
@@ -2534,7 +2623,7 @@ footer{
     var rows = foodCat === '전체' ? all : all.filter(function(f){
       return f.category === foodCat || f.area === foodCat;
     });
-    el('food-count').innerHTML = rows.length + '곳 · 평점은 타베로그 기준'
+    el('food-count').innerHTML = rows.length + '곳 · 타베로그 평점'
       + '<br><span class="sub">3.5 이상이면 상위권</span>';
 
     var box = el('foods');
@@ -2622,6 +2711,26 @@ footer{
     renderChips();
     renderFoods();
     renderExport();
+  }
+
+  /* ---------- 식당 일본어 ---------- */
+  function setupPhrases(){
+    var sheet = el('phrase-sheet'), btn = el('phrase-open');
+    if (!TRIP.phrases || !sheet.showModal) { btn.hidden = true; return; }
+
+    el('phrase-list').innerHTML = TRIP.phrases.map(function(g){
+      return '<h4 class="ph-group">' + esc(g.group) + '</h4><ul class="ph-list">'
+        + g.items.map(function(p){
+          return '<li><div class="ph-ja" lang="ja">' + esc(p.ja) + '</div>'
+            + '<div class="ph-ko">' + esc(p.ko) + '</div>'
+            + '<div class="ph-mean">' + esc(p.mean) + '</div></li>';
+        }).join('') + '</ul>';
+    }).join('');
+
+    btn.addEventListener('click', function(){ sheet.showModal(); el('phrase-list').scrollTop = 0; });
+    el('phrase-close').addEventListener('click', function(){ sheet.close(); });
+    // 시트 바깥(어두운 배경)을 누르면 닫기
+    sheet.addEventListener('click', function(e){ if (e.target === sheet) sheet.close(); });
   }
 
   /* ---------- 추가 폼 ---------- */
@@ -2735,6 +2844,7 @@ footer{
   select(startIndex());
   renderStay();
   refreshFoods();
+  setupPhrases();
   setupAddForm();
   setupExport();
   fetchWeather();

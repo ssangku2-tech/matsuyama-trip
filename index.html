@@ -1282,7 +1282,7 @@ body{
   :root:not([data-theme="light"]) .bunting .b2{fill:#d9a066}
   :root:not([data-theme="light"]) .bunting path:not(.string){opacity:.62}
 }
-.plane-trail{width:68px;height:17px;flex:0 0 auto;margin-left:-2px;overflow:visible}
+.plane-trail{width:91px;height:17px;flex:0 0 auto;margin-left:-2px;overflow:visible}
 .plane-trail .trail{fill:none;stroke:var(--accent);stroke-width:1.4;stroke-linecap:round;stroke-dasharray:2.5 3.5;opacity:.55}
 .plane-trail .plane{fill:var(--accent)}
 
@@ -1294,14 +1294,14 @@ body{
 /* 비행기: 점선을 따라 날아가 끝에서 잠시 쉬었다가 다시 출발 */
 .plane-trail .plane{animation:plane-fly 7s linear infinite}
 @keyframes plane-fly{
-  0%  {transform:translate(2px,18px) rotate(5deg) scale(-.8,.8);opacity:0}
+  0%  {transform:translate(2px,18px) rotate(5deg) scale(-1,1);opacity:0}
   5%  {opacity:1}
-  9%  {transform:translate(18.5px,18.4px) rotate(-2deg) scale(-1,1)}
-  17% {transform:translate(35px,16.8px) rotate(-9deg) scale(-1,1)}
-  25% {transform:translate(52px,13.2px) rotate(-14deg) scale(-1,1)}
-  33% {transform:translate(70px,8px) rotate(-18deg) scale(-1,1)}
-  40%,86% {transform:translate(80px,7px) rotate(-22deg) scale(-1,1);opacity:1}
-  94%,100% {transform:translate(86px,5px) rotate(-22deg) scale(-1,1);opacity:0}
+  9%  {transform:translate(25.8px,18.4px) rotate(-2deg) scale(-1.25,1.25)}
+  17% {transform:translate(49.6px,16.8px) rotate(-9deg) scale(-1.25,1.25)}
+  25% {transform:translate(74px,13.2px) rotate(-14deg) scale(-1.25,1.25)}
+  33% {transform:translate(100px,8px) rotate(-18deg) scale(-1.25,1.25)}
+  40%,86% {transform:translate(110px,7px) rotate(-22deg) scale(-1.25,1.25);opacity:1}
+  94%,100% {transform:translate(116px,5px) rotate(-22deg) scale(-1.25,1.25);opacity:0}
 }
 
 /* 나뭇잎: 빙글 돌며 좌우로 흔들리듯 떨어지기 */
@@ -1350,7 +1350,7 @@ body{
 
 /* D-day 배지 바로 뒤에 겹쳐 둡니다 — 여행이 시작돼 배지가 사라지면 그 자리에 도장만 남아요 */
 .hero .hero-stamp{
-  position:absolute;z-index:1;right:40px;top:calc(34px + env(safe-area-inset-top));
+  position:absolute;z-index:1;right:72px;top:calc(34px + env(safe-area-inset-top));
   width:52px;height:52px;color:var(--accent);opacity:.6;transform:rotate(14deg);pointer-events:none;
 }
 
@@ -1456,7 +1456,7 @@ section:first-of-type{margin-top:8px}   /* 제목 바로 아래 진행 바 */
 .tab i.wx u{display:block;text-decoration:none;margin-top:2px;font-weight:600}
 .tab i.wx s{
   display:block;text-decoration:none;margin-top:1px;
-  font-variant-numeric:tabular-nums;color:var(--text-3);font-size:10px;
+  font-variant-numeric:tabular-nums;color:var(--accent-text);font-size:10px;font-weight:700;
 }
 .tab[aria-selected="true"]{
   background:var(--accent);border-color:var(--accent);
@@ -1468,7 +1468,7 @@ section:first-of-type{margin-top:8px}   /* 제목 바로 아래 진행 바 */
 .tab[aria-selected="true"] i.wx s{color:#fff}
 /* 날씨 이름 옆에 강수확률을 작게 — 예: 소나기 18% */
 .tab i.wx u .pop{
-  margin-left:3px;font-size:10px;font-weight:700;color:var(--accent-text);
+  margin-left:3px;font-size:10px;font-weight:400;color:var(--text-3);
   font-variant-numeric:tabular-nums;
 }
 .tab[aria-selected="true"] i.wx u .pop{color:#fff;opacity:.85}
@@ -1659,9 +1659,11 @@ li.place .card{
 
 /* ---------- 맛집 ---------- */
 /* 제목 옆 '식당 일본어' — 제목과 평점 안내 사이 빈자리에 작게 */
-.sec-title{display:flex;align-items:center;gap:6px;min-width:0}
+.sec-title{display:flex;align-items:center;gap:10px;min-width:0}
+.sec-head:has(.sec-title){gap:8px}   /* 좁은 폰에서도 오른쪽 안내가 두 줄로 남게 */
 .phrase-btn{
-  flex:0 0 auto;display:inline-flex;align-items:center;gap:5px;padding:3px 11px 3px 13px;
+  /* 높이는 옆 '저녁 맛집' 깃발과 같게 늘려서 누르기 쉽게 */
+  flex:0 0 auto;align-self:stretch;display:inline-flex;align-items:center;gap:6px;padding:0 14px 0 17px;
   background:var(--surface);border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));
   border-radius:999px;box-shadow:0 2px 6px -3px color-mix(in srgb,var(--accent) 45%,transparent);
   font:inherit;font-size:11.5px;font-weight:700;line-height:1.5;color:var(--accent-text);
@@ -1899,9 +1901,9 @@ footer{
     </svg>
     <div class="meta">
       <span class="period" id="hero-period"></span>
-      <svg class="plane-trail" viewBox="0 0 92 22" aria-hidden="true">
-        <path class="trail" d="M2 18C24 20 46 16 70 8"/>
-        <path class="plane" transform="translate(80 7) rotate(-22) scale(-1 1)" d="M-9 -1.2h6l4.5-6h2.4l-2.6 6h4.6l2-2.6h1.8l-1.2 3.8 1.2 3.8h-1.8l-2-2.6h-4.6l2.6 6h-2.4l-4.5-6h-6z"/>
+      <svg class="plane-trail" viewBox="0 0 122 22" aria-hidden="true">
+        <path class="trail" d="M2 18C34 20 66 16 100 8"/>
+        <path class="plane" transform="translate(110 7) rotate(-22) scale(-1.25 1.25)" d="M-9 -1.2h6l4.5-6h2.4l-2.6 6h4.6l2-2.6h1.8l-1.2 3.8 1.2 3.8h-1.8l-2-2.6h-4.6l2.6 6h-2.4l-4.5-6h-6z"/>
       </svg>
     </div>
   </header>

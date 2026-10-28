@@ -1241,6 +1241,7 @@ body{
 .bunting .b3{fill:#8fa07a}
 .bunting .b4{fill:var(--autumn)}
 .bunting .b5{fill:#c0727a}
+.bunting .b6{fill:#e9c46a}               /* 은행잎 노랑 */
 .bunting path:not(.string){opacity:.82}
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .bunting .b2{fill:#d9a066}
@@ -1249,6 +1250,50 @@ body{
 .plane-trail{width:68px;height:17px;flex:0 0 auto;margin-left:-2px;overflow:visible}
 .plane-trail .trail{fill:none;stroke:var(--accent);stroke-width:1.4;stroke-linecap:round;stroke-dasharray:2.5 3.5;opacity:.55}
 .plane-trail .plane{fill:var(--accent)}
+
+/* ---------- 움직이는 소품 — 은은하게, '동작 줄이기'를 켜면 멈춥니다 ---------- */
+/* 삼각 깃발: 꼭대기를 축으로 살랑 */
+.bunting g path{animation:pennant-sway 1.5s ease-in-out var(--d,0s) infinite alternate}
+@keyframes pennant-sway{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+
+/* 비행기: 점선을 따라 날아가 끝에서 잠시 쉬었다가 다시 출발 */
+.plane-trail .plane{animation:plane-fly 7s linear infinite}
+@keyframes plane-fly{
+  0%  {transform:translate(2px,18px) rotate(5deg) scale(-.8,.8);opacity:0}
+  5%  {opacity:1}
+  9%  {transform:translate(18.5px,18.4px) rotate(-2deg) scale(-1,1)}
+  17% {transform:translate(35px,16.8px) rotate(-9deg) scale(-1,1)}
+  25% {transform:translate(52px,13.2px) rotate(-14deg) scale(-1,1)}
+  33% {transform:translate(70px,8px) rotate(-18deg) scale(-1,1)}
+  40%,86% {transform:translate(80px,7px) rotate(-22deg) scale(-1,1);opacity:1}
+  94%,100% {transform:translate(86px,5px) rotate(-22deg) scale(-1,1);opacity:0}
+}
+
+/* 나뭇잎: 빙글 돌며 좌우로 흔들리듯 떨어지기 */
+.hero .leaves{position:absolute;inset:0;z-index:0;pointer-events:none}
+.leaves .leaf{
+  position:absolute;top:-24px;width:19px;height:19px;fill:var(--autumn);opacity:0;
+  animation:leaf-fall 12s linear infinite,leaf-spin 3.6s ease-in-out infinite alternate;
+}
+.leaves .l1{left:58%;width:18px;height:18px;animation-delay:0s,-1s}
+.leaves .l2{left:74%;width:21px;height:21px;fill:#c0727a;animation-duration:14s,4.2s;animation-delay:-5s,-2s}
+.leaves .l3{left:88%;width:16px;height:16px;fill:#d9a15f;animation-duration:10s,3s;animation-delay:-8s,0s}
+.leaves .l4{left:40%;width:17px;height:17px;animation-duration:15s,4.6s;animation-delay:-11s,-3s}
+.leaves .l5{left:66%;width:15px;height:15px;fill:#d9a15f;animation-duration:11s,3.4s;animation-delay:-3s,-1.5s}
+@keyframes leaf-fall{
+  0%  {translate:0 0;opacity:0}
+  8%  {opacity:.75}
+  30% {translate:-18px 45px}
+  55% {translate:10px 85px}
+  80% {translate:-14px 125px;opacity:.7}
+  100%{translate:6px 165px;opacity:0}
+}
+@keyframes leaf-spin{from{rotate:-40deg}to{rotate:120deg}}
+
+@media (prefers-reduced-motion:reduce){
+  .bunting g path,.plane-trail .plane{animation:none}
+  .hero .leaves{display:none}
+}
 
 /* 섹션 제목 — 끝이 갈라진 작은 깃발 라벨 */
 .sec-head h2.flag{
@@ -1268,8 +1313,9 @@ body{
 .guide-flag .pole{fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round}
 .guide-flag .cloth{fill:#fff;opacity:.9}
 
+/* D-day 배지 바로 뒤에 겹쳐 둡니다 — 여행이 시작돼 배지가 사라지면 그 자리에 도장만 남아요 */
 .hero .hero-stamp{
-  position:absolute;z-index:1;right:22px;top:calc(68px + env(safe-area-inset-top));
+  position:absolute;z-index:1;right:40px;top:calc(34px + env(safe-area-inset-top));
   width:52px;height:52px;color:var(--accent);opacity:.6;transform:rotate(14deg);pointer-events:none;
 }
 
@@ -1751,11 +1797,20 @@ footer{
   <!-- 1. 헤더 -->
   <header class="hero">
     <!-- 여행사 이벤트 안내처럼 — 위에 걸린 삼각 깃발 가랜드 -->
-    <svg class="bunting" viewBox="0 0 560 32" preserveAspectRatio="xMidYMin slice" aria-hidden="true"><path class="string" d="M0 2Q140 22 280 2Q420 22 560 2"/><path class="b1" transform="translate(28 5.6) rotate(7)" d="M-8 0h16L0 18z"/><path class="b2" transform="translate(56 8.4) rotate(5)" d="M-8 0h16L0 18z"/><path class="b3" transform="translate(84 10.4) rotate(3)" d="M-8 0h16L0 18z"/><path class="b4" transform="translate(112 11.6) rotate(2)" d="M-8 0h16L0 18z"/><path class="b5" transform="translate(140 12.0) rotate(0)" d="M-8 0h16L0 18z"/><path class="b1" transform="translate(168 11.6) rotate(-2)" d="M-8 0h16L0 18z"/><path class="b2" transform="translate(196 10.4) rotate(-3)" d="M-8 0h16L0 18z"/><path class="b3" transform="translate(224 8.4) rotate(-5)" d="M-8 0h16L0 18z"/><path class="b4" transform="translate(252 5.6) rotate(-7)" d="M-8 0h16L0 18z"/><path class="b5" transform="translate(308 5.6) rotate(7)" d="M-8 0h16L0 18z"/><path class="b1" transform="translate(336 8.4) rotate(5)" d="M-8 0h16L0 18z"/><path class="b2" transform="translate(364 10.4) rotate(3)" d="M-8 0h16L0 18z"/><path class="b3" transform="translate(392 11.6) rotate(2)" d="M-8 0h16L0 18z"/><path class="b4" transform="translate(420 12.0) rotate(0)" d="M-8 0h16L0 18z"/><path class="b5" transform="translate(448 11.6) rotate(-2)" d="M-8 0h16L0 18z"/><path class="b1" transform="translate(476 10.4) rotate(-3)" d="M-8 0h16L0 18z"/><path class="b2" transform="translate(504 8.4) rotate(-5)" d="M-8 0h16L0 18z"/><path class="b3" transform="translate(532 5.6) rotate(-7)" d="M-8 0h16L0 18z"/></svg>
+    <svg class="bunting" viewBox="0 0 560 32" preserveAspectRatio="xMidYMin slice" aria-hidden="true"><path class="string" d="M0 2Q140 22 280 2Q420 22 560 2"/><g transform="translate(28 5.6) rotate(7)" style="--d:-0.37s"><path class="b1" d="M-8 0h16L0 18z"/></g><g transform="translate(56 8.4) rotate(5)" style="--d:-0.74s"><path class="b2" d="M-8 0h16L0 18z"/></g><g transform="translate(84 10.4) rotate(3)" style="--d:-1.11s"><path class="b6" d="M-8 0h16L0 18z"/></g><g transform="translate(112 11.6) rotate(2)" style="--d:-1.48s"><path class="b4" d="M-8 0h16L0 18z"/></g><g transform="translate(140 12.0) rotate(0)" style="--d:-1.85s"><path class="b5" d="M-8 0h16L0 18z"/></g><g transform="translate(168 11.6) rotate(-2)" style="--d:-2.22s"><path class="b1" d="M-8 0h16L0 18z"/></g><g transform="translate(196 10.4) rotate(-3)" style="--d:-2.59s"><path class="b2" d="M-8 0h16L0 18z"/></g><g transform="translate(224 8.4) rotate(-5)" style="--d:-0.36s"><path class="b3" d="M-8 0h16L0 18z"/></g><g transform="translate(252 5.6) rotate(-7)" style="--d:-0.73s"><path class="b4" d="M-8 0h16L0 18z"/></g><g transform="translate(308 5.6) rotate(7)" style="--d:-1.10s"><path class="b6" d="M-8 0h16L0 18z"/></g><g transform="translate(336 8.4) rotate(5)" style="--d:-1.47s"><path class="b1" d="M-8 0h16L0 18z"/></g><g transform="translate(364 10.4) rotate(3)" style="--d:-1.84s"><path class="b2" d="M-8 0h16L0 18z"/></g><g transform="translate(392 11.6) rotate(2)" style="--d:-2.21s"><path class="b3" d="M-8 0h16L0 18z"/></g><g transform="translate(420 12.0) rotate(0)" style="--d:-2.58s"><path class="b4" d="M-8 0h16L0 18z"/></g><g transform="translate(448 11.6) rotate(-2)" style="--d:-0.35s"><path class="b5" d="M-8 0h16L0 18z"/></g><g transform="translate(476 10.4) rotate(-3)" style="--d:-0.72s"><path class="b6" d="M-8 0h16L0 18z"/></g><g transform="translate(504 8.4) rotate(-5)" style="--d:-1.09s"><path class="b2" d="M-8 0h16L0 18z"/></g><g transform="translate(532 5.6) rotate(-7)" style="--d:-1.46s"><path class="b3" d="M-8 0h16L0 18z"/></g></svg>
+    <!-- 천천히 떨어지는 나뭇잎 -->
+    <div class="leaves" aria-hidden="true">
+      <svg width="0" height="0"><symbol id="fall-leaf" viewBox="0 0 24 24"><path d="M12 2.5C17.5 6.5 19.5 12 17 16.5c-1.4 2.5-3.2 3.6-5 4.2-1.8-.6-3.6-1.7-5-4.2C4.5 12 6.5 6.5 12 2.5z"/><path d="M12 6.5v16.5M12 11.5l2.6-2M12 15l-2.8-2.2M12 18l2.4-1.8" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1" stroke-linecap="round"/></symbol></svg>
+      <svg class="leaf l1"><use href="#fall-leaf"/></svg>
+      <svg class="leaf l2"><use href="#fall-leaf"/></svg>
+      <svg class="leaf l3"><use href="#fall-leaf"/></svg>
+      <svg class="leaf l4"><use href="#fall-leaf"/></svg>
+      <svg class="leaf l5"><use href="#fall-leaf"/></svg>
+    </div>
     <span class="dday" id="hero-dday" hidden></span>
     <p class="eyebrow" id="hero-sub"></p>
     <h1 id="hero-title"></h1>
-    <!-- D-day 아래 성 그림 위에 찍힌 여권 도장 (꼬리말 도장과 같은 그림) -->
+    <!-- D-day 배지 뒤에 찍힌 여권 도장 (꼬리말 도장과 같은 그림) -->
     <svg class="stamp hero-stamp" viewBox="0 0 120 120" aria-hidden="true">
       <defs><path id="stamp-ring-hero" d="M60 18a42 42 0 1 1 0 84a42 42 0 1 1 0-84"/></defs>
       <circle class="o" cx="60" cy="60" r="54"/>

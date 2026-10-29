@@ -9,7 +9,7 @@
 <link rel="manifest" href="./manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gaegu:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Gaegu:wght@700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <link rel="icon" href="./icon-192.png">
 <link rel="apple-touch-icon" href="./icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -31,6 +31,7 @@
 const TRIP = {
   title: '동그라미 마쓰야마 여행',
   titleEmoji: '🍂',
+  titleTag: '일본',            // 제목 첫 낱말 뒤 위쪽에 비스듬히 작게 얹는 말 (제목 폭은 그대로)
   subtitle: '松山 · 3박 4일',
   periodLabel: '2026.11.5(목) ~ 11.8(일)',
   start: '2026-11-05',
@@ -1282,7 +1283,7 @@ body{
   :root:not([data-theme="light"]) .bunting .b2{fill:#d9a066}
   :root:not([data-theme="light"]) .bunting path:not(.string){opacity:.62}
 }
-.plane-trail{width:91px;height:17px;flex:0 0 auto;margin-left:-2px;overflow:visible}
+.plane-trail{width:112px;height:23px;flex:0 0 auto;margin:-3px 0 -3px -2px;overflow:visible}
 .plane-trail .trail{fill:none;stroke:var(--accent);stroke-width:1.4;stroke-linecap:round;stroke-dasharray:2.5 3.5;opacity:.55}
 .plane-trail .plane{fill:var(--accent)}
 
@@ -1291,18 +1292,8 @@ body{
 .bunting g path{animation:pennant-sway 1.5s ease-in-out var(--d,0s) infinite alternate}
 @keyframes pennant-sway{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
 
-/* 비행기: 점선을 따라 날아가 끝에서 잠시 쉬었다가 다시 출발 */
-.plane-trail .plane{animation:plane-fly 7s linear infinite}
-@keyframes plane-fly{
-  0%  {transform:translate(2px,18px) rotate(5deg) scale(-1,1);opacity:0}
-  5%  {opacity:1}
-  9%  {transform:translate(25.8px,18.4px) rotate(-2deg) scale(-1.25,1.25)}
-  17% {transform:translate(49.6px,16.8px) rotate(-9deg) scale(-1.25,1.25)}
-  25% {transform:translate(74px,13.2px) rotate(-14deg) scale(-1.25,1.25)}
-  33% {transform:translate(100px,8px) rotate(-18deg) scale(-1.25,1.25)}
-  40%,86% {transform:translate(110px,7px) rotate(-22deg) scale(-1.25,1.25);opacity:1}
-  94%,100% {transform:translate(116px,5px) rotate(-22deg) scale(-1.25,1.25);opacity:0}
-}
+/* 비행기: 점선을 따라 날다가 가운데서 한 바퀴 공중제비, 끝에서 잠시 쉬었다가 다시 출발
+   (SVG animateMotion — 고리를 따라 기수가 돌아가야 해서. 시작은 아래 startPlane()) */
 
 /* 나뭇잎: 빙글 돌며 좌우로 흔들리듯 떨어지기 */
 .hero .leaves{position:absolute;inset:0;z-index:0;pointer-events:none}
@@ -1326,7 +1317,7 @@ body{
 @keyframes leaf-spin{from{rotate:-40deg}to{rotate:120deg}}
 
 @media (prefers-reduced-motion:reduce){
-  .bunting g path,.plane-trail .plane{animation:none}
+  .bunting g path{animation:none}
   .hero .leaves{display:none}
 }
 
@@ -1380,8 +1371,22 @@ footer .stamp{
     "Apple SD Gothic Neo","Noto Sans KR",sans-serif;
   -webkit-text-stroke:.45px currentColor;
 }
+/* 제목 낱말 사이에 교정 표시처럼 끼워 넣은 연필 글씨 — 낱말 사이만 4px 벌리고,
+   ∨ 꺾쇠는 제목 글자 바로 위, 글씨는 그 위에 띄워 제목 글자와 겹치지 않게. 둘 다 '미'와 '마' 사이 한가운데(띄어쓰기 중앙 = 자리표 +5px)에, 15° 기울여 */
+.hero h1 .title-tag{display:inline-block;position:relative;width:4px;height:0;color:color-mix(in srgb,var(--text) 50%,var(--text-3))}  /* 제목 검정과 회색의 중간 — 연필 흑연색 */
+.hero h1 .title-tag b{
+  position:absolute;left:50%;bottom:34px;transform:translateX(calc(-50% + 5px)) rotate(-15deg);
+  font:400 24px/1 'Nanum Pen Script','Gaegu',sans-serif;white-space:nowrap;
+  -webkit-text-stroke:.8px currentColor;   /* 연필로 꾹꾹 눌러 쓴 듯 굵게 */
+}
+/* 꺾쇠: 끝은 가늘고 꺾이는 곳은 굵은 펜 획 + 살짝 어긋난 덧그은 선 */
+.hero h1 .title-tag svg{
+  position:absolute;left:50%;bottom:25px;width:18px;height:10px;transform:translateX(calc(-50% + 5px)) rotate(-15deg);overflow:visible;
+  fill:currentColor;
+}
+.hero h1 .title-tag svg .redo{fill:none;stroke:currentColor;stroke-width:.5;vector-effect:non-scaling-stroke;stroke-linecap:round;opacity:.55}
 .hero h1 .emo{
-  margin-left:4px;font-size:24px;vertical-align:2px;
+  margin-left:-5px;font-size:24px;vertical-align:2px;  /* 앞 띄어쓰기를 반쯤 당겨 '여행'에 붙게 (띄어쓰기는 남겨 좁은 화면에선 나뭇잎만 줄바꿈) */
   -webkit-text-stroke:0;
   font-family:-apple-system,"Apple Color Emoji","Segoe UI Emoji",sans-serif;
 }
@@ -1901,9 +1906,22 @@ footer{
     </svg>
     <div class="meta">
       <span class="period" id="hero-period"></span>
-      <svg class="plane-trail" viewBox="0 0 122 22" aria-hidden="true">
-        <path class="trail" d="M2 18C34 20 66 16 100 8"/>
-        <path class="plane" transform="translate(110 7) rotate(-22) scale(-1.25 1.25)" d="M-9 -1.2h6l4.5-6h2.4l-2.6 6h4.6l2-2.6h1.8l-1.2 3.8 1.2 3.8h-1.8l-2-2.6h-4.6l2.6 6h-2.4l-4.5-6h-6z"/>
+      <svg class="plane-trail" viewBox="0 -9 150 31" aria-hidden="true">
+        <!-- 점선은 비행기가 지나간 자리만 보이게: 같은 경로의 실선 마스크를 비행기 속도에 맞춰 늘려 갑니다.
+             마스크 길이 비율 = 비행기 이동 거리 ÷ 점선 길이(184.2), 끝은 1을 조금 넘겨 점선 전체가 보이도록 -->
+        <mask id="trail-mask" maskUnits="userSpaceOnUse" x="-10" y="-20" width="140" height="50">
+          <path fill="none" stroke="#fff" stroke-width="3" pathLength="1" stroke-dasharray="1.1 1.1" stroke-dashoffset="0.045" d="M2 18C18 18.5 36 12 48 12A11 8 0 0 0 48 -4A11.3 8.2 0 0 0 53 12C62 10.7 96 10 128 -3">
+            <animate attributeName="stroke-dashoffset" begin="indefinite" dur="10s" repeatCount="indefinite" calcMode="spline" values="1.1;0.848;0.517;0.045;0.045" keyTimes="0;0.11;0.39;0.59;1" keySplines="0.25 0.25 0.6 0.8;0 0 1 1;0.4 0.2 0.75 0.75;0 0 1 1"/>
+            <animate attributeName="opacity" begin="indefinite" dur="10s" repeatCount="indefinite" values="1;1;0;0" keyTimes="0;0.89;0.95;1"/>
+          </path>
+        </mask>
+        <path class="trail" mask="url(#trail-mask)" d="M2 18C18 18.5 36 12 48 12A11 8 0 0 0 48 -4A11.3 8.2 0 0 0 53 12C62 10.7 96 10 128 -3"/>
+        <path id="plane-route" fill="none" d="M2 18C18 18.5 36 12 48 12A11 8 0 0 0 48 -4A11.3 8.2 0 0 0 53 12C62 10.7 96 10 128 -3l9.3 -3.8"/>
+        <path class="plane" id="hero-plane" transform="translate(137.3 -6.8) rotate(-22) scale(-1.25 1.25)" d="M-9 -1.2h6l4.5-6h2.4l-2.6 6h4.6l2-2.6h1.8l-1.2 3.8 1.2 3.8h-1.8l-2-2.6h-4.6l2.6 6h-2.4l-4.5-6h-6z">
+          <!-- 고리 구간(경로의 24%~55%)은 절반 속도로, 들어가고 나올 때는 부드럽게 감속·가속 -->
+          <animateMotion begin="indefinite" dur="10s" repeatCount="indefinite" rotate="auto" calcMode="spline" keyPoints="0;0.239;0.553;1;1" keyTimes="0;0.11;0.39;0.59;1" keySplines="0.25 0.25 0.6 0.8;0 0 1 1;0.4 0.2 0.75 0.75;0 0 1 1"><mpath href="#plane-route"/></animateMotion>
+          <animate attributeName="opacity" begin="indefinite" dur="10s" repeatCount="indefinite" values="0;1;1;0;0" keyTimes="0;0.04;0.89;0.95;1"/>
+        </path>
       </svg>
     </div>
   </header>
@@ -2261,8 +2279,24 @@ footer{
   function wxFor(date){ return wxData && wxData[date] ? wxData[date] : null; }
 
   /* =========== 헤더 =========== */
+  // 상단 비행기 — '동작 줄이기'면 점선 끝에 가만히 둡니다
+  function startPlane(){
+    var p = el('hero-plane');
+    if (!p || p.dataset.flying || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+    p.dataset.flying = '1';
+    p.setAttribute('transform', 'scale(-1.25 1.25)');
+    // 비행기와 점선 마스크를 같은 순간에 출발시켜야 박자가 맞습니다
+    [].forEach.call(p.ownerSVGElement.querySelectorAll('animate, animateMotion'), function(a){ a.beginElement(); });
+  }
+
   function renderHeader(){
-    el('hero-title').innerHTML = esc(TRIP.title)
+    startPlane();
+    var title = esc(TRIP.title);
+    if (TRIP.titleTag) title = title.replace(' ', '<span class="title-tag"><b>' + esc(TRIP.titleTag) + '</b>'
+      + '<svg viewBox="0 0 14 10" preserveAspectRatio="none" aria-hidden="true">'
+      + '<path d="M1 1.3C2.6 3.4 4.3 5.9 5.9 8.7Q6.6 9.7 7.3 8.6C9 5.6 10.9 2.8 13.4.3C13.6.1 13.4 0 13.2.2C10.6 2.4 8.6 5.1 6.9 7.6C5.4 5.3 3.6 3 1.5.9C1.2.6.8 1 1 1.3Z"/>'
+      + '<path class="redo" d="M1.7 2.1C3.3 4.2 5 6.5 6.4 8.8M7.1 8.2C8.8 5.4 10.6 3 12.9 1"/></svg></span> ');
+    el('hero-title').innerHTML = title
       + (TRIP.titleEmoji ? ' <span class="emo">' + TRIP.titleEmoji + '</span>' : '');
     el('hero-sub').textContent = TRIP.subtitle || '';
     el('hero-period').textContent = TRIP.periodLabel;

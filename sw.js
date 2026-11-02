@@ -1,6 +1,6 @@
 /* 동그라미 마쓰야마 여행 — service worker
    index.html 을 고친 뒤 캐시를 확실히 비우려면 아래 VERSION 숫자를 올리세요. */
-const VERSION = 'v53';
+const VERSION = 'v57';
 const CACHE = 'matsuyama-' + VERSION;
 
 const SHELL = [
@@ -9,7 +9,24 @@ const SHELL = [
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
-  './icon-maskable-512.png'
+  './icon-maskable-512.png',
+  // 목적지 사진 — 오프라인에서도 모든 날짜가 보이도록 미리 받아둡니다
+  './img/places/akinai.jpg',
+  './img/places/dogo.jpg',
+  './img/places/garyu.jpg',
+  './img/places/kamihaga.jpg',
+  './img/places/kanamaruza.jpg',
+  './img/places/kinryo.jpg',
+  './img/places/kirosan.jpg',
+  './img/places/koshoji.jpg',
+  './img/places/kotohiragu.jpg',
+  './img/places/kurushima.jpg',
+  './img/places/matsuyamajo.jpg',
+  './img/places/monzen.jpg',
+  './img/places/ozu.jpg',
+  './img/places/shimonada.jpg',
+  './img/places/towel.jpg',
+  './img/places/yokaichi.jpg'
 ];
 
 self.addEventListener('install', (e) => {

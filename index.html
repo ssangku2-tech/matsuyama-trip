@@ -1176,7 +1176,22 @@ const TRIP = {
       { ja: 'これは何ですか？', ko: '코레와 난데스카?', mean: '이건 뭐예요? (메뉴나 나온 음식을 가리키며)' },
       { ja: '同じものをもう一つ。', ko: '오나지 모노오 모- 히토츠', mean: '같은 걸로 하나 더요.' },
       { ja: '地酒はありますか？', ko: '지자케와 아리마스카?', mean: '이 지역 술(에히메 사케) 있어요?' },
+      { ja: '辛くないですか？', ko: '카라쿠나이데스카?', mean: '안 매워요?' },
       { ja: 'ラストオーダーは何時ですか？', ko: '라스토 오-다-와 난지 데스카?', mean: '마지막 주문은 몇 시예요?' }
+    ]},
+    { group: '자주 쓰는 단어', compact: true, items: [
+      { ja: '塩', ko: '시오', mean: '소금' },
+      { ja: '醤油', ko: '쇼-유', mean: '간장' },
+      { ja: '砂糖', ko: '사토-', mean: '설탕' },
+      { ja: '胡椒', ko: '코쇼-', mean: '후추' },
+      { ja: '酢', ko: '스', mean: '식초' },
+      { ja: 'わさび', ko: '와사비', mean: '고추냉이' },
+      { ja: 'マヨネーズ', ko: '마요네-즈', mean: '마요네즈' },
+      { ja: '箸', ko: '하시', mean: '젓가락' },
+      { ja: 'スプーン', ko: '스푼', mean: '숟가락' },
+      { ja: 'フォーク', ko: '포-쿠', mean: '포크' },
+      { ja: 'おしぼり', ko: '오시보리', mean: '물수건' },
+      { ja: 'トイレ', ko: '토이레', mean: '화장실' }
     ]},
     { group: '먹는 중', items: [
       { ja: 'お通しって何ですか？', ko: '오토-싯테 난데스카?', mean: '오토시가 뭐예요? (자리마다 나오는 유료 기본 안주)' },
@@ -1187,6 +1202,7 @@ const TRIP = {
     { group: '계산할 때', items: [
       { ja: 'お会計お願いします。', ko: '오카이케- 오네가이시마스', mean: '계산해 주세요.' },
       { ja: 'カードは使えますか？', ko: '카-도와 츠카에마스카?', mean: '카드 되나요?' },
+      { ja: '持ち帰りできますか？', ko: '모치카에리 데키마스카?', mean: '포장해 갈 수 있나요?' },
       { ja: 'ごちそうさまでした。', ko: '고치소-사마 데시타', mean: '잘 먹었습니다. (나갈 때 인사)' }
     ]}
   ]
@@ -1708,6 +1724,18 @@ li.place .card{
 .ph-ko{font-size:13px;color:var(--accent-text);font-weight:600}
 .ph-mean{font-size:12.5px;color:var(--text-2)}
 
+/* 자주 쓰는 단어 — 카드 대신 한 박스 안에 칩으로 묶어 공간을 아낍니다 */
+.ph-words{
+  display:flex;flex-wrap:wrap;gap:5px 14px;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:10px 12px;
+}
+.ph-words li{display:flex;align-items:baseline;gap:4px;padding:2px 0}
+.ph-words .ph-ja{font-size:14px;line-height:1.3}
+.ph-words .ph-ko{font-size:12px}
+.ph-words .ph-mean{font-size:12px}
+.ph-words .ph-mean::before{content:'· '}
+
 /* 카테고리는 4칸 격자로 두 줄 — 한 화면에 다 보입니다 */
 .chips{
   display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:0 0 14px;
@@ -1719,9 +1747,15 @@ li.place .card{
   color:var(--tone);cursor:pointer;white-space:nowrap;text-align:center;
   letter-spacing:-.03em;overflow:hidden;text-overflow:ellipsis;
   -webkit-tap-highlight-color:transparent;
-  transition:background .15s,color .15s,border-color .15s;
+  box-shadow:0 1px 2px rgba(90,55,35,.06);
+  transition:background .15s,color .15s,border-color .15s,transform .1s,box-shadow .15s;
 }
-.chip[aria-pressed="true"]{background:var(--tone);border-color:var(--tone);color:#fff}
+@media (hover:hover){
+  .chip:hover{border-color:var(--tone);color:var(--tone);box-shadow:0 2px 6px rgba(90,55,35,.1)}
+  .chip[aria-pressed="true"]:hover{color:#fff}
+}
+.chip:active{transform:scale(.94);box-shadow:0 1px 1px rgba(90,55,35,.06)}
+.chip[aria-pressed="true"]{background:var(--tone);border-color:var(--tone);color:#fff;box-shadow:0 2px 6px -1px color-mix(in srgb,var(--tone) 55%,transparent)}
 .chip.t0[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .chip[aria-pressed="true"]{color:#101216}
@@ -2755,6 +2789,14 @@ footer{
     if (!TRIP.phrases || !sheet.showModal) { btn.hidden = true; return; }
 
     el('phrase-list').innerHTML = TRIP.phrases.map(function(g){
+      if (g.compact) {
+        return '<h4 class="ph-group">' + esc(g.group) + '</h4><ul class="ph-list ph-words">'
+          + g.items.map(function(p){
+            return '<li><span class="ph-ja" lang="ja">' + esc(p.ja) + '</span>'
+              + '<span class="ph-ko">' + esc(p.ko) + '</span>'
+              + '<span class="ph-mean">' + esc(p.mean) + '</span></li>';
+          }).join('') + '</ul>';
+      }
       return '<h4 class="ph-group">' + esc(g.group) + '</h4><ul class="ph-list">'
         + g.items.map(function(p){
           return '<li><div class="ph-ja" lang="ja">' + esc(p.ja) + '</div>'

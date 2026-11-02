@@ -1534,8 +1534,10 @@ section:first-of-type{margin-top:8px}   /* 제목 바로 아래 진행 바 */
   box-shadow:0 14px 30px -18px color-mix(in srgb,var(--route-a) 85%,transparent);
   min-height:0;padding:13px 18px 12px;color:#fff;
 }
-.route-map{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.5}
-.route-map .land{fill:rgba(255,255,255,.14);stroke:rgba(255,255,255,.35);stroke-width:.4}
+.route-map{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.6}
+/* 바다는 푸르스름하게 가라앉히고(왼쪽 끝은 카드 색으로 스며듦), 육지는 밝게 떠 보이게 */
+.route-map .sea-bg{fill:url(#sea-fade)}
+.route-map .land{fill:rgba(255,246,236,.34);stroke:rgba(255,255,255,.7);stroke-width:.5;stroke-linejoin:round}
 .route-map .path{fill:none;stroke:#fff;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
 .route-map .fly{fill:none;stroke:#fff;stroke-width:.8;stroke-dasharray:2 1.6;opacity:.8}
 .route-map .dot{fill:var(--route-a);stroke:#fff;stroke-width:1}
@@ -1564,8 +1566,11 @@ section:first-of-type{margin-top:8px}   /* 제목 바로 아래 진행 바 */
   border-radius:999px;padding:3px 10px;font-variant-numeric:tabular-nums;
   -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
 }
-.day-theme{margin:6px 0 0;font-size:12px;color:rgba(255,255,255,.78);line-height:1.5}
-.day-theme:empty{display:none}
+/* 동네별로 실제 들르는 곳 — 하나투어 상세일정처럼 순서대로 */
+.route-detail{list-style:none;margin:10px 0 0;padding:8px 0 0;border-top:1px dashed rgba(255,255,255,.35);display:grid;gap:3px}
+.route-detail:empty{display:none}
+.route-detail li{display:flex;gap:8px;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.92)}
+.route-detail b{flex:0 0 auto;min-width:54px;font-weight:800;color:#fff}
 
 /* ---------- 식사 — 동선 카드 아래 한 줄 띠 ---------- */
 .meals{margin:0 0 18px}
@@ -2008,7 +2013,7 @@ footer{
         <p class="route-eyebrow"><svg class="guide-flag" viewBox="0 0 16 20" aria-hidden="true"><path class="pole" d="M3 1.5v17"/><path class="cloth" d="M3.6 2.2h10.2l-2.6 3.6 2.6 3.6H3.6z"/></svg>오늘의 동선</p>
         <p class="route-steps" id="route-steps"></p>
         <p class="route-sum" id="route-sum"></p>
-        <p class="day-theme" id="day-theme"></p>
+        <ul class="route-detail" id="route-detail"></ul>
       </div>
     </div>
     <div class="meals" id="day-meals"></div>
@@ -2546,10 +2551,20 @@ footer{
     var sum = [];
     if (fly) sum.push('비행 ' + fly);
     if (drive) sum.push('차량 약 ' + fmtMin(drive));
-    var spots = stops.filter(function(s){ return s.spot !== '호텔' && s.spot !== '인천' && s.spot !== '마쓰야마공항'; }).length;
+    var spots = day.places.filter(function(p){ return p.tag !== '항공' && p.tag !== '숙소'; }).length;
     if (spots) sum.push('방문 ' + spots + '곳');
     el('route-sum').innerHTML = sum.map(function(t){ return '<span>' + esc(t) + '</span>'; }).join('');
-    el('day-theme').textContent = /→/.test(day.theme || '') ? '' : noDot(day.theme || '');
+    // 동네별 목적지 — 같은 spot이 이어지면 한 줄로
+    var rows = [];
+    day.places.forEach(function(p){
+      if (p.tag === '항공' || p.tag === '숙소') return;
+      var last = rows[rows.length - 1];
+      if (!last || last.spot !== p.spot) rows.push(last = { spot: p.spot, items: [] });
+      last.items.push(esc(p.name));
+    });
+    el('route-detail').innerHTML = rows.map(function(r){
+      return '<li><b>' + esc(r.spot) + '</b><span>' + r.items.join(' · ') + '</span></li>';
+    }).join('');
 
     // 약도
     var lls = stops.filter(function(s){ return s.ll; }).map(function(s){ return s.ll; });
@@ -2557,7 +2572,11 @@ footer{
     if (day.fly) lls.push(AIRPORT);
     fitView(lls);
 
-    var svg = '';
+    var svg = '<defs><linearGradient id="sea-fade" x1="0" x2="1" y1="0" y2="0">'
+      + '<stop offset="0" stop-color="#1d4a63" stop-opacity="0"/>'
+      + '<stop offset=".22" stop-color="#1d4a63" stop-opacity=".42"/>'
+      + '<stop offset="1" stop-color="#1d4a63" stop-opacity=".42"/></linearGradient></defs>'
+      + '<rect class="sea-bg" x="0" y="-50" width="' + VB_W + '" height="' + (VB_H + 100) + '"/>';
     LAND.forEach(function(l){ svg += '<polygon class="land" points="' + poly(l) + '"/>'; });
     var seaShown = {};
     SEAS.forEach(function(m){

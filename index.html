@@ -3064,25 +3064,11 @@ footer{
 })();
 </script>
 <!-- 방문자 통계(GoatCounter) — 화면에는 아무것도 안 보이고, 대시보드 https://matsuyama.goatcounter.com 에서만 확인 -->
-<!-- 같은 단말기(브라우저)는 평생 한 번만 집계: 한 번 집계했으면 스크립트를 다시는 불러오지 않음.
-     → 누적 = 사이트를 써 본 단말기 수, 당일 = 그날 처음 들어온 단말기 수.
-     집계 표시는 스크립트가 실제로 받아졌을 때만 남겨서, 오프라인으로 처음 연 경우는 다음에 온라인일 때 집계됨.
-     예전 '하루 1회' 방식(gc-counted-day)으로 이미 집계된 단말기도 집계된 것으로 봄.
-     주소 끝 #toggle-goatcounter 로 '내 브라우저 제외' 켜고 끄기는 그대로 동작하도록 그때는 항상 불러옴. -->
+<!-- 열 때마다 집계(제한 없이 계속 올라감). 대시보드의 Visitors는 GoatCounter가 몇 시간 단위 세션으로 중복을 걸러 줌.
+     예전 '1회만 집계' 방식이 남긴 기록(gc-counted, gc-counted-day)은 지움. -->
 <script>
-(function () {
-  var KEY = 'gc-counted';
-  var toggle = location.hash === '#toggle-goatcounter';
-  var done = false;
-  try { done = !!(localStorage.getItem(KEY) || localStorage.getItem('gc-counted-day')); } catch (e) {}
-  if (done && !toggle) return;
-  var s = document.createElement('script');
-  s.async = true;
-  s.src = '//gc.zgo.at/count.js';
-  s.setAttribute('data-goatcounter', 'https://matsuyama.goatcounter.com/count');
-  s.onload = function () { try { localStorage.setItem(KEY, new Date().toISOString()); } catch (e) {} };
-  document.body.appendChild(s);
-})();
+try { localStorage.removeItem('gc-counted'); localStorage.removeItem('gc-counted-day'); } catch (e) {}
 </script>
+<script data-goatcounter="https://matsuyama.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

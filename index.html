@@ -3064,6 +3064,25 @@ footer{
 })();
 </script>
 <!-- 방문자 통계(GoatCounter) — 화면에는 아무것도 안 보이고, 대시보드 https://matsuyama.goatcounter.com 에서만 확인 -->
-<script data-goatcounter="https://matsuyama.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<!-- 같은 단말기(브라우저)는 하루 한 번만 집계: 오늘 이미 집계했으면 스크립트를 아예 불러오지 않음.
+     집계 표시는 스크립트가 실제로 받아졌을 때만 남겨서, 오프라인으로 연 날은 다음에 온라인일 때 집계됨.
+     주소 끝 #toggle-goatcounter 로 '내 브라우저 제외' 켜고 끄기는 그대로 동작하도록 그때는 항상 불러옴. -->
+<script>
+(function () {
+  var KEY = 'gc-counted-day';
+  var d = new Date();
+  var today = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+  var toggle = location.hash === '#toggle-goatcounter';
+  var last = null;
+  try { last = localStorage.getItem(KEY); } catch (e) {}
+  if (last === today && !toggle) return;
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = '//gc.zgo.at/count.js';
+  s.setAttribute('data-goatcounter', 'https://matsuyama.goatcounter.com/count');
+  s.onload = function () { try { localStorage.setItem(KEY, today); } catch (e) {} };
+  document.body.appendChild(s);
+})();
+</script>
 </body>
 </html>

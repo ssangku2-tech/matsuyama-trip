@@ -1340,15 +1340,19 @@ body{
   margin:0 -16px 2px;
   padding:calc(34px + env(safe-area-inset-top)) 16px 10px;
 }
+/* 상단 배경: 일행 사진 (img/hero.jpg). 위쪽 하늘에 제목이 오도록 사진 비율대로 높이를 잡습니다 */
+.hero{aspect-ratio:1400/974;color:#fff}
 .hero::before{
   content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background:
-    linear-gradient(180deg,color-mix(in srgb,var(--accent) 9%,transparent) 0%,transparent 62%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200' preserveAspectRatio='xMaxYMin slice'%3E%3Cpath fill='%23cf8a5e' opacity='.5' transform='translate(150 40) rotate(-18) scale(1.7)' d='M12 2l1.6 4.2 3.4-1.6-.9 3.9 3.9.4-2.8 2.7 2 1.7-4 .8.5 3.6-3.2-2.1L12 22l-.5-6.4-3.2 2.1.5-3.6-4-.8 2-1.7-2.8-2.7 3.9-.4-.9-3.9 3.4 1.6z'/%3E%3Cpath fill='%23c0727a' opacity='.4' transform='translate(96 92) rotate(24) scale(1.2)' d='M12 2l1.6 4.2 3.4-1.6-.9 3.9 3.9.4-2.8 2.7 2 1.7-4 .8.5 3.6-3.2-2.1L12 22l-.5-6.4-3.2 2.1.5-3.6-4-.8 2-1.7-2.8-2.7 3.9-.4-.9-3.9 3.4 1.6z'/%3E%3Cpath fill='%23d9a15f' opacity='.42' transform='translate(212 128) rotate(-40) scale(1.05)' d='M12 2l1.6 4.2 3.4-1.6-.9 3.9 3.9.4-2.8 2.7 2 1.7-4 .8.5 3.6-3.2-2.1L12 22l-.5-6.4-3.2 2.1.5-3.6-4-.8 2-1.7-2.8-2.7 3.9-.4-.9-3.9 3.4 1.6z'/%3E%3C/svg%3E")
-      right top / auto 100% no-repeat,
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200' preserveAspectRatio='xMaxYMax slice'%3E%3Cg fill='%23bb6355'%3E%3Ccircle cx='72' cy='44' r='17' opacity='.15'/%3E%3Cpath opacity='.13' d='M0 200v-46c40-20 78-6 112 6 34 12 66 4 96-12 30-16 64-14 96 4 30 17 60 14 96-2v50z'/%3E%3Cg opacity='.28' transform='translate(284 84)'%3E%3Cpath d='M4 88h92v12H4z'/%3E%3Cpath d='M14 70h72v18H14z'/%3E%3Cpath d='M6 70 50 54l44 16z'/%3E%3Cpath d='M22 44h56v12H22z'/%3E%3Cpath d='M16 44 50 30l34 14z'/%3E%3Cpath d='M32 20h36v10H32z'/%3E%3Cpath d='M26 20 50 8l24 12z'/%3E%3Cpath d='M48 0h4v8h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
-      right bottom / auto 100% no-repeat;
+    linear-gradient(180deg,rgba(15,35,70,.42) 0%,rgba(15,35,70,.16) 42%,transparent 58%),
+    url("img/hero.jpg") center bottom / cover no-repeat;
 }
+header.hero .eyebrow,header.hero h1,header.hero .period,header.hero h1 .title-tag{color:#fff}
+header.hero .eyebrow,header.hero h1,header.hero .period{text-shadow:0 1px 5px rgba(0,20,50,.55)}
+header.hero h1{font-size:min(32px,8vw)}
+header.hero .hero-stamp{color:#fff;opacity:.45}
+header.hero .plane-trail{color:#fff}
 .hero > *{position:relative;z-index:1}
 
 /* ---------- 여행 소품 그림 — 테마 색을 따라가도록 전부 CSS 로 칠합니다 ---------- */

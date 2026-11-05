@@ -1,6 +1,6 @@
 /* 동그라미 마쓰야마 여행 — service worker
    index.html 을 고친 뒤 캐시를 확실히 비우려면 아래 VERSION 숫자를 올리세요. */
-const VERSION = 'v65';
+const VERSION = 'v66';
 const CACHE = 'matsuyama-' + VERSION;
 
 const SHELL = [
@@ -10,6 +10,7 @@ const SHELL = [
   './icon-192.png',
   './icon-512.png',
   './icon-maskable-512.png',
+  './img/hero.jpg',
   // 목적지 사진 — 오프라인에서도 모든 날짜가 보이도록 미리 받아둡니다
   './img/places/akinai.jpg',
   './img/places/dogo.jpg',

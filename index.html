@@ -2356,11 +2356,18 @@ footer{
       }
       // 기온은 00시 = 최저, 09시 = 최고 로 나옵니다.
       if (st[2]) {
+        // 단, 아침 발표분의 '오늘'은 최저 자리에도 최고값이 들어올 수 있어 그때는 기존 최저를 유지합니다.
         var t0 = area(st[2], cfg.point) || st[2].areas[0];
+        var prevMin = {};
         st[2].timeDefines.forEach(function(t, i){
-          var s = out[day(t)], v = num(t0.temps[i]);
+          var d = day(t), s = out[d], v = num(t0.temps[i]);
           if (!s || s.src !== '기상청' || v === null) return;
+          if (!(d in prevMin)) prevMin[d] = s.min;
           if (String(t).slice(11, 13) === '09') s.max = v; else s.min = v;
+        });
+        Object.keys(prevMin).forEach(function(d){
+          var s = out[d];
+          if (s.max !== null && s.min !== null && s.min >= s.max) s.min = prevMin[d];
         });
       }
     }

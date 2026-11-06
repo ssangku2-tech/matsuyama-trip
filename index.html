@@ -167,7 +167,7 @@ const TRIP = {
       places: [
         {
           name: '우치코 야오카이치 거리',
-          leg: '🚐 차로 약 50분 · 45km · 호텔에서 출발',
+          leg: '🚐 차로 약 40분 · 45km · 호텔에서 출발',
           nameJa: '内子 八日市護国地区',
           tag: '옛마을',
           photo: { src: 'img/places/yokaichi.jpg', by: 'Asturio Cantabrio', license: 'CC BY-SA 4.0',
@@ -262,7 +262,7 @@ const TRIP = {
           leg: '🚐 차로 약 50분 · 35km',
           nameJa: 'カンデオホテルズ松山大街道',
           tag: '숙소',
-          short: '저녁 6시(18시) 호텔 복귀.',
+          short: '오후 5시 30분(17:30) 호텔 복귀.',
           detail: '시모나다에서 마쓰야마까지는 차로 1시간 안팎입니다. 하루 종일 이동이 많은 날이라 돌아오면 바로 쉬고 싶을 수 있는데, 오카이도와 긴텐가이 아케이드는 밤에도 열려 있어 저녁 식사 뒤 산책하기 좋습니다.\n\n다리가 뻐근하면 최상층 스카이 스파를 추천합니다. 나베야키 우동집은 대부분 낮 장사라 저녁에는 문을 닫으니 참고하세요.',
           spot: '호텔',
           ll: [33.8418, 132.7680],
@@ -290,7 +290,7 @@ const TRIP = {
       places: [
         {
           name: '마쓰야마성',
-          leg: '🚶 도보 5분 + 리프트 3분 · 호텔에서 출발',
+          leg: '🚶 도보 40분 · 호텔에서 출발',
           nameJa: '松山城',
           tag: '성',
           photo: { src: 'img/places/matsuyamajo.jpg', by: 'Urashimataro', license: 'Public domain',
@@ -1348,6 +1348,16 @@ body{
     linear-gradient(180deg,rgba(15,35,70,.45) 0%,rgba(15,35,70,.22) 50%,transparent 70%),
     url("img/hero.jpg") center bottom / cover no-repeat;
 }
+/* 두 번째 사진이 첫 사진 위로 천천히 나타났다 사라지며 번갈아 보입니다 */
+.hero::after{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;
+  background:
+    linear-gradient(180deg,rgba(15,35,70,.45) 0%,rgba(15,35,70,.22) 50%,transparent 70%),
+    url("img/hero2.jpg") center bottom / cover no-repeat;
+  animation:hero-swap 16s ease-in-out infinite;
+}
+@keyframes hero-swap{0%,40%{opacity:0}50%,90%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.hero::after{animation:none}}
 header.hero .eyebrow,header.hero h1,header.hero .period,header.hero h1 .title-tag{color:#fff}
 header.hero .eyebrow,header.hero h1,header.hero .period{text-shadow:0 1px 5px rgba(0,20,50,.55)}
 header.hero h1{font-size:min(32px,8vw)}

@@ -1341,18 +1341,18 @@ body{
   padding:calc(34px + env(safe-area-inset-top)) 16px 10px;
 }
 /* 상단 배경: 일행 사진 (img/hero.jpg). 위쪽 하늘에 제목이 오도록 사진 비율대로 높이를 잡습니다 */
-.hero{aspect-ratio:1400/974;color:#fff}
+.hero{aspect-ratio:2212/1020;color:#fff}
 .hero::before{
   content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background:
-    linear-gradient(180deg,rgba(15,35,70,.42) 0%,rgba(15,35,70,.16) 42%,transparent 58%),
+    linear-gradient(180deg,rgba(15,35,70,.45) 0%,rgba(15,35,70,.22) 50%,transparent 70%),
     url("img/hero.jpg") center bottom / cover no-repeat;
 }
 header.hero .eyebrow,header.hero h1,header.hero .period,header.hero h1 .title-tag{color:#fff}
 header.hero .eyebrow,header.hero h1,header.hero .period{text-shadow:0 1px 5px rgba(0,20,50,.55)}
 header.hero h1{font-size:min(32px,8vw)}
 header.hero .hero-stamp{color:#fff;opacity:.45}
-header.hero .plane-trail{color:#fff}
+header.hero .plane-trail{display:none}  /* 비행기가 사진 속 얼굴을 가리지 않게 */
 .hero > *{position:relative;z-index:1}
 
 /* ---------- 여행 소품 그림 — 테마 색을 따라가도록 전부 CSS 로 칠합니다 ---------- */
